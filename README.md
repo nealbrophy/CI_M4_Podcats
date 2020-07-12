@@ -69,3 +69,4 @@ A web app for searching/reviewing/subscribing-to podcasts
 ### Open bugs
 
 ## Credits/Acknowledgements
+- upload functions based on [this medium post](https://medium.com/@simathapa111/how-to-upload-a-csv-file-in-django-3a0d6295f624) by [Seema Thapa](https://medium.com/@simathapa111)
