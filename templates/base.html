@@ -16,6 +16,7 @@
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
               integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk"
               crossorigin="anonymous">
+
     {% endblock %}
     {% block extra_css %}{% endblock %}
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
@@ -29,11 +30,58 @@
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
                 integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
                 crossorigin="anonymous"></script>
+        <script src="https://kit.fontawesome.com/624307dae0.js" crossorigin="anonymous"></script>
     {% endblock %}
     {% block extra_js %}{% endblock %}
     <title>Podcats {% block extra_title %}{% endblock %}</title>
 </head>
 <body>
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+    <a class="navbar-brand" href="{% url 'home' %}"><i class="fas fa-headphones-alt"></i> Podcats</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+                <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">Link</a>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+                   aria-haspopup="true" aria-expanded="false">
+                    MyAccount
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" href="#">Dashboard</a>
+                    {% if request.user.is_authenticated %}
+                        {% if request.user.is_superuser %}
+                            <a class="dropdown-item" href="#">Podcast Management</a>
+                            <a class="dropdown-item" href="#">Review Management</a>
+                        {% endif %}
+                        <a class="dropdown-item" href="{% url 'account_logout' %}">Logout</a>
+                    {% else %}
+                        <a class="dropdown-item" href="{% url 'account_login' %}">Login</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="{% url 'account_signup' %}">Register</a>
+                    {% endif %}
+                </div>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
+            </li>
+        </ul>
+        <form method="GET" action="" class="form-inline my-2 my-lg-0">
+            <input class="form-control mr-sm-2" type="search" name="q" placeholder="Search" aria-label="Search">
+            <button class="btn btn-outline-success my-2 my-sm-0" type="submit"><i class="fas fa-search"></i> Search
+            </button>
+        </form>
+    </div>
+</nav>
 {% block extra_header %}{% endblock %}
 {% block content %}{% endblock %}
 {% if messages %}
