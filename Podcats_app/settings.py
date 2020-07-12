@@ -44,7 +44,8 @@ INSTALLED_APPS = [
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
-    'home.apps.HomeConfig'
+    'home.apps.HomeConfig',
+    'pods.apps.PodsConfig',
 ]
 
 MIDDLEWARE = [
