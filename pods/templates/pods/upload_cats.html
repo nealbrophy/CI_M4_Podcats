@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+{% if messages %}
+    {% for message in messages %}
+        <div>
+            <!--                | means OR operator-->
+            <strong>{{ message|safe }}</strong>
+        </div>
+    {% endfor %}
+{% else %}
+    <ul>
+        {% for category in categories %}
+            <li>{{ category.friendly_name }}</li>
+        {% endfor %}
+    </ul>
+
+    {% if request.user.is_authenticated %}
+        {% if request.user.is_superuser %}
+            <h3>Category Upload</h3>
+            <form action="" method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                <label for="file1"> Upload a file</label>
+                <br>
+                <input type="file" id="file1" name="file">
+                <br>
+                <small>Only accepts CSV files</small>
+                <br>
+                <button type="submit">Execute</button>
+            </form>
+        {% endif %}
+    {% endif %}
+{% endif %}
+</body>
+</html>
