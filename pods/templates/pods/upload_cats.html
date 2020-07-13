@@ -1,39 +1,40 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-{% if messages %}
-    {% for message in messages %}
-        <div>
-            <!--                | means OR operator-->
-            <strong>{{ message|safe }}</strong>
-        </div>
-    {% endfor %}
-{% else %}
-    <ul>
-        {% for category in categories %}
-            <li>{{ category.friendly_name }}</li>
-        {% endfor %}
-    </ul>
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
 
-    {% if request.user.is_authenticated %}
-        {% if request.user.is_superuser %}
-            <h3>Category Upload</h3>
-            <form action="" method="POST" enctype="multipart/form-data">
-                {% csrf_token %}
-                <label for="file1"> Upload a file</label>
-                <br>
-                <input type="file" id="file1" name="file">
-                <br>
-                <small>Only accepts CSV files</small>
-                <br>
-                <button type="submit">Execute</button>
-            </form>
+    {% if messages %}
+        {% for message in messages %}
+            <div>
+                <!--                | means OR operator-->
+                <strong>{{ message|safe }}</strong>
+            </div>
+        {% endfor %}
+    {% else %}
+
+        {% if request.user.is_authenticated %}
+            {% if request.user.is_superuser %}
+                <div class="row mt-5">
+                    <div class="col-3 mx-auto">
+                        <div class="card bg-dark text-white">
+                            <form action="" method="POST" enctype="multipart/form-data">
+                                <div class="card-header">Upload Category Data</div>
+                                <div class="card-body">
+                                    <div class="form-group">
+                                        {% csrf_token %}
+                                        <label for="file1"> Upload a file</label>
+                                        <br>
+                                        <input type="file" class="form-control-file" id="file1" name="file">
+                                        <br>
+                                        <small>Only accepts CSV files</small>
+                                        <br>
+                                    </div>
+                                    <button class="btn btn-danger text-center" type="submit">Upload</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
         {% endif %}
     {% endif %}
-{% endif %}
-</body>
-</html>
+{% endblock %}
