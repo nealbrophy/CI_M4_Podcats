@@ -5,9 +5,9 @@ from django.contrib import messages
 
 def pods(request):
     """ A view to return the Pods page """
-    form = Podcast
+    podcasts = Podcast.objects.all()
     context = {
-        'form': form,
+        'podcasts': podcasts,
     }
     return render(request, 'pods/pods.html', context)
 
