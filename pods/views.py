@@ -3,6 +3,7 @@ from django.shortcuts import render
 from .models import Podcast, Category
 from django.contrib import messages
 
+
 def pods(request):
     """ A view to return the Pods page """
     podcasts = Podcast.objects.all()
@@ -10,6 +11,7 @@ def pods(request):
         'podcasts': podcasts,
     }
     return render(request, 'pods/pods.html', context)
+
 
 def upload_pod_data(request):
     """ A view to upload podcast data """
@@ -35,15 +37,16 @@ def upload_pod_data(request):
     for column in csv.reader(io_string, delimiter=',', quotechar="|"):
         _, create = Podcast.objects.update_or_create(
             uuid=column[0],
-            title=column[1],
-            friendly_title=column[2],
-            image_url=column[3],
-            language=column[4],
-            category=column[5],
-            website=column[6],
+            itunes_id=column[1],
+            title=column[2],
+            friendly_title=column[3],
+            # image_url=column[4],
+            # category_id=column[5],
+            itunes_url=column[4],
         )
     context = {}
     return render(request, template, context)
+
 
 def upload_category_data(request):
     """ A view to upload podcast category data """
@@ -74,6 +77,7 @@ def upload_category_data(request):
         )
     context = {}
     return render(request, template, context)
+
 
 def delete_all(request):
     """ A view to delete all pods """
