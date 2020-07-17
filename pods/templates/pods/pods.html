@@ -2,6 +2,31 @@
 {% load static %}
 
 {% block content %}
-    <h1>This is the Pods Page</h1>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col text-center mt-3">
+                <h2>Podcasts</h2>
+                <hr class="w-50 mb-1">
+            </div>
+        </div>
+        <div class="row">
+            {% for podcast in podcasts %}
+                <div class="col-md-4">
+                    <div class="card podcast-card">
+                    {% if podcast.image_url %}
+                        <img src="" class="" alt="{{ podcast.title }} image">
+                        <img src="{{ podcast.image_url }}" class="podcast-card-image" alt="{{ podcast.title }} image">
+                    {% else %}
+                        <img src="" class="" alt="{{ podcast.title }} image">
+                    {% endif %}
+                    <div class="card-content">
+
+                    </div>
+                    </div>
+
+                </div>
+            {% endfor %}
+        </div>
+    </div>
 
 {% endblock %}
