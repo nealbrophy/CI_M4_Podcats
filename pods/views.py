@@ -1,15 +1,36 @@
 import csv, io
+from csv import DictReader
 from django.shortcuts import render
 from .models import Podcast, Category
 from django.contrib import messages
+import requests
+
 
 
 def pods(request):
     """ A view to return the Pods page """
-    podcasts = Podcast.objects.all()
+
+
+    podcast = request.POST['q']
+    print(podcast)
+
+    url = f'https://listen-api.listennotes.com/api/v2/search?q={podcast}&sort_by_date=0&type=episode&offset=0&len_min=10&len_max=30&genre_ids=68%2C82&published_before=1580172454000&published_after=0&only_in=title%2Cdescription&language=English&safe_mode=0'
+    headers = {
+        'X-ListenAPI-Key': '4b3475985e5f47a79fb9d10645756f6f',
+    }
+    response = requests.request('GET', url, headers=headers)
+    results = response.json()["results"]
+    podcasts = []
+    for podcast in results:
+        podcasts.append({
+            "image_url": podcast['image'],
+            "title": podcast["title_original"],
+            "description": podcast["description_original"]
+        })
     context = {
         'podcasts': podcasts,
     }
+
     return render(request, 'pods/pods.html', context)
 
 
@@ -40,10 +61,13 @@ def upload_pod_data(request):
             itunes_id=column[1],
             title=column[2],
             friendly_title=column[3],
-            # image_url=column[4],
-            # category_id=column[5],
             itunes_url=column[4],
+            # image_url=column[5],
+            # description=column[6],
+            # category_id=column[7],
         )
+    for column in csv.reader(io_string, delimiter=',', quotechar="|"):
+        _, create = Podcast.objects.get(uuid=column[0]).category.set(column[7])
     context = {}
     return render(request, template, context)
 
@@ -85,10 +109,17 @@ def delete_all(request):
     if request.method == "GET":
         return render(request, 'pods/delete_all.html')
     else:
-        if int(Podcast.objects.all().count()) > 0:
-            Podcast.objects.all().delete()
-            messages.success(request, 'Deleted successfully')
+        if "pods" in request.POST:
+            if int(Podcast.objects.all().count()) > 0:
+                Podcast.objects.all().delete()
+                messages.success(request, 'Deleted successfully')
+                return render(request, template)
+            else:
+                messages.error(request, 'Nothing to delete')
+                return render(request, template)
+        elif "descriptions" in request.POST:
+            Podcast.objects.all().update(description="")
+            messages.error(request, 'Descriptions emptied')
             return render(request, template)
-        else:
-            messages.error(request, 'Nothing to delete')
-            return render(request, template)
+
+

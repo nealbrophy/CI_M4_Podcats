@@ -16,7 +16,10 @@
 {% if request.user.is_authenticated and request.user.is_superuser %}
     <form action="" method="POST">
         {% csrf_token %}
-        <button type="submit">Delete ALL</button>
+        <input type="checkbox" name="pods">Delete PODs
+        <input type="checkbox" name="descriptions">Delete DESCRIPTIONS
+
+        <button type="submit">Delete</button>
     </form>
 {% endif %}
 

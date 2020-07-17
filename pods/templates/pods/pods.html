@@ -11,17 +11,13 @@
         </div>
         <div class="row">
             {% for podcast in podcasts %}
-                <div class="col-md-4">
+                <div class="col-md-3">
                     <div class="card podcast-card">
                     {% if podcast.image_url %}
-                        <img src="" class="" alt="{{ podcast.title }} image">
-                        <img src="{{ podcast.image_url }}" class="podcast-card-image" alt="{{ podcast.title }} image">
+                        <img src="{{ podcast.image_url }}" class="img-fluid podcast-card-img img-thumbnail" alt="{{ podcast.title }} image">
                     {% else %}
-                        <img src="" class="" alt="{{ podcast.title }} image">
+                        <img src="https://podcasts.apple.com/us/podcast/achr-news-podcast/id399213137" class="img-fluid img-thumbnail" alt="{{ podcast.title }} no image">
                     {% endif %}
-                    <div class="card-content">
-
-                    </div>
                     </div>
 
                 </div>
