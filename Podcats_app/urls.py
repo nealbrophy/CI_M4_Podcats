@@ -24,5 +24,6 @@ urlpatterns = [
     path('', include('home.urls')),
     path('', include('pods.urls')),
     path('', include('reviews.urls')),
+    path('', include('search.urls')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 

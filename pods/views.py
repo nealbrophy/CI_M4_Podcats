@@ -1,10 +1,10 @@
 import csv, io
 from csv import DictReader
-from django.conf import settings
+
 from django.shortcuts import render
 from .models import Podcast, Category
 from django.contrib import messages
-import requests
+
 
 
 
@@ -12,25 +12,7 @@ def pods(request):
     """ A view to return the Pods page """
 
 
-    podcast = request.POST['q']
-    print(podcast)
 
-    url = f'https://listen-api.listennotes.com/api/v2/search?q={podcast}&sort_by_date=0&type=episode&offset=0&len_min=10&len_max=30&genre_ids=68%2C82&published_before=1580172454000&published_after=0&only_in=title%2Cdescription&language=English&safe_mode=0'
-    headers = {
-        'X-ListenAPI-Key': settings['LISTEN_KEY'],
-    }
-    response = requests.request('GET', url, headers=headers)
-    results = response.json()["results"]
-    podcasts = []
-    for podcast in results:
-        podcasts.append({
-            "image_url": podcast['image'],
-            "title": podcast["title_original"],
-            "description": podcast["description_original"]
-        })
-    context = {
-        'podcasts': podcasts,
-    }
 
     return render(request, 'pods/pods.html', context)
 

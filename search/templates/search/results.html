@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col text-center mt-3">
+                <h2>Results for "{{ request.POST.q }}"</h2>
+                <hr class="w-50 mb-1">
+            </div>
+        </div>
+        <div class="row">
+            {% for podcast in podcasts %}
+                <div class="card mx-3 my-3" style="width: 18rem;">
+                    {% if podcast.image_url %}
+                        <img src="{{ podcast.image_url }}" class="card-img-top" alt="{{ podcast.title }} image">
+                    {% else %}
+                        <img src="https://podcasts.apple.com/us/podcast/achr-news-podcast/id399213137"
+                             class="img-fluid img-thumbnail" alt="{{ podcast.title }} no image">
+                    {% endif %}
+                    <div class="card-body">
+                        <h5 class="card-title">{{ podcast.title }}</h5>
+                        <p class="card-text text-truncate">{{ podcast.description }}</p>
+                        <a href="#" class="btn btn-primary">Go somewhere</a>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+
+{% endblock %}
