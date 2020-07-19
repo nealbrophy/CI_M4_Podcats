@@ -1,6 +1,4 @@
 import csv, io
-from csv import DictReader
-
 from django.shortcuts import render
 from .models import Podcast, Category
 from django.contrib import messages
@@ -11,10 +9,7 @@ from django.contrib import messages
 def pods(request):
     """ A view to return the Pods page """
 
-
-
-
-    return render(request, 'pods/pods.html', context)
+    return render(request, 'pods/pods.html')
 
 
 def upload_pod_data(request):
@@ -35,22 +30,37 @@ def upload_pod_data(request):
         messages.error(request, 'THIS IS NOT A CSV FILE')
 
     data_set = csv_file.read().decode('UTF-8')
-
     io_string = io.StringIO(data_set)
+    top_row = next(io_string)
+    headings = top_row.split(",")
+
     next(io_string)
     for column in csv.reader(io_string, delimiter=',', quotechar="|"):
-        _, create = Podcast.objects.update_or_create(
-            uuid=column[0],
-            itunes_id=column[1],
-            title=column[2],
-            friendly_title=column[3],
-            itunes_url=column[4],
-            # image_url=column[5],
-            # description=column[6],
-            # category_id=column[7],
-        )
-    for column in csv.reader(io_string, delimiter=',', quotechar="|"):
-        _, create = Podcast.objects.get(uuid=column[0]).category.set(column[7])
+        if "category" in headings:
+            _, create = Podcast.objects.update_or_create(
+                uuid=column[0],
+                itunes_id=column[1],
+                title=column[2],
+                friendly_title=column[3],
+                itunes_url=column[4],
+                image_url=column[5],
+                description=column[6],
+                website=column[7],
+                category_id=column[8],
+            )
+        else:
+            _, create = Podcast.objects.update_or_create(
+                uuid=column[0],
+                itunes_id=column[1],
+                title=column[2],
+                friendly_title=column[3],
+                itunes_url=column[4],
+                image_url=column[5],
+                description=column[6],
+                website=column[7],
+            )
+
+
     context = {}
     return render(request, template, context)
 
