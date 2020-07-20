@@ -5,7 +5,8 @@
 *.pyc
 __pycache__/
 env.py
-/venv/
+venv
+venv/*
 
 
 # -------------------
