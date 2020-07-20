@@ -13,13 +13,13 @@
             {% for podcast in podcasts %}
                 <div class="card mx-3 my-3" style="width: 18rem;">
                     {% if podcast.image_url %}
-                        <img src="{{ podcast.image_url }}" class="card-img-top" alt="{{ podcast.title }} image">
+                        <img src="{{ podcast.image_url }}" class="card-img-top" alt="{{ podcast.friendly_title }} image">
                     {% else %}
                         <img src="https://podcasts.apple.com/us/podcast/achr-news-podcast/id399213137"
-                             class="img-fluid img-thumbnail" alt="{{ podcast.title }} no image">
+                             class="img-fluid img-thumbnail" alt="{{ podcast.friendly_title }} no image">
                     {% endif %}
                     <div class="card-body">
-                        <h5 class="card-title">{{ podcast.title }}</h5>
+                        <h5 class="card-title">{{ podcast.friendly_title }}</h5>
                         <p class="card-text text-truncate">{{ podcast.description }}</p>
                         <a href="#" class="btn btn-primary">Go somewhere</a>
                     </div>

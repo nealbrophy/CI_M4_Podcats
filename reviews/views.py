@@ -25,7 +25,6 @@ def upload_review_data(request):
 
     io_string = io.StringIO(data_set)
     next(io_string)
-    # podcast_id		title	content	rating	created_at	in_list
     for column in csv.reader(io_string, delimiter=',', quotechar="|"):
         _, create = Review.objects.update_or_create(
             podcast=Podcast.objects.get(uuid=column[0].replace('"', '')),
@@ -37,6 +36,15 @@ def upload_review_data(request):
     context = {}
     return render(request, template, context)
 
+
+def create_review(request):
+    """
+    A view for returning the add_review page
+    and accepting using review submissions
+    """
+
+    if request.method == "GET":
+        return render(request, )
 
 def reviews(request):
     return render(request, 'reviews/index.html')

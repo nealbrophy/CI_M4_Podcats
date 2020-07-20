@@ -10,7 +10,7 @@ def basic_search(request):
     if True:
         query = request.POST['q']
         all_pods = Podcast.objects.all()
-        queries = Q(title__icontains=query) | Q(description__icontains=query)
+        queries = Q(title__icontains=query) | Q(description__icontains=query) | Q(uuid__icontains=query)
         podcasts = all_pods.filter(queries)
 
         context = {
