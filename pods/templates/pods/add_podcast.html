@@ -11,34 +11,35 @@
         </div>
         <div class="row">
             {% if form %}
-            <form>
-
-{#                uuid = models.UUIDField()#}
-{#                title = models.CharField(max_length=254)#}
-{#                friendly_title = models.CharField(max_length=254, blank=True, null=True)#}
-{#                image_url = models.URLField(max_length=1024, null=True, blank=True)#}
-{#                image = models.ImageField(null=True, blank=True)#}
-{#                category = models.ForeignKey('Category', blank=True, null=True, on_delete=models.SET_NULL)#}
-{#                itunes_url = models.URLField(max_length=1024, null=True, blank=True)#}
-{#                website = models.URLField(max_length=1024, null=True, blank=True)#}
-{#                itunes_id = models.BigIntegerField(null=True, blank=True)#}
-{#                description = models.TextField(null=True, blank=True)#}
-                <div class="form-group">
-                    <label for="exampleInputEmail1">Email address</label>
-                    <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
-                    <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone
-                        else.</small>
-                </div>
-                <div class="form-group">
-                    <label for="exampleInputPassword1">Password</label>
-                    <input type="password" class="form-control" id="exampleInputPassword1">
-                </div>
-                <div class="form-group form-check">
-                    <input type="checkbox" class="form-check-input" id="exampleCheck1">
-                    <label class="form-check-label" for="exampleCheck1">Check me out</label>
-                </div>
-                <button type="submit" class="btn btn-primary">Submit</button>
-            </form>
+                <form action="" method="POST">
+                    {% csrf_token %}
+                    {#                uuid = models.UUIDField()#}
+                    {#                title = models.CharField(max_length=254)#}
+                    {#                friendly_title = models.CharField(max_length=254, blank=True, null=True)#}
+                    {#                image_url = models.URLField(max_length=1024, null=True, blank=True)#}
+                    {#                image = models.ImageField(null=True, blank=True)#}
+                    {#                category = models.ForeignKey('Category', blank=True, null=True, on_delete=models.SET_NULL)#}
+                    {#                itunes_url = models.URLField(max_length=1024, null=True, blank=True)#}
+                    {#                website = models.URLField(max_length=1024, null=True, blank=True)#}
+                    {#                itunes_id = models.BigIntegerField(null=True, blank=True)#}
+                    {#                description = models.TextField(null=True, blank=True)#}
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Email address</label>
+                        <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                        <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone
+                            else.</small>
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputPassword1">Password</label>
+                        <input type="password" class="form-control" id="exampleInputPassword1">
+                    </div>
+                    <div class="form-group form-check">
+                        <input type="checkbox" class="form-check-input" id="exampleCheck1">
+                        <label class="form-check-label" for="exampleCheck1">Check me out</label>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                    <input type="hidden" name="redirect_url" value="{{ request.path }}">
+                </form>
             {% endif %}
         </div>
     </div>

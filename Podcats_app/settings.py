@@ -49,6 +49,9 @@ INSTALLED_APPS = [
     'pods.apps.PodsConfig',
     'reviews.apps.ReviewsConfig',
     'search.apps.SearchConfig',
+
+    # other
+    'crispy_forms',
 ]
 
 MIDDLEWARE = [
@@ -62,6 +65,8 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'Podcats_app.urls'
+
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 TEMPLATES = [
     {
@@ -79,6 +84,10 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
             ],
+            'builtins': [
+                'crispy_forms.templatetags.crispy_forms_tags',
+                'crispy_forms.templatetags.crispy_forms_fields',
+            ]
         },
     },
 ]

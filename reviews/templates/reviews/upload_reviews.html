@@ -9,11 +9,6 @@
             </div>
         {% endfor %}
     {% else %}
-        <ul>
-            {% for review in reviews %}
-                <li>{{ review.title }}</li>
-            {% endfor %}
-        </ul>
         {% if request.user.is_authenticated %}
             {% if request.user.is_superuser %}
                 <div class="row">

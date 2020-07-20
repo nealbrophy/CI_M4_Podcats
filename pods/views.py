@@ -3,6 +3,7 @@ from django.shortcuts import render
 from .forms import PodcastForm
 from .models import Podcast, Category
 from django.contrib import messages
+from datetime import datetime
 
 
 def pods(request):
@@ -28,10 +29,12 @@ def upload_pod_data(request):
     if not csv_file.name.endswith('.csv'):
         messages.error(request, 'THIS IS NOT A CSV FILE')
     # read csv file
+    start_time = datetime.now()
     data_set = csv_file.read().decode('UTF-8')
     io_string = io.StringIO(data_set)
     top_row = next(io_string)
     headings = top_row.split(",")
+    counter = 0
     # skip headings
     next(io_string)
     for column in csv.reader(io_string, delimiter=',', quotechar="|"):
@@ -48,6 +51,7 @@ def upload_pod_data(request):
                 website=column[7],
                 category_id=column[8],
             )
+            counter +=1
         # if csv doesn't contain category column upload data without category
         else:
             _, create = Podcast.objects.update_or_create(
@@ -60,7 +64,9 @@ def upload_pod_data(request):
                 description=column[6],
                 website=column[7],
             )
-    messages.success(request, 'UPLOAD SUCCESSFUL')
+            counter += 1
+    finish_time = datetime.now() - start_time
+    messages.success(request, f'{counter} rows added to DB in {finish_time}')
     context = {}
     return render(request, template, context)
 
