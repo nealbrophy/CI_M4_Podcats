@@ -5,6 +5,8 @@
 *.pyc
 __pycache__/
 env.py
+/venv/
+
 
 # -------------------
 #   JETBRAINS IGNORE
