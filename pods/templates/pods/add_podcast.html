@@ -11,18 +11,8 @@
         </div>
         <div class="row">
             {% if form %}
-                <form action="" method="POST">
+                <form action="{% url 'add_podcast' %}" method="POST" enctype="multipart/form-data">
                     {% csrf_token %}
-                    {#                uuid = models.UUIDField()#}
-                    {#                title = models.CharField(max_length=254)#}
-                    {#                friendly_title = models.CharField(max_length=254, blank=True, null=True)#}
-                    {#                image_url = models.URLField(max_length=1024, null=True, blank=True)#}
-                    {#                image = models.ImageField(null=True, blank=True)#}
-                    {#                category = models.ForeignKey('Category', blank=True, null=True, on_delete=models.SET_NULL)#}
-                    {#                itunes_url = models.URLField(max_length=1024, null=True, blank=True)#}
-                    {#                website = models.URLField(max_length=1024, null=True, blank=True)#}
-                    {#                itunes_id = models.BigIntegerField(null=True, blank=True)#}
-                    {#                description = models.TextField(null=True, blank=True)#}
                     <div class="form-group">
                         <fieldset>
                             {{ form.title | as_crispy_field }}

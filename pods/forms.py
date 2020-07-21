@@ -7,13 +7,14 @@ class PodcastForm(forms.ModelForm):
 
     class Meta:
         model = Podcast
-        fields = ('title', 'image_url', 'image', 'category', 'itunes_url', 'website', 'description')
+        fields = ('title', 'image_url', 'image', 'category', 'itunes_url', 'website', 'description', 'friendly_title')
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         categories = Category.objects.all()
         friendly_names = [(c.id, c.get_friendly_name()) for c in categories]
         placeholders = {
+            'friendly_title': 'Friendly name',
             'title': 'Podcast name',
             'image_url': 'URL for podcast image',
             'image': 'Upload an image',
@@ -39,3 +40,10 @@ class PodcastForm(forms.ModelForm):
 
             self.fields[field].label = False
 
+    def clean_friendly_title(self):
+        friendly_title = self.data['title']
+        return friendly_title
+
+    def clean_title(self):
+        title = self.cleaned_data['title'].replace(' ', '')
+        return title

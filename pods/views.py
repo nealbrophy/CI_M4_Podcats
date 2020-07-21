@@ -1,10 +1,10 @@
 import csv, io
-from django.shortcuts import render
+from django.shortcuts import render, redirect, reverse
 from .forms import PodcastForm
 from .models import Podcast, Category
 from django.contrib import messages
-from datetime import datetime
 import threading
+from .tasks import upload_pods
 
 
 def pods(request):
@@ -29,46 +29,11 @@ def upload_pod_data(request):
     # check if file is CSV, if not present error
     if not csv_file.name.endswith('.csv'):
         messages.error(request, 'THIS IS NOT A CSV FILE')
-    # read csv file
-    start_time = datetime.now()
-    data_set = csv_file.read().decode('UTF-8')
-    io_string = io.StringIO(data_set)
-    top_row = next(io_string)
-    headings = top_row.split(",")
-    counter = 0
-    # skip headings
-    next(io_string)
-    for column in csv.reader(io_string, delimiter=',', quotechar="|"):
-        # if csv contains category column upload data with category
-        if "category" in headings:
-            _, create = Podcast.objects.update_or_create(
-                uuid=column[0],
-                itunes_id=column[1],
-                title=column[2],
-                friendly_title=column[3],
-                itunes_url=column[4],
-                image_url=column[5],
-                description=column[6],
-                website=column[7],
-                category_id=column[8],
-            )
-            counter += 1
-        # if csv doesn't contain category column upload data without category
-        else:
-            _, create = Podcast.objects.update_or_create(
-                uuid=column[0],
-                itunes_id=column[1],
-                title=column[2],
-                friendly_title=column[3],
-                itunes_url=column[4],
-                image_url=column[5],
-                description=column[6],
-                website=column[7],
-            )
-            counter += 1
-    finish_time = datetime.now() - start_time
-    messages.success(request, f'{counter} rows added to DB in {finish_time}')
+    t = threading.Thread(target=upload_pods, args=[request])
+    t.setDaemon(True)
+    t.start()
     context = {}
+    messages.success(request, 'Task started!')
     return render(request, template, context)
 
 
@@ -146,8 +111,15 @@ def add_podcast(request):
     context = {
         "form": podcast_form,
     }
-    if request.method == "GET":
-        return render(request, template, context)
-
     if request.method == "POST":
         form = PodcastForm(request.POST, request.FILES)
+        form.clean_friendly_title()
+        if form.is_valid():
+            form.clean_title()
+            form.save()
+            messages.success(request, "Successfully added podcast!")
+            return redirect(reverse("add_podcast"))
+        else:
+            messages.error(request, "Failed to add podcast. Please ensure the form is valid.")
+    else:
+        return render(request, template, context)

@@ -1,4 +1,5 @@
 from django.db import models
+import uuid
 
 
 class Category(models.Model):
@@ -16,7 +17,7 @@ class Category(models.Model):
 
 
 class Podcast(models.Model):
-    uuid = models.UUIDField()
+    uuid = models.UUIDField(default=uuid.uuid4)
     title = models.CharField(max_length=254)
     friendly_title = models.CharField(max_length=254, blank=True, null=True)
     image_url = models.URLField(max_length=1024, null=True, blank=True)
