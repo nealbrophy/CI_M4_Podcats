@@ -25,7 +25,7 @@ class Podcast(models.Model):
     itunes_url = models.URLField(max_length=1024, null=True, blank=True)
     website = models.URLField(max_length=1024, null=True, blank=True)
     itunes_id = models.BigIntegerField(null=True, blank=True)
-    description = models.TextField(null=True, blank=True)
+    description = models.TextField()
 
     def __str__(self):
         return self.title

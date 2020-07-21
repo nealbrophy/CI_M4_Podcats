@@ -8,6 +8,7 @@ class PodcastAdmin(admin.ModelAdmin):
         'title',
         'friendly_title',
         'category',
+        'description',
         'website',
         'itunes_url',
         'image_url',

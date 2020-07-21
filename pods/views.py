@@ -4,6 +4,7 @@ from .forms import PodcastForm
 from .models import Podcast, Category
 from django.contrib import messages
 from datetime import datetime
+import threading
 
 
 def pods(request):
@@ -51,7 +52,7 @@ def upload_pod_data(request):
                 website=column[7],
                 category_id=column[8],
             )
-            counter +=1
+            counter += 1
         # if csv doesn't contain category column upload data without category
         else:
             _, create = Podcast.objects.update_or_create(
@@ -122,6 +123,17 @@ def delete_all(request):
             else:
                 messages.error(request, 'Nothing to delete')
                 return render(request, template)
+        elif 'fix_description' in request.POST:
+            for pod in Podcast.objects.all():
+                try:
+                    if pod.description.count() < 10:
+                        pod(description=f"The {pod.friendly_title} podcast.")
+                        pod.save()
+                    messages.success(request, 'descriptions fixed')
+                    return render(request, template)
+                except Exception as e:
+                    messages.error(request, f'Unable to complete due to {e}')
+
 
 def add_podcast(request):
     """
@@ -129,10 +141,13 @@ def add_podcast(request):
     and allow user to add a single podcast to db
     """
 
-    form = PodcastForm()
+    podcast_form = PodcastForm()
     template = 'pods/add_podcast.html'
     context = {
-        "form": form,
+        "form": podcast_form,
     }
     if request.method == "GET":
         return render(request, template, context)
+
+    if request.method == "POST":
+        form = PodcastForm(request.POST, request.FILES)
