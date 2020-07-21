@@ -4,7 +4,7 @@ from .forms import PodcastForm
 from .models import Podcast, Category
 from django.contrib import messages
 import threading
-from .tasks import upload_pods
+from .tasks import queue_manager
 
 
 def pods(request):
@@ -29,7 +29,7 @@ def upload_pod_data(request):
     # check if file is CSV, if not present error
     if not csv_file.name.endswith('.csv'):
         messages.error(request, 'THIS IS NOT A CSV FILE')
-    t = threading.Thread(target=upload_pods, args=[request])
+    t = threading.Thread(target=queue_manager, args=[request])
     t.setDaemon(True)
     t.start()
     context = {}

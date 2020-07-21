@@ -1,13 +1,29 @@
 import csv, io
 from .models import Podcast, Category
 from datetime import datetime
-import threading
+import sched, time, queue
+
+scheduler = sched.scheduler(time.time, time.sleep)
+request_queue = []
+counter = 0
+
+def queue_manager(request):
+    request_queue.append(request)
+    global counter
+    counter = counter + 1
+    print(f"Added to queue. Will let you know when work starts. There are {len(request_queue)} items in the queue.")
+    for r in request_queue:
+        scheduler.enter(counter, counter, upload_pods(r), (f'Finished {r.name}', ))
+        print(f"Finished {r.name}. Starting next job. There are {len(request_queue)} items left in the queue.")
+        request_queue.pop(r)
+
 
 
 def upload_pods(request):
     # read csv file
-    start_time = datetime.now()
     csv_file = request.FILES['file']
+    print(f"Starting to process {csv_file.name}. Will let you know when done.")
+    start_time = datetime.now()
     data_set = csv_file.read().decode('UTF-8')
     io_string = io.StringIO(data_set)
     top_row = next(io_string)
@@ -45,3 +61,4 @@ def upload_pods(request):
             counter += 1
     finish_time = datetime.now() - start_time
     print(f'{counter} rows added to DB in {finish_time}')
+
