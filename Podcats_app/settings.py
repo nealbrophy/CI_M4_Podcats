@@ -26,6 +26,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = os.environ.get("SECRET_KEY")
 LISTEN_KEY = os.environ.get("LISTEN_KEY")
 
+
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
@@ -52,7 +53,18 @@ INSTALLED_APPS = [
 
     # other
     'crispy_forms',
+
+    # social
+   'allauth.socialaccount.providers.google',
+   'allauth.socialaccount.providers.twitter',
 ]
+
+SOCIALACCOUNT_PROVIDERS = {
+    'google': {
+        'SCOPE': ['email'],
+        'AUTH_PARAMS': {'access_type': 'online'}
+    },
+}
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
