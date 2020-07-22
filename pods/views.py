@@ -3,8 +3,8 @@ from django.shortcuts import render, redirect, reverse
 from .forms import PodcastForm
 from .models import Podcast, Category
 from django.contrib import messages
-import threading
 from .tasks import queue_manager
+
 
 
 def pods(request):
@@ -25,15 +25,15 @@ def upload_pod_data(request):
     if request.method == "GET":
         return render(request, template, prompt)
     # otherwise, capture uploaded file
-    csv_file = request.FILES['file']
-    # check if file is CSV, if not present error
-    if not csv_file.name.endswith('.csv'):
-        messages.error(request, 'THIS IS NOT A CSV FILE')
-    t = threading.Thread(target=queue_manager, args=[request])
-    t.setDaemon(True)
-    t.start()
+    file_count = 0
+    for file in request.FILES:
+        # check if file is CSV, if not present error
+        file_count += 1
+        if not request.FILES[file].name.endswith('.csv'):
+            messages.error(request, 'THIS IS NOT A CSV FILE')
+    upload = queue_manager(request)
     context = {}
-    messages.success(request, 'Task started!')
+    messages.success(request, f'Upload complete! {upload} rows added to DB from {file_count} files.')
     return render(request, template, context)
 
 

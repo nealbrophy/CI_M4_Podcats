@@ -1,29 +1,37 @@
 {% extends 'base.html' %}
 {% load static %}
 
+
 {% block content %}
     <div class="container-fluid">
         <div class="row">
             <div class="col text-center mt-3">
                 <h2>Results for "{{ request.POST.q }}"</h2>
+                <nav aria-label="Search results pages">
+                    <ul class="pagination pagination-lg">
+                        <li class="page-item active" aria-current="page">
+                            <span class="page-link">
+                            1
+                            <span class="sr-only">(current)</span>
+                          </span>
+                        </li>
+                        <li class="page-item"><a class="page-link" href="#">2</a></li>
+                        <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    </ul>
+                </nav>
                 <hr class="w-50 mb-1">
             </div>
         </div>
         <div class="row">
-            {% for podcast in podcasts %}
-                <div class="card mx-3 my-3" style="width: 18rem;">
-                    {% if podcast.image_url %}
-                        <img src="{{ podcast.image_url }}" class="card-img-top" alt="{{ podcast.friendly_title }} image">
-                    {% else %}
-                        <img src="https://podcasts.apple.com/us/podcast/achr-news-podcast/id399213137"
-                             class="img-fluid img-thumbnail" alt="{{ podcast.friendly_title }} no image">
-                    {% endif %}
-                    <div class="card-body">
-                        <h5 class="card-title">{{ podcast.friendly_title }}</h5>
-                        <p class="card-text text-truncate">{{ podcast.description }}</p>
-                        <a href="#" class="btn btn-primary">Go somewhere</a>
-                    </div>
-                </div>
+            {% for result in results %}
+              <div class="card">
+                  <img src="{{ result.image_url }}" alt="{{ result.friendly_title }} image" class="card-img-top">
+              <div class="card-body">
+                  <h5 class="card-title">{{ result.friendly_title }}</h5>
+                  <p class="card-text">{{ result.description }}</p>
+                  <a href="#" class="btn btn-primary"></a>
+              </div>
+              </div>
             {% endfor %}
         </div>
     </div>

@@ -28,6 +28,8 @@ class Podcast(models.Model):
     itunes_id = models.BigIntegerField(null=True, blank=True)
     description = models.TextField()
 
+    ordering = ['title']
+
     def __str__(self):
         return self.title
 
