@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+{% block content %}
+    <div class="container">
+        <div class="row">
+            {% if podcast.image_url %}
+                <img src="{{ podcast.image_url }}" class="img-fluid podcast-card-img img-thumbnail"
+                     alt="{{ podcast.title }} image">
+            {% else %}
+                <img src="https://is3-ssl.mzstatic.com/image/thumb/Features/v4/5f/88/96/5f8896e9-9be5-529a-af14-cc807367568a/mza_1382744875394257421.png/276x0w.png"
+                     class="img-fluid img-thumbnail" alt="{{ podcast.title }} no image">
+            {% endif %}
+            <h5 class="podcast-detail-title">{{ podcast.friendly_title }}</h5> <small class="text-muted">{{ podcast.category }}</small>
+            <p>{{ podcast.description }}</p>
+
+        </div>
+    </div>
+{% endblock %}

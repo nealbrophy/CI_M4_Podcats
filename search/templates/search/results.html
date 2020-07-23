@@ -24,14 +24,22 @@
         </div>
         <div class="row">
             {% for result in results %}
-              <div class="card">
-                  <img src="{{ result.image_url }}" alt="{{ result.friendly_title }} image" class="card-img-top">
-              <div class="card-body">
-                  <h5 class="card-title">{{ result.friendly_title }}</h5>
-                  <p class="card-text">{{ result.description }}</p>
-                  <a href="#" class="btn btn-primary"></a>
-              </div>
-              </div>
+                <div class="card podcast-card">
+                    {% if result.image_url %}
+                        <a href="{% url "podcast_detail" result.id %}">
+                            <img src="{{ result.image_url }}" class="img-fluid podcast-card-img img-thumbnail"
+                                 alt="{{ result.title }} image"></a>
+                    {% else %}
+                        <a href="{% url "podcast_detail" result.id %}">
+                            <img src="https://is3-ssl.mzstatic.com/image/thumb/Features/v4/5f/88/96/5f8896e9-9be5-529a-af14-cc807367568a/mza_1382744875394257421.png/313x0w.png"
+                                 class="img-fluid img-thumbnail" alt="{{ result.title }} no image"></a>
+                    {% endif %}
+                    <div class="card-body">
+                        <h5 class="card-title">{{ result.friendly_title }}</h5>
+                        <p class="card-text">{{ result.description }}</p>
+                        <a href="#" class="btn btn-primary"></a>
+                    </div>
+                </div>
             {% endfor %}
         </div>
     </div>

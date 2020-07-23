@@ -17,6 +17,9 @@ class Category(models.Model):
 
 
 class Podcast(models.Model):
+    class Meta:
+        ordering = ['title']
+
     uuid = models.UUIDField(default=uuid.uuid4)
     title = models.CharField(max_length=254)
     friendly_title = models.CharField(max_length=254, blank=True, null=True)
@@ -27,8 +30,6 @@ class Podcast(models.Model):
     website = models.URLField(max_length=1024, null=True, blank=True)
     itunes_id = models.BigIntegerField(null=True, blank=True)
     description = models.TextField()
-
-    ordering = ['title']
 
     def __str__(self):
         return self.title

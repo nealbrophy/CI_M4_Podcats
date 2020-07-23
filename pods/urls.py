@@ -8,4 +8,5 @@ urlpatterns = [
     path('upload_cats/', views.upload_category_data, name='upload_category_data'),
     path('delete_all/', views.delete_all, name='delete_all'),
     path('add_podcast/', views.add_podcast, name='add_podcast'),
+    path('podcast/<int:id>/', views.podcast_detail, name='podcast_detail'),
 ]

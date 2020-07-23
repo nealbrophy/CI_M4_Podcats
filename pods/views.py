@@ -1,5 +1,5 @@
 import csv, io
-from django.shortcuts import render, redirect, reverse
+from django.shortcuts import render, redirect, reverse, get_object_or_404
 from .forms import PodcastForm
 from .models import Podcast, Category
 from django.contrib import messages
@@ -125,3 +125,14 @@ def add_podcast(request):
             messages.error(request, "Failed to add podcast. Please ensure the form is valid.")
     else:
         return render(request, template, context)
+
+def podcast_detail(request, id):
+    """ A vew to show individual podcast page. """
+
+    podcast = get_object_or_404(Podcast, pk=id)
+
+    context = {
+        "podcast": podcast,
+    }
+
+    return render(request, "pods/podcast_detail.html", context)
