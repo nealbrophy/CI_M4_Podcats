@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-5">
+                <form method="POST" action="" class="profile-form">
+                    {% csrf_token %}
+                    {{ form|crispy }}
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                    <input type="hidden" name="redirect_url" value="{{ request.path }}">
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}
