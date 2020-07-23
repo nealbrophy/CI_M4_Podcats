@@ -3,18 +3,20 @@
 ## Podcats
 
 ### Project Description/Goals
-A web app for searching/reviewing/subscribing-to podcasts
+A podcast review platform.
 
 ### Technologies used
 - [Python](https://www.python.org/)
 - [Django](https://www.djangoproject.com/)
-- [gpodder.net](https://gpodder.net/)
-- [mygpoclient](https://github.com/gpodder/mygpoclient)
+- [pitunes](https://pypi.org/project/pitunes/)
 - [HTML](https://www.w3schools.com/html/), [CSS](https://www.w3schools.com/Css/), [JavaScript](https://en.wikipedia.org/wiki/JavaScript)
 - [Bootstrap](https://getbootstrap.com/)
 - [Google Fonts](https://fonts.google.com/)
 - [Font Awesome](https://fontawesome.com/)
 - [Material Icons](https://material.io/resources/icons/?style=baseline)
+- [Material Design for Bootstrap](https://mdbootstrap.com/)
+- [iTunes API](https://affiliate.itunes.apple.com/resources/documentation/itunes-store-web-service-search-api/)
+
  
 ## UX
 
@@ -70,3 +72,8 @@ A web app for searching/reviewing/subscribing-to podcasts
 
 ## Credits/Acknowledgements
 - upload functions based on [this medium post](https://medium.com/@simathapa111/how-to-upload-a-csv-file-in-django-3a0d6295f624) by [Seema Thapa](https://medium.com/@simathapa111)
+- Multiple tutorials & How-Tos from the excellent [SimpleIsBetterThanComplex](https://simpleisbetterthancomplex.com/) by Vitor Freitas.
+- Pagination with help from:
+    - [this StackOverflow question](https://stackoverflow.com/questions/2266554/paginating-the-results-of-a-django-forms-post-request)
+    - [this CodeLoop.org tutorial](https://codeloop.org/django-pagination-complete-example/)
+    - [this tutorial](https://samulinatri.com/blog/django-pagination-tutorial/) by Samuli Natri

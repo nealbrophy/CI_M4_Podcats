@@ -4,10 +4,10 @@ from datetime import datetime
 from concurrent.futures.thread import ThreadPoolExecutor
 
 
-def queue_manager(request):
-    with ThreadPoolExecutor(max_workers=1) as executor:
-        job = executor.submit(upload_pods, request)
-    return job.result()
+# def queue_manager(request):
+#     with ThreadPoolExecutor(max_workers=1) as executor:
+#         job = executor.submit(upload_pods, request)
+#     return job.result()
 
 
 def upload_pods(request):
@@ -21,6 +21,9 @@ def upload_pods(request):
         io_string = io.StringIO(data_set)
         top_row = next(io_string)
         headings = top_row.split(",")
+        print(headings)
+        if "category" in headings:
+            print(top_row)
         counter = 0
         # skip headings
         next(io_string)
@@ -30,13 +33,14 @@ def upload_pods(request):
                 _, create = Podcast.objects.update_or_create(
                     uuid=column[0],
                     itunes_id=column[1],
-                    title=column[2],
+                    title=column[2].lower(),
                     friendly_title=column[3],
                     itunes_url=column[4],
                     image_url=column[5],
                     description=column[6],
-                    website=column[7],
-                    category_id=column[8],
+                    category_id=column[7],
+                    website=column[8],
+
                 )
                 counter += 1
             # if csv doesn't contain category column upload data without category
@@ -44,7 +48,7 @@ def upload_pods(request):
                 _, create = Podcast.objects.update_or_create(
                     uuid=column[0],
                     itunes_id=column[1],
-                    title=column[2],
+                    title=column[2].lower(),
                     friendly_title=column[3],
                     itunes_url=column[4],
                     image_url=column[5],

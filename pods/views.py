@@ -3,7 +3,8 @@ from django.shortcuts import render, redirect, reverse
 from .forms import PodcastForm
 from .models import Podcast, Category
 from django.contrib import messages
-from .tasks import queue_manager
+# from .tasks import queue_manager
+from .tasks import upload_pods
 
 
 
@@ -31,7 +32,8 @@ def upload_pod_data(request):
         file_count += 1
         if not request.FILES[file].name.endswith('.csv'):
             messages.error(request, 'THIS IS NOT A CSV FILE')
-    upload = queue_manager(request)
+    # upload = queue_manager(request)
+    upload = upload_pods(request)
     context = {}
     messages.success(request, f'Upload complete! {upload} rows added to DB from {file_count} files.')
     return render(request, template, context)
@@ -61,7 +63,7 @@ def upload_category_data(request):
     for column in csv.reader(io_string, delimiter=',', quotechar="|"):
         _, create = Category.objects.update_or_create(
             pk=column[0],
-            name=column[1],
+            name=column[1].lower(),
             friendly_name=column[2],
         )
     context = {}
