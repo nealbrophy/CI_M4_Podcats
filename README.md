@@ -77,3 +77,4 @@ A podcast review platform.
     - [this StackOverflow question](https://stackoverflow.com/questions/2266554/paginating-the-results-of-a-django-forms-post-request)
     - [this CodeLoop.org tutorial](https://codeloop.org/django-pagination-complete-example/)
     - [this tutorial](https://samulinatri.com/blog/django-pagination-tutorial/) by Samuli Natri
+    - [this answer](https://stackoverflow.com/a/30864681) from [Blackeagle52](https://stackoverflow.com/users/2798610/blackeagle52) on StackOverflow

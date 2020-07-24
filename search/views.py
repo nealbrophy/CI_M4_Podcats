@@ -18,8 +18,10 @@ def basic_search(request):
                 return redirect(reverse('index'))
             queries = Q(title__icontains=query) | Q(description__icontains=query) | Q(uuid__icontains=query)
             podcasts = all_pods.filter(queries)
+
     page = request.GET.get('page', 1)
     paginator = Paginator(podcasts, 20)
+
     try:
         results = paginator.page(page)
     except PageNotAnInteger:
@@ -27,7 +29,16 @@ def basic_search(request):
     except EmptyPage:
         results = paginator.page(paginator.num_pages)
 
-    return render(request, 'search/results.html', {'results': results})
+    index = results.number - 1
+    max_index = len(paginator.page_range)
+    start_index = index - 3 if index >= 3 else 0
+    end_index = index + 3 if index <= max_index - 3 else max_index
+    page_range = list(paginator.page_range)[start_index:end_index]
+
+    return render(request, 'search/results.html', {
+        "results": results,
+        "page_range": page_range
+    })
 
     # else:
     #     podcast = request.POST['q'].replace(' ', '%20')

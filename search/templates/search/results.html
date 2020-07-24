@@ -1,7 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
 
-
 {% block content %}
     <div class="container-fluid">
         <div class="row">
@@ -18,7 +17,7 @@
                                 <li class="page-item"><a class="page-link disabled" href="#"><i
                                         class="fas fa-caret-left text-muted"></i></a></li>
                             {% endif %}
-                            {% for i in results.paginator.page_range %}
+                            {% for i in page_range %}
                                 {% if results.number == i %}
                                     <li class="page-item active" aria-current="page">
                                 <span class="page-link">
@@ -46,26 +45,24 @@
             </div>
         </div>
         <div class="row">
-            <div class="col text-center mt-3">
-                {% for result in results %}
-                    <div class="card podcast-card">
-                        {% if result.image_url %}
-                            <a href="{% url "podcast_detail" result.id %}">
-                                <img src="{{ result.image_url }}" class="img-fluid podcast-card-img img-thumbnail"
-                                     alt="{{ result.title }} image"></a>
-                        {% else %}
-                            <a href="{% url "podcast_detail" result.id %}">
-                                <img src="https://is3-ssl.mzstatic.com/image/thumb/Features/v4/5f/88/96/5f8896e9-9be5-529a-af14-cc807367568a/mza_1382744875394257421.png/313x0w.png"
-                                     class="img-fluid img-thumbnail" alt="{{ result.title }} no image"></a>
-                        {% endif %}
-                        <div class="card-body">
-                            <h5 class="card-title">{{ result.friendly_title }}</h5>
-                            <p class="card-text">{{ result.description }}</p>
-                            <a href="#" class="btn btn-primary"></a>
-                        </div>
-                    </div>
-                {% endfor %}
+            {% for result in results %}
+            <div class="card" style="width: 18rem;">
+            {% if result.image_url %}
+                <a href="{% url "podcast_detail" result.id %}">
+                    <img src="{{ result.image_url }}" class="card-img-top" alt="image for {{ result.title }} onerror="this.onerror=null;this.src='{{ MEDIA_URL }}img-placeholder.png';">
+                </a>
+            {% else %}
+                <a href="{% url "podcast_detail" result.id %}">
+                    <img src="/media/img-placeholder.png" class="card-img-top" alt="image for {{ result.title }}">
+                </a>
+            {% endif %}
+                <div class="card-body">
+                    <h5 class="card-title">{{ result.friendly_title }}</h5>
+                    <p class="card-text text-truncate">{{ result.description }}</p>
+                    <a href="{% url "podcast_detail" result.id %}" class="btn btn-primary">View</a>
+                </div>
             </div>
+            {% endfor %}
         </div>
     </div>
 
