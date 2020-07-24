@@ -5,42 +5,67 @@
 {% block content %}
     <div class="container-fluid">
         <div class="row">
-            <div class="col text-center mt-3">
-                <h2>Results for "{{ request.POST.q }}"</h2>
-                <nav aria-label="Search results pages">
-                    <ul class="pagination pagination-lg">
-                        <li class="page-item active" aria-current="page">
-                            <span class="page-link">
-                            1
-                            <span class="sr-only">(current)</span>
-                          </span>
-                        </li>
-                        <li class="page-item"><a class="page-link" href="#">2</a></li>
-                        <li class="page-item"><a class="page-link" href="#">3</a></li>
-                    </ul>
-                </nav>
-                <hr class="w-50 mb-1">
+            <div class="text-center mt-3">
+                <h2>Results for "{{ request.GET.q }}"</h2>
+                {% if results.has_other_pages %}
+                    <nav aria-label="Search results pages">
+                        <ul class="pagination justify-content-center pagination-sm">
+                            {% if results.has_previous %}
+                                <li class="page-item"><a class="page-link"
+                                                         href="?q={{ request.GET.q }}&page={{ results.previous_page_number }}"><i
+                                        class="fas fa-caret-left lg"></i></a></li>
+                            {% else %}
+                                <li class="page-item"><a class="page-link disabled" href="#"><i
+                                        class="fas fa-caret-left text-muted"></i></a></li>
+                            {% endif %}
+                            {% for i in results.paginator.page_range %}
+                                {% if results.number == i %}
+                                    <li class="page-item active" aria-current="page">
+                                <span class="page-link">
+                                {{ i }}
+                                <span class="sr-only">(current)</span>
+                              </span>
+                                    </li>
+                                {% else %}
+                                    <li class="page-item" aria-current="page"><a
+                                            href="?q={{ request.GET.q }}&page={{ i }}">{{ i }}</a></li>
+                                {% endif %}
+                            {% endfor %}
+                            {% if results.has_next %}
+                                <li class="page-item"><a class="page-link"
+                                                         href="?q={{ request.GET.q }}&page={{ results.next_page_number }}"><i
+                                        class="fas fa-caret-right"></i></a></li>
+                            {% else %}
+                                <li class="page-item"><a class="page-link disabled" href=""><i
+                                        class="fas text-muted fa-caret-right"></i></a></li>
+                            {% endif %}
+                        </ul>
+                    </nav>
+                {% endif %}
+                <hr class="w-50 mb-1" style="margin:auto !important">
             </div>
         </div>
         <div class="row">
-            {% for result in results %}
-                <div class="card podcast-card">
-                    {% if result.image_url %}
-                        <a href="{% url "podcast_detail" result.id %}">
-                            <img src="{{ result.image_url }}" class="img-fluid podcast-card-img img-thumbnail"
-                                 alt="{{ result.title }} image"></a>
-                    {% else %}
-                        <a href="{% url "podcast_detail" result.id %}">
-                            <img src="https://is3-ssl.mzstatic.com/image/thumb/Features/v4/5f/88/96/5f8896e9-9be5-529a-af14-cc807367568a/mza_1382744875394257421.png/313x0w.png"
-                                 class="img-fluid img-thumbnail" alt="{{ result.title }} no image"></a>
-                    {% endif %}
-                    <div class="card-body">
-                        <h5 class="card-title">{{ result.friendly_title }}</h5>
-                        <p class="card-text">{{ result.description }}</p>
-                        <a href="#" class="btn btn-primary"></a>
+            <div class="col text-center mt-3">
+                {% for result in results %}
+                    <div class="card podcast-card">
+                        {% if result.image_url %}
+                            <a href="{% url "podcast_detail" result.id %}">
+                                <img src="{{ result.image_url }}" class="img-fluid podcast-card-img img-thumbnail"
+                                     alt="{{ result.title }} image"></a>
+                        {% else %}
+                            <a href="{% url "podcast_detail" result.id %}">
+                                <img src="https://is3-ssl.mzstatic.com/image/thumb/Features/v4/5f/88/96/5f8896e9-9be5-529a-af14-cc807367568a/mza_1382744875394257421.png/313x0w.png"
+                                     class="img-fluid img-thumbnail" alt="{{ result.title }} no image"></a>
+                        {% endif %}
+                        <div class="card-body">
+                            <h5 class="card-title">{{ result.friendly_title }}</h5>
+                            <p class="card-text">{{ result.description }}</p>
+                            <a href="#" class="btn btn-primary"></a>
+                        </div>
                     </div>
-                </div>
-            {% endfor %}
+                {% endfor %}
+            </div>
         </div>
     </div>
 
