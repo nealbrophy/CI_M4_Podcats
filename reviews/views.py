@@ -42,3 +42,21 @@ def create_review(request):
 
     if request.method == "GET":
         return render(request, )
+
+def delete_all_reviews(request):
+    """ A view to delete all reviews in the db. """
+
+    template = "reviews/delete_all.html"
+    # if GET return template
+    if request.method == "GET":
+        return render(request, 'reviews/delete_all.html')
+
+    if "delete_reviews" in request.POST:
+        # check if there are pods to delete in db
+        if int(Review.objects.all().count()) > 0:
+            Review.objects.all().delete()
+            messages.success(request, 'Deleted successfully')
+            return render(request, template)
+        else:
+            messages.error(request, 'Nothing to delete')
+            return render(request, template)

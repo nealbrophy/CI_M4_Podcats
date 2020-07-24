@@ -9,6 +9,7 @@ class ReviewAdmin(admin.ModelAdmin):
         'content',
         'rating',
         'created',
+        'user',
     )
 
     ordering = ('created',)

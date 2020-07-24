@@ -1,13 +1,16 @@
 import csv, io
+from django.contrib.auth.models import User
 from .models import Review
 from pods.models import Podcast
 from datetime import datetime
+import random
 
 
 def upload_reviews(request):
     for file in request.FILES:
         total_count = 0
         # read csv file
+        all_users = User.objects.all()
         print(f"Starting to process {request.FILES[file].name}. Will let you know when done.")
         start_time = datetime.now()
         counter = 0
@@ -16,14 +19,17 @@ def upload_reviews(request):
         io_string = io.StringIO(data_set)
         next(io_string)
         for column in csv.reader(io_string, delimiter=',', quotechar="|"):
+            random_id = random.randint(1, 50000)
+            random_user = all_users.filter(id=random_id).first()
             try:
                 if podcasts_in_db.filter(uuid=column[0]).count() > 0:
                     _, create = Review.objects.update_or_create(
-                        podcast=Podcast.objects.get(uuid=column[0].replace('"', '')),
+                        podcast_id=Podcast.objects.get(uuid=column[0].replace('"', '')),
                         title=column[1],
                         content=column[2],
                         rating=column[3],
                         created=column[4].replace('"', ''),
+                        user=all_users.get(id=random_user.id),
                     )
                     counter += 1
                 else:
