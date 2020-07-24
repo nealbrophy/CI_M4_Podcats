@@ -2,5 +2,15 @@
 {% load static %}
 {% block extra_title %}- Reviews{% endblock %}
 {% block content %}
-    <h2>This is the reviews page</h2>s
+    <h2>This is the reviews page</h2>
+    {% for review in reviews %}
+        <h3>{{ review.title }}</h3>
+        {% with ''|center:review.rating as range %}
+        {% for i in range %}
+            <span><i class="fas fa-star"></i></span>
+        {% endfor %}
+        {% endwith %}
+        <p>{{ review.content }}</p>
+
+    {% endfor %}
 {% endblock %}

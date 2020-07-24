@@ -36,6 +36,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    # default apps
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -43,20 +44,23 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.sites',
+
+    # allauth
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
+    'allauth.socialaccount.providers.google',
+    'allauth.socialaccount.providers.twitter',
+
+    # podcats apps
     'home.apps.HomeConfig',
     'pods.apps.PodsConfig',
     'reviews.apps.ReviewsConfig',
     'search.apps.SearchConfig',
+    'pro.apps.ProConfig',
 
     # other
     'crispy_forms',
-
-    # social
-   'allauth.socialaccount.providers.google',
-   'allauth.socialaccount.providers.twitter',
 ]
 
 SOCIALACCOUNT_PROVIDERS = {

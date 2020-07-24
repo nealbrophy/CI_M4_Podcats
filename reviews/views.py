@@ -1,13 +1,19 @@
-import csv, io
 from django.shortcuts import render
 from .models import Review, Podcast
 from django.contrib import messages
 from .tasks import upload_reviews
 
 
+def reviews(request):
+    all_reviews = Review.objects.all()[:10]
+    context = {
+        "reviews": all_reviews,
+    }
+    return render(request, 'reviews/index.html', context)
+
 
 def upload_review_data(request):
-    """ A view to upload podcast data """
+    """ A view to upload podcast data. """
     template = "reviews/upload_reviews.html"
     data = Review.objects.all()
     prompt = {
@@ -31,11 +37,8 @@ def upload_review_data(request):
 def create_review(request):
     """
     A view for returning the add_review page
-    and accepting using review submissions
+    and accepting using review submissions.
     """
 
     if request.method == "GET":
         return render(request, )
-
-def reviews(request):
-    return render(request, 'reviews/index.html')
