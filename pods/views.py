@@ -3,7 +3,6 @@ from django.shortcuts import render, redirect, reverse, get_object_or_404
 from .forms import PodcastForm
 from .models import Podcast, Category
 from django.contrib import messages
-# from .tasks import queue_manager
 from .tasks import upload_pods
 
 
@@ -32,10 +31,10 @@ def upload_pod_data(request):
         file_count += 1
         if not request.FILES[file].name.endswith('.csv'):
             messages.error(request, 'THIS IS NOT A CSV FILE')
-    # upload = queue_manager(request)
-    upload = upload_pods(request)
+    upload_pods(request)
     context = {}
-    messages.success(request, f'Upload complete! {upload} rows added to DB from {file_count} files.')
+    #messages.success(request, f'Upload complete! {upload} rows added to DB from {file_count} files.')
+    messages.success(request, f'Files added to upload queue.')
     return render(request, template, context)
 
 
