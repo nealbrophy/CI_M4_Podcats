@@ -1,67 +1,88 @@
 {% extends 'base.html' %}
 {% load static %}
 
+{% block extra_title %}
+    - results for "{{ request.GET.q }}"
+{% endblock %}
+
 {% block content %}
     <div class="container-fluid">
         <div class="row">
             <div class="text-center mt-3">
                 <h2>Results for "{{ request.GET.q }}"</h2>
+                <!-- PAGINATION START -->
                 {% if results.has_other_pages %}
                     <nav aria-label="Search results pages">
-                        <ul class="pagination justify-content-center pagination-sm">
+                        <ul class="pagination justify-content-center">
                             {% if results.has_previous %}
-                                <li class="page-item"><a class="page-link"
-                                                         href="?q={{ request.GET.q }}&page={{ results.previous_page_number }}"><i
-                                        class="fas fa-caret-left lg"></i></a></li>
+                                <li class="page-item">
+                                    <a class="page-link"
+                                       href="?q={{ request.GET.q }}&page={{ results.previous_page_number }}">
+                                        <i class="fas fa-caret-left"></i>
+                                    </a>
+                                </li>
                             {% else %}
-                                <li class="page-item"><a class="page-link disabled" href="#"><i
-                                        class="fas fa-caret-left text-muted"></i></a></li>
+                                <li class="page-item">
+                                    <a class="page-link disabled" tabindex="-1" href="#">
+                                        <i class="fas fa-caret-left text-muted"></i>
+                                    </a>
+                                </li>
                             {% endif %}
                             {% for i in page_range %}
                                 {% if results.number == i %}
                                     <li class="page-item active" aria-current="page">
-                                <span class="page-link">
-                                {{ i }}
-                                <span class="sr-only">(current)</span>
-                              </span>
+                                        <a class="page-link{% if i > 1 %} ml-2{% endif %}">{{ i }}<span class="sr-only">(current)</span>
+                                        </a>
                                     </li>
                                 {% else %}
-                                    <li class="page-item" aria-current="page"><a
-                                            href="?q={{ request.GET.q }}&page={{ i }}">{{ i }}</a></li>
+                                    <li class="page-item page-link-inactive text-light ml-2" aria-current="page">
+                                        <a class="text-white" href="?q={{ request.GET.q }}&page={{ i }}">{{ i }}</a>
+                                    </li>
                                 {% endif %}
                             {% endfor %}
                             {% if results.has_next %}
-                                <li class="page-item"><a class="page-link"
-                                                         href="?q={{ request.GET.q }}&page={{ results.next_page_number }}"><i
-                                        class="fas fa-caret-right"></i></a></li>
+                                <li class="page-item">
+                                    <a class="page-link"
+                                       href="?q={{ request.GET.q }}&page={{ results.next_page_number }}">
+                                        <i class="fas fa-caret-right"></i></a>
+                                </li>
                             {% else %}
-                                <li class="page-item"><a class="page-link disabled" href=""><i
-                                        class="fas text-muted fa-caret-right"></i></a></li>
+                                <li class="page-item">
+                                    <a class="page-link disabled" tabindex="-1" href="">
+                                        <i class="fas text-muted fa-caret-right">
+
+                                        </i>
+                                    </a>
+                                </li>
                             {% endif %}
                         </ul>
                     </nav>
                 {% endif %}
+                <!-- PAGINATION END -->
                 <hr class="w-50 mb-1" style="margin:auto !important">
             </div>
         </div>
-        <div class="row">
+        <!-- RESULTS CARDS -->
+        <div class="row mt-3 mb-5 justify-content-center text-center">
             {% for result in results %}
-            <div class="card" style="width: 18rem;">
-            {% if result.image_url %}
-                <a href="{% url "podcast_detail" result.id %}">
-                    <img src="{{ result.image_url }}" class="card-img-top" alt="image for {{ result.title }} onerror="this.onerror=null;this.src='{{ MEDIA_URL }}img-placeholder.png';">
-                </a>
-            {% else %}
-                <a href="{% url "podcast_detail" result.id %}">
-                    <img src="/media/img-placeholder.png" class="card-img-top" alt="image for {{ result.title }}">
-                </a>
-            {% endif %}
-                <div class="card-body">
-                    <h5 class="card-title">{{ result.friendly_title }}</h5>
-                    <p class="card-text text-truncate">{{ result.description }}</p>
-                    <a href="{% url "podcast_detail" result.id %}" class="btn btn-primary">View</a>
+                <div class="card force-hover my-2 mx-2" style="width: 18rem;">
+                    {% if result.image_url %}
+                        <a href="{% url "podcast_detail" result.id %}">
+                            <img src="{{ result.image_url }}" class="card-img-top mt-2" alt="image for {{ result.title }}
+                    onerror=" this.onerror=null;this.src='{{ MEDIA_URL }}img-placeholder.png';">
+                        </a>
+                    {% else %}
+                        <a href="{% url "podcast_detail" result.id %}">
+                            <img src="/media/img-placeholder.png" class="card-img-top mt-2"
+                                 alt="image for {{ result.title }}">
+                        </a>
+                    {% endif %}
+                    <div class="card-body d-flex flex-column">
+                        <h5 class="card-title">{{ result.friendly_title }}</h5>
+                        <p class="card-text text-truncate">{{ result.description }}</p>
+                        <a href="{% url "podcast_detail" result.id %}" class="btn mt-auto btn-primary">View</a>
+                    </div>
                 </div>
-            </div>
             {% endfor %}
         </div>
     </div>

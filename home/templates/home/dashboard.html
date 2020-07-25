@@ -3,14 +3,75 @@
 
 {% block content %}
     <div class="container-fluid">
-        <div class="row">
-            <div class="col-5">
-                <form method="POST" action="" class="profile-form">
-                    {% csrf_token %}
-                    {{ form|crispy }}
-                    <button type="submit" class="btn btn-primary">Submit</button>
-                    <input type="hidden" name="redirect_url" value="{{ request.path }}">
-                </form>
+        <div class="col-12 text-center mt-3">
+            <h2>{{ profile.user|capfirst }}'s Dashboard</h2>
+            <hr class="w-50 mb-1" style="margin:auto !important">
+        </div>
+        <div class="card force-hover mt-5" style="width: 18rem;">
+            {% if profile.profile_image_url %}
+                <img class="card-img-top" src="{{ profile.profile_image_url }}"
+                     alt="{{ profile.username }} profile image">
+            {% else %}
+                <img class="card-img-top"
+                     src="https://via.placeholder.com/300.jpg?text=No+Image+Added+Yet"
+                     alt="{{ profile.username }} profile image">
+            {% endif %}
+            <div class="card-body">
+                <h5 class="card-title">Profile:
+                    {% if profile.nickname %}
+                        {{ profile.nickname }}
+                    {% else %}
+                        {{ profile.user }}
+                    {% endif %}
+                    {% if profile.pro_user %}
+                        <sup class="badge badge-warning"><i class="fas fa-star"></i> Pro</sup>
+                    {% endif %}
+                </h5>
+                <p class="card-text">Bio: {% if profile.bio %}{{ profile.bio }}{% endif %}</p>
+            </div>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item">Location:
+                    {% if profile.location %}{{ profile.location }}{% endif %}</li>
+                <li class="list-group-item">Birth Date:
+                    {% if profile.birth_date %}{{ profile.birth_date }}{% endif %}</li>
+                <li class="list-group-item">Favourite Genres:
+                    <br>
+                    {% for fav in profile.fav_genre.all %}
+                        <span class="badge badge-dark">{{ fav.friendly_name }}</span>
+                    {% endfor %}
+                </li>
+            </ul>
+            <div class="card-body">
+                <!-- Button trigger modal -->
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#staticBackdrop">
+                    <i class="fas fa-user-edit"></i> EDIT
+                </button>
+            </div>
+        </div>
+        <!-- Modal -->
+        <div class="modal fade" id="staticBackdrop" data-backdrop="static" data-keyboard="false" tabindex="-1"
+             role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="staticBackdropLabel">Update Profile</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <form method="POST" action="" class="profile-form">
+                        {% csrf_token %}
+                        <div class="modal-body">
+
+                            {{ form|crispy }}
+                            <input type="hidden" name="redirect_url" value="{{ request.path }}">
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary">Save</button>
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>
     </div>

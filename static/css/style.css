@@ -9,3 +9,34 @@
 .pagination {
    justify-content: center;
 }
+
+.page-link-inactive {
+    background: lightslategray;
+    padding-left: .7rem;
+    padding-right: .7rem;
+    padding-top: .2rem;
+    color: white !important;
+    border-radius: .125rem;
+
+}
+
+.badge {
+    border-radius: 10rem !important;
+}
+
+.profile-modal-textbox {
+    max-height: 8rem !important;
+}
+
+/* MATERIALIZE hover */
+.force-hover {
+  -webkit-transition: -webkit-box-shadow .25s;
+  transition: -webkit-box-shadow .25s;
+  transition: box-shadow .25s;
+  transition: box-shadow .25s, -webkit-box-shadow .25s;
+}
+
+.force-hover:hover {
+  -webkit-box-shadow: 0 8px 17px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+          box-shadow: 0 8px 17px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}

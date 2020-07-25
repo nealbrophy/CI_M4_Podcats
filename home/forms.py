@@ -26,7 +26,9 @@ class ProfileForm(forms.ModelForm):
         for field in self.fields:
             if field != "fav_genre":
                 placeholder = placeholders[field]
-                self.fields[field].widget.attrs['placeholder'] = placeholder
-            self.fields[field].widget.attrs['class'] = 'profile-form-field'
+                self.fields[field].widget.attrs["placeholder"] = placeholder
+            self.fields[field].widget.attrs["class"] = "profile-form-field"
             self.fields["birth_date"].widget = forms.DateInput(attrs={"type": "date"})
+            if field == "bio":
+                self.fields[field].widget.attrs["class"] += " profile-modal-textbox"
 
