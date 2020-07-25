@@ -2,6 +2,7 @@ import csv, io
 from django.shortcuts import render, redirect, reverse, get_object_or_404
 from .forms import PodcastForm
 from .models import Podcast, Category
+from reviews.models import Review
 from django.contrib import messages
 from .tasks import upload_pods
 
@@ -129,9 +130,15 @@ def podcast_detail(request, id):
     """ A vew to show individual podcast page. """
 
     podcast = get_object_or_404(Podcast, pk=id)
+    all_reviews = Review.objects.all()
+    if all_reviews.get(podcast_id=id):
+        reviews = all_reviews.get(podcast_id=id)
+    else:
+        reviews = None
 
     context = {
         "podcast": podcast,
+        "reviews": reviews,
     }
 
     return render(request, "pods/podcast_detail.html", context)
