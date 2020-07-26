@@ -21,6 +21,7 @@ def upload_pods(request):
         next(io_string)
         for column in csv.reader(io_string, delimiter=',', quotechar="|"):
             # if csv contains category column upload data with category
+            print(f"TYPE IS: {type(column[2])}")
             try:
                 if "category" in headings:
                     _, create = Podcast.objects.update_or_create(

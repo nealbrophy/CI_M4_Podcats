@@ -147,17 +147,42 @@ def podcast_detail(request, id):
 
     return render(request, "pods/podcast_detail.html", context)
 
-def import_from_itunes(request, itunes_id):
-    itunes_lookup = requests.get(f'{settings.ITUNES_LOOKUP_URL}{itunes_id}')
-    Podcast.objects.update_or_create(
-        itunes_id=itunes_lookup["results"]["collectionId"],
-        title=itunes_lookup["results"]["collectionName"].replace(" ", "_").lower(),
-        friendly_title=itunes_lookup["results"]["collectionName"],
-        image_url=itunes_lookup["results"]["artworkUrl600"],
-        itunes_url=itunes_lookup["results"]["collectionViewUrl"],
-    )
-    category_lookup = Category.objects.get(friendly_name=itunes_lookup["results"]["primaryGenreName"]).id
-    this_pod = Podcast.objects.get(itunes_id=itunes_id)
-    this_pod.category.set(category_lookup)
+def import_from_itunes(request, id):
+    itunes_lookup = requests.get(f'{settings.ITUNES_LOOKUP_URL}{id}')
+    result = itunes_lookup.json()
+    # this_id = result["results"][0]["collectionId"]
+    # this_title = result["results"]["collectionName"].replace(" ", "_").lower()
 
-    # return redirect() THIS SHOULD RETURN THE EDIT VIEW SO DESCRIPTION CAN BE ADDED
+    Podcast.objects.update_or_create(
+        itunes_id=result["results"][0]["collectionId"],
+        title=result["results"][0]["collectionName"].replace(" ", "_").lower(),
+        friendly_title=result["results"][0]["collectionName"],
+        image_url=result["results"][0]["artworkUrl600"],
+        itunes_url=result["results"][0]["collectionViewUrl"],
+    )
+    category_lookup = Category.objects.get(friendly_name=result["results"][0]["primaryGenreName"]).id
+    this_uuid = Podcast.objects.get(itunes_id=id).uuid
+    print(f"UUID: {this_uuid}")
+    pod = Podcast.objects.get(uuid=this_uuid)
+
+    pod.category.set(str(category_lookup))
+
+
+    context = {
+        "id": this_uuid
+    }
+    return render(request, "pods/edit_podcast.html", context)
+
+def edit_podcast(request, id):
+    podcast = Podcast.objects.get(id=id)
+    form = PodcastForm(instance=podcast)
+
+    context = {
+        "podcast": podcast,
+        "form": form
+    }
+
+    if request.method == "GET":
+        return render(request, "pods/edit_podcast.html", context)
+    else:
+        pass

@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col text-center mt-3">
+                <h2>Edit Podcast</h2>
+                <hr class="w-50 mb-1">
+            </div>
+        </div>
+        <div class="row">
+            {% if form %}
+                <form action="{% url 'edit_podcast' %}" method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <fieldset>
+                            {{ form|crispy }}
+                        </fieldset>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                    <input type="hidden" name="redirect_url" value="{{ request.path }}">
+                </form>
+            {% endif %}
+        </div>
+    </div>
+
+{% endblock %}

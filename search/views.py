@@ -20,21 +20,8 @@ def basic_search(request):
                 return redirect(reverse('index'))
     queries = Q(title__icontains=query) | Q(description__icontains=query) | Q(uuid__icontains=query)
     if not all_pods.filter(queries):
-        itunes_results = []
-        raw_response = requests.get(f'{settings.ITUNES_SEARCH_URL}term={query}&entity=podcast,podcastAuthor')
-        response = raw_response.json()
-
-        for i in range(response["resultCount"]):
-            itunes_results.append({
-                    "itunes_id": response["results"][i]["collectionId"],
-                    "title": response["results"][i]["collectionName"].replace(" ", "_"),
-                    "friendly_title": response["results"][i]["collectionName"],
-                    "image_url": response["results"][i]["artworkUrl600"],
-                    "category": response["results"][i]["genres"],
-            })
-        return render(request, 'search/results.html', {
-            "itunes_results": itunes_results,
-        })
+        q = request.GET["q"]
+        return search_itunes(request, q)
     else:
         podcasts = all_pods.filter(queries)
         print(podcasts)
@@ -60,23 +47,21 @@ def basic_search(request):
             "page_range": page_range
         })
 
-    # else:
-    #     podcast = request.POST['q'].replace(' ', '%20')
-    #
-    #     url = f'https://listen-api.listennotes.com/api/v2/search?q={podcast}&sort_by_date=0&type=podcast&only_in=title%2Cdescription&safe_mode=0'
-    #     headers = {
-    #         'X-ListenAPI-Key': settings.LISTEN_KEY,
-    #     }
-    #     response = requests.request('GET', url, headers=headers)
-    #     results = response.json()["results"]
-    #     podcasts = []
-    #     for podcast in results:
-    #         podcasts.append({
-    #             "image_url": podcast['image'],
-    #             "title": podcast["title_original"],
-    #             "description": podcast["description_original"]
-    #         })
-    #     context = {
-    #         'podcasts': podcasts,
-    #     }
-    #     return render(request, 'search/results.html', context)
+def search_itunes(request, q):
+    """ A view to return results via the iTunes API """
+    query = q
+    itunes_results = []
+    raw_response = requests.get(f'{settings.ITUNES_SEARCH_URL}term={query}&entity=podcast,podcastAuthor')
+    response = raw_response.json()
+
+    for i in range(response["resultCount"]):
+        itunes_results.append({
+            "itunes_id": response["results"][i]["collectionId"],
+            "title": response["results"][i]["collectionName"].replace(" ", "_"),
+            "friendly_title": response["results"][i]["collectionName"],
+            "image_url": response["results"][i]["artworkUrl600"],
+            "category": response["results"][i]["genres"],
+        })
+    return render(request, 'search/results.html', {
+        "itunes_results": itunes_results,
+    })
