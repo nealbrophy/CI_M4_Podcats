@@ -7,8 +7,7 @@ from reviews.models import Review
 from django.contrib import messages
 from .tasks import upload_pods
 import requests
-
-
+from django.contrib.auth.decorators import login_required
 
 
 def pods(request):
@@ -37,7 +36,7 @@ def upload_pod_data(request):
             messages.error(request, 'THIS IS NOT A CSV FILE')
     upload_pods(request)
     context = {}
-    #messages.success(request, f'Upload complete! {upload} rows added to DB from {file_count} files.')
+    # messages.success(request, f'Upload complete! {upload} rows added to DB from {file_count} files.')
     messages.success(request, f'Files added to upload queue.')
     return render(request, template, context)
 
@@ -129,6 +128,7 @@ def add_podcast(request):
     else:
         return render(request, template, context)
 
+
 def podcast_detail(request, id):
     """ A vew to show a specific podcast page. """
     from_page = request.META.get("HTTP_REFERER", "/")
@@ -146,6 +146,7 @@ def podcast_detail(request, id):
     }
 
     return render(request, "pods/podcast_detail.html", context)
+
 
 def import_from_itunes(request, id):
     itunes_lookup = requests.get(f'{settings.ITUNES_LOOKUP_URL}{id}')
@@ -167,22 +168,30 @@ def import_from_itunes(request, id):
 
     pod.category.set(str(category_lookup))
 
-
     context = {
         "id": this_uuid
     }
     return render(request, "pods/edit_podcast.html", context)
 
+@login_required
 def edit_podcast(request, id):
-    podcast = Podcast.objects.get(id=id)
-    form = PodcastForm(instance=podcast)
-
-    context = {
-        "podcast": podcast,
-        "form": form
-    }
-
-    if request.method == "GET":
-        return render(request, "pods/edit_podcast.html", context)
+    """ A view to return the edit podcast page """
+    podcast = get_object_or_404(Podcast, pk=id)
+    if request.method == "POST":
+        form = PodcastForm(request.POST, request.FILES, instance=podcast)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Podcast updated!")
+            return redirect(reverse('podcast_detail', args=[podcast.id]))
+        else:
+            messages.error(request, "Failed to update. Please check the form is valid.")
     else:
-        pass
+        form = PodcastForm(instance=podcast)
+        messages.info(request, f"You are editing {podcast.friendly_title}")
+    template = "pods/edit_podcast.html"
+    context = {
+        "form": form,
+        "podcast": podcast,
+        }
+
+    return render(request, template, context)

@@ -30,6 +30,7 @@
                     {% endfor %}
                     <p class="text-wrap">{{ podcast.description }}</p>
                 </div>
+                <a href="{% url "edit_podcast" podcast.id %}" class="btn btn-primary">Edit</a>
             </div>
         </div>
     {% if reviews %}
