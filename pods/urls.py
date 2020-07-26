@@ -11,4 +11,5 @@ urlpatterns = [
     path('podcast/<int:id>/', views.podcast_detail, name='podcast_detail'),
     path('import_podcast/<int:id>/', views.import_from_itunes, name='import_from_itunes'),
     path('edit_podcast/<int:id>/', views.edit_podcast, name='edit_podcast'),
+    path('delete_podcast/<int:id>/', views.delete_podcast, name='delete_podcast'),
 ]

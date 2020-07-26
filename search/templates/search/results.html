@@ -92,7 +92,8 @@
                 {% endfor %}
                 <span class="text-muted">Not what you're looking for? <a href="{% url "search_itunes" request.GET.q %}">Search iTunes</a></span>
             {% endif %}
-            {% if itunes_results %} <!-- results from iTunes -->
+            <!-- results from iTunes -->
+            {% if itunes_results %}
                 <span class="text-muted">
                     No results in the database but we found the below on iTunes.
                     If it's correct, feel free to add it to the DB
@@ -110,7 +111,12 @@
                         <div class="card-body d-flex flex-column">
                             <h5 class="card-title">{{ result.friendly_title }}</h5>
                             <p class="card-text text-truncate">{{ result.description }}</p>
-                        <a href="{% url "import_from_itunes" result.itunes_id %}" class="btn mt-auto btn-primary">Import</a>
+                            <span class="">
+                            {% for cat in result.category %}
+                                {{ cat }} |
+                            {% endfor %}
+                            </span>
+                            <a href="{% url "import_from_itunes" result.itunes_id %}" class="btn mt-auto btn-primary">Import</a>
                         </div>
                     </div>
                 {% endfor %}

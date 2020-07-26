@@ -1,15 +1,13 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% load crispy_forms_tags %}
-{% crispy podcast_form %}
-
 {% block content %}
-    <div class="container-fluid">
+
+        <div class="container-fluid">
         <div class="row mx-auto col-7">
             <div class="card">
-                <h5 class="card-header info-color white-text text-center py-4">
-                    <strong>Edit Podcast</strong>
+                <h5 class="card-header info-color white-text text-center py-4 mt-5 mb-2">
+                    <strong>Are you SURE you want to Delete {{ podcast.friendly_title }}?</strong>
                 </h5>
                 {% if podcast.image_url %}
                     <img src="{{ podcast.image_url }}" class="img-fluid rounded mx-auto"
@@ -20,18 +18,18 @@
                 {% endif %}
                 <div class="card-body px-lg-5 pt-0">
 
-                    <form class="md-form" style="color: #757575;" action="{% url 'edit_podcast' podcast.id %}"
+                    <form class="md-form" style="color: #757575;" action="{% url 'delete_podcast' podcast.id %}"
                           method="POST"
                           enctype="multipart/form-data">
                         {% csrf_token %}
                         <div class="form-group">
-                            <fieldset>
-                                {{ form|crispy }}
+                            <fieldset class="disabled mt-2">
+                                <input type="text" class="form-control my-2" value="{{ podcast.friendly_title }}" disabled>
                             </fieldset>
                         </div>
 
-                        <button class="btn btn-outline-info btn-rounded btn-block z-depth-0 my-4 waves-effect"
-                                type="submit">Save
+                        <button class="btn btn-outline-danger btn-rounded btn-block z-depth-0 my-4 waves-effect"
+                                type="submit">Delete
                         </button>
                         <input type="hidden" name="redirect_url" value="{{ request.path }}">
                     </form>

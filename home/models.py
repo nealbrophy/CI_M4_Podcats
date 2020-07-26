@@ -13,16 +13,18 @@ class UserProfile(models.Model):
     bio = models.TextField(max_length=500, blank=True)
     location = models.CharField(max_length=30, blank=True)
     birth_date = models.DateField(null=True, blank=True)
-    fav_genre = models.ManyToManyField(Category, blank=True,verbose_name="Favourite Genres")
+    fav_genre = models.ManyToManyField(Category, blank=True, verbose_name="Favourite Genres")
     pro_user = models.BooleanField(default=False)
 
     def __str__(self):
         return self.user.username
 
+
 @receiver(post_save, sender=User)
 def create_user_profile(sender, instance, created, **kwargs):
     if created:
         UserProfile.objects.create(user=instance)
+
 
 @receiver(post_save, sender=User)
 def save_user_profile(sender, instance, **kwargs):

@@ -37,9 +37,7 @@
                 integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
                 crossorigin="anonymous"></script>
         <script src="https://kit.fontawesome.com/624307dae0.js" crossorigin="anonymous"></script>
-        <!-- MDB -->
-        <script type="text/javascript"
-                src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/1.0.0-alpha3/mdb.min.js"></script>
+
     {% endblock %}
     {% block extra_js %}{% endblock %}
     <title>Podcats {% block extra_title %}{% endblock %}</title>
@@ -68,16 +66,19 @@
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                     <a class="dropdown-item" href="{% url 'dashboard' %}">Dashboard</a>
                     {% if request.user.is_authenticated %}
-                            <a class="dropdown-item" href="{% url 'add_podcast' %}">Add Podcast</a>
-                            <a class="dropdown-item" href="#">Add Review</a>
+                        <a class="dropdown-item" href="{% url 'add_podcast' %}">Add Podcast</a>
+                        <a class="dropdown-item" href="#">Add Review</a>
                         {% if request.user.is_superuser %}
                             <a class="dropdown-item" href="{% url 'upload' %}">Podcast Management</a>
                             <a class="dropdown-item" href="{% url 'upload_category_data' %}">Category Management</a>
                             <a class="dropdown-item" href="{% url 'upload_review_data' %}">Review Management</a>
                         {% else %}
-                            <a class="dropdown-item" href="#" disabled>Podcast Management <sup><i class="fas fa-lock text-warning"> pro</i></sup></a>
-                            <a class="dropdown-item" href="#" disabled>Category Management <sup><i class="fas fa-lock text-warning"> pro</i></sup></a>
-                            <a class="dropdown-item" href="#" disabled>Review Management <sup><i class="fas fa-lock text-warning"> pro</i></sup></a>
+                            <a class="dropdown-item" href="#" disabled>Podcast Management <sup><i
+                                    class="fas fa-lock text-warning"> pro</i></sup></a>
+                            <a class="dropdown-item" href="#" disabled>Category Management <sup><i
+                                    class="fas fa-lock text-warning"> pro</i></sup></a>
+                            <a class="dropdown-item" href="#" disabled>Review Management <sup><i
+                                    class="fas fa-lock text-warning"> pro</i></sup></a>
                         {% endif %}
                         <a class="dropdown-item" href="{% url 'account_logout' %}">Logout</a>
                     {% else %}
@@ -88,7 +89,8 @@
                 </div>
             </li>
             <li class="nav-item">
-                <a class="nav-link disabled" href="{% url 'upgrade' %}" tabindex="-1" aria-disabled="true">Upgrade to Pro</a>
+                <a class="nav-link disabled" href="{% url 'upgrade' %}" tabindex="-1" aria-disabled="true">Upgrade to
+                    Pro</a>
             </li>
         </ul>
         <form method="GET" action="{% url 'basic_search' %}" class="form-inline my-2 my-lg-0">
@@ -106,21 +108,21 @@
 {% endif %}
 <footer class="bg-primary text-white text-center text-lg-left fixed-bottom">
     <!-- Grid container -->
-{#    <div class="container p-4">#}
-{#        <!--Grid row-->#}
-{#        <div class="row">#}
-{#            <!--Grid column-->#}
-{#            <div class="col-lg-6 col-md-12 mb-4 mb-md-0">#}
-{#                <h5 class="text-uppercase">Footer Content</h5>#}
-{##}
-{#                <p>#}
-{#                    Lorem ipsum dolor sit amet consectetur, adipisicing elit. Iste atque ea quis#}
-{#                    molestias. Fugiat pariatur maxime quis culpa corporis vitae repudiandae aliquam#}
-{#                    voluptatem veniam, est atque cumque eum delectus sint!#}
-{#                </p>#}
-{#            </div>#}
-{#        </div>#}
-        <!--Grid row-->
+    {#    <div class="container p-4">#}
+    {#        <!--Grid row-->#}
+    {#        <div class="row">#}
+    {#            <!--Grid column-->#}
+    {#            <div class="col-lg-6 col-md-12 mb-4 mb-md-0">#}
+    {#                <h5 class="text-uppercase">Footer Content</h5>#}
+    {##}
+    {#                <p>#}
+    {#                    Lorem ipsum dolor sit amet consectetur, adipisicing elit. Iste atque ea quis#}
+    {#                    molestias. Fugiat pariatur maxime quis culpa corporis vitae repudiandae aliquam#}
+    {#                    voluptatem veniam, est atque cumque eum delectus sint!#}
+    {#                </p>#}
+    {#            </div>#}
+    {#        </div>#}
+    <!--Grid row-->
     </div>
     <!-- Grid container -->
 
@@ -129,6 +131,10 @@
     </div>
     <!-- Copyright -->
 </footer>
-{% block postload_js %}{% endblock %}
+{% block postload_js %}
+    <!-- MDB -->
+    <script type="text/javascript"
+            src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/1.0.0-alpha3/mdb.min.js"></script>
+{% endblock %}
 </body>
 </html>

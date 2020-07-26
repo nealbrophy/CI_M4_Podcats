@@ -2,56 +2,146 @@
 {% load static %}
 
 {% block extra_header %}
-<nav aria-label="breadcrumb">
-  <ol class="breadcrumb">
-    <li class="breadcrumb-item"><a href="{{ from_page }}">Back</a></li>
-    <li class="breadcrumb-item active" aria-current="page">{{ podcast.friendly_title }}</li>
-  </ol>
-</nav>
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            {% if redirect_url %}
+                <li class="breadcrumb-item"><a href="{{ request.redirect_url }}">Back</a></li>
+            {% else %}
+                <li class="breadcrumb-item"><a href="{{ from_page }}">Back</a></li>
+            {% endif %}
+            <li class="breadcrumb-item active" aria-current="page">{{ podcast.friendly_title }}</li>
+        </ol>
+    </nav>
 {% endblock %}
 
 {% block content %}
     <div class="container">
         <div class="row">
-            <div class="podcast-detail mt-5">
-                <div class="image-wrapper float-left">
-                    {% if podcast.image_url %}
-                        <img src="{{ podcast.image_url }}" class="img-fluid rounded"
-                             alt="{{ podcast.title }} image" style="width: 200px;">
-                    {% else %}
-                        <img src="https://is3-ssl.mzstatic.com/image/thumb/Features/v4/5f/88/96/5f8896e9-9be5-529a-af14-cc807367568a/mza_1382744875394257421.png/276x0w.png"
-                             class="img-fluid img-thumbnail" alt="{{ podcast.title }} no image">
-                    {% endif %}
+            <div class="card mb-3" style="max-width: 540px;">
+                <div class="row no-gutters">
+                    <div class="col-md-4">
+                        {% if podcast.image_url %}
+                            <img src="{{ podcast.image_url }}" class="img-fluid rounded"
+                                 alt="{{ podcast.friendly_title }} image" style="width: 200px;">
+                        {% else %}
+                            <img src="https://is3-ssl.mzstatic.com/image/thumb/Features/v4/5f/88/96/5f8896e9-9be5-529a-af14-cc807367568a/mza_1382744875394257421.png/276x0w.png"
+                                 class="img-fluid img-thumbnail" alt="{{ podcast.title }} no image">
+                        {% endif %}
+                    </div>
+                    <div class="col-md-8">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ podcast.friendly_title }}</h5>
+                            {% for cat in podcast.category.all %}
+                                <span class="badge-pill badge badge-primary">{{ cat.friendly_name }}</span>
+                            {% endfor %}
+                            <p class="card-text">{{ podcast.description }}</p>
+                            {% if podcast.itunes_url %}
+                                <a href="{{ podcast.itunes_url }}" class="text-decoration-none"><i
+                                        class="fab fa-itunes"></i> iTunes</a>
+                            {% endif %}
+                            <br>
+                            {% if podcast.website %}
+                                <a href="{{ podcast.website }}" class="text-decoration-none"><i
+                                        class="fas fa-globe"></i> Homepage</a>
+                            {% endif %}
+                            <br>
+                            {#                            <a href="{% url "edit_podcast" podcast.id %}" class="btn btn-primary">Edit</a>#}
+                            <!-- Button trigger modal -->
+                            <button type="button" class="btn btn-primary" data-toggle="modal"
+                                    data-target="#editBackdrop">
+                                <i class="fas fa-user-edit"></i> EDIT
+                            </button>
+                            {#                            <a href="{% url "delete_podcast" podcast.id %}" class="btn btn-danger">Delete</a>#}
+                            <button type="button" class="btn btn-danger" data-toggle="modal"
+                                    data-target="#deleteBackdrop">
+                                <i class="fas fa-trash-alt"></i> DELETE
+                            </button>
+                        </div>
+                    </div>
                 </div>
-                <div class="podcast-details-info float-left mt-3">
-                    <h5 class="podcast-detail-title">{{ podcast.friendly_title }}</h5>
-                    {% for cat in podcast.category.all %}
-                        <span class="badge-pill badge badge-primary">{{ cat.friendly_name }}</span>
-                    {% endfor %}
-                    <p class="text-wrap">{{ podcast.description }}</p>
-                </div>
-                <a href="{% url "edit_podcast" podcast.id %}" class="btn btn-primary">Edit</a>
             </div>
         </div>
-    {% if reviews %}
-        <div class="podcast-detail-reviews">
-            {% for review in reviews %}
-                <div class="card mb-3">
-                    <div class="card-body bg-primary text-white">
-                        <h5 class="card-title">{{ review.friendly_title }}</h5>
-                        <p class="card-text text-wrap">{{ review.content }}</p>
-                        <span class="card-rating">
+        {% if reviews %}
+            <div class="podcast-detail-reviews">
+                {% for review in reviews %}
+                    <div class="card mb-3">
+                        <div class="card-body bg-primary text-white">
+                            <h5 class="card-title">{{ review.friendly_title }}</h5>
+                            <p class="card-text text-wrap">{{ review.content }}</p>
+                            <span class="card-rating">
                         {% with ''|center:review.rating as range %}
                             {% for i in range %}
-                            <i class="fas fa-star text-warning"></i>
+                                <i class="fas fa-star text-warning"></i>
                             {% endfor %}
                         {% endwith %}
                         </span>
-                        <span class="card-user">- {{ review.user }}</span>
+                            <span class="card-user">- {{ review.user }}</span>
+                        </div>
                     </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+
+        {#    EDIT MODAL #}
+        <!-- Modal -->
+        <div class="modal fade" id="editBackdrop" data-backdrop="static" data-keyboard="false" tabindex="-1"
+             role="dialog" aria-labelledby="editBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="editBackdropLabel">Edit Podcast</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <form method="POST" action="{% url 'edit_podcast' podcast.id %}" class="profile-form">
+                        {% csrf_token %}
+                        <div class="modal-body">
+
+                            {{ form|crispy }}
+                            <input type="hidden" name="redirect_url" value="{{ request.path }}">
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary">Save</button>
+                            <input type="hidden" name="redirect_url" value="{{ request.path }}">
+                        </div>
+                    </form>
                 </div>
-            {% endfor %}
+            </div>
         </div>
-    {% endif %}
+        {#    DELETE MODAL#}
+        <!-- Modal -->
+        <div class="modal fade" id="deleteBackdrop" data-backdrop="static" data-keyboard="false" tabindex="-1"
+             role="dialog" aria-labelledby="deleteBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="deleteBackdropLabel">Delete {{ podcast.friendly_title }}</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <form method="POST" action="" class="profile-form">
+                        {% csrf_token %}
+                        <div class="modal-body">
+                            <span class="text-danger">Are you <em>SURE</em>?</span>
+                            {% if podcast.image_url %}
+                                <img src="{{ podcast.image_url }}" class="img-fluid rounded mx-auto"
+                                     alt="{{ podcast.friendly_title }} image" style="width: 200px;">
+                            {% else %}
+                                <img src="https://is3-ssl.mzstatic.com/image/thumb/Features/v4/5f/88/96/5f8896e9-9be5-529a-af14-cc807367568a/mza_1382744875394257421.png/276x0w.png"
+                                     class="img-fluid img-thumbnail" alt="{{ podcast.title }} no image">
+                            {% endif %}
+                            <input type="hidden" name="redirect_url" value="{{ request.path }}">
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-danger">Delete</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
     </div>
 {% endblock %}

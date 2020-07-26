@@ -15,7 +15,7 @@
                     {% csrf_token %}
                     <div class="form-group">
                         <fieldset>
-                            {{ form.title | as_crispy_field }}
+                            {{ form.friendly_title | as_crispy_field }}
                             {{ form.description | as_crispy_field }}
                             {{ form.category | as_crispy_field }}
                             {{ form.image_url | as_crispy_field }}
