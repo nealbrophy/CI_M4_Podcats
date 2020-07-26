@@ -1,7 +1,7 @@
 import csv, io
-from .models import Podcast
+from .models import Podcast, Category
 from datetime import datetime
-
+import ast
 
 def upload_pods(request):
     for file in request.FILES:
@@ -26,15 +26,15 @@ def upload_pods(request):
                     _, create = Podcast.objects.update_or_create(
                         uuid=column[0],
                         itunes_id=column[1],
-                        category_id=column[2],
                         title=column[3].lower(),
                         friendly_title=column[4],
                         itunes_url=column[5],
                         image_url=column[6],
                         description=column[7],
                         website=column[8],
-
                     )
+                    pod = Podcast.objects.get(uuid=column[0])
+                    pod.category.set(column[2])
                     counter += 1
                 # if csv doesn't contain category column upload data without category
                 else:

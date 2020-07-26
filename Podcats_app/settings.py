@@ -118,6 +118,9 @@ AUTHENTICATION_BACKENDS = [
 
 SITE_ID = 1
 
+ITUNES_SEARCH_URL = 'https://itunes.apple.com/search?'
+ITUNES_LOOKUP_URL = 'https://itunes.apple.com/lookup?id='
+
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 ACCOUNT_AUTHENTICATION_METHOD = 'username_email'

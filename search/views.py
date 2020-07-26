@@ -5,6 +5,8 @@ import requests
 from pods.models import Podcast, Category
 from django.db.models import Q
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+import itunes
+
 
 def basic_search(request):
     """ A view to return results from the navbar search """
@@ -16,29 +18,47 @@ def basic_search(request):
             if not query:
                 messages.error(request, "You didn't enter any search criteria!")
                 return redirect(reverse('index'))
-            queries = Q(title__icontains=query) | Q(description__icontains=query) | Q(uuid__icontains=query)
-            podcasts = all_pods.filter(queries)
+    queries = Q(title__icontains=query) | Q(description__icontains=query) | Q(uuid__icontains=query)
+    if not all_pods.filter(queries):
+        itunes_results = []
+        raw_response = requests.get(f'{settings.ITUNES_SEARCH_URL}term={query}&entity=podcast,podcastAuthor')
+        response = raw_response.json()
 
-    page = request.GET.get('page', 1)
-    paginator = Paginator(podcasts, 20)
+        for i in range(response["resultCount"]):
+            itunes_results.append({
+                    "itunes_id": response["results"][i]["collectionId"],
+                    "title": response["results"][i]["collectionName"].replace(" ", "_"),
+                    "friendly_title": response["results"][i]["collectionName"],
+                    "image_url": response["results"][i]["artworkUrl600"],
+                    "category": response["results"][i]["genres"],
+            })
+        return render(request, 'search/results.html', {
+            "itunes_results": itunes_results,
+        })
+    else:
+        podcasts = all_pods.filter(queries)
+        print(podcasts)
 
-    try:
-        results = paginator.page(page)
-    except PageNotAnInteger:
-        results = paginator.page(1)
-    except EmptyPage:
-        results = paginator.page(paginator.num_pages)
+        page = request.GET.get('page', 1)
+        paginator = Paginator(podcasts, 20)
 
-    index = results.number - 1
-    max_index = len(paginator.page_range)
-    start_index = index - 3 if index >= 3 else 0
-    end_index = index + 3 if index <= max_index - 3 else max_index
-    page_range = list(paginator.page_range)[start_index:end_index]
+        try:
+            results = paginator.page(page)
+        except PageNotAnInteger:
+            results = paginator.page(1)
+        except EmptyPage:
+            results = paginator.page(paginator.num_pages)
 
-    return render(request, 'search/results.html', {
-        "results": results,
-        "page_range": page_range
-    })
+        index = results.number - 1
+        max_index = len(paginator.page_range)
+        start_index = index - 3 if index >= 3 else 0
+        end_index = index + 3 if index <= max_index - 3 else max_index
+        page_range = list(paginator.page_range)[start_index:end_index]
+
+        return render(request, 'search/results.html', {
+            "results": results,
+            "page_range": page_range
+        })
 
     # else:
     #     podcast = request.POST['q'].replace(' ', '%20')

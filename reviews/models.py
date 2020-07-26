@@ -7,7 +7,7 @@ from eos_name_generator import RandomNameGenerator
 
 class Review(models.Model):
     podcast_id = models.ForeignKey(Podcast, on_delete=models.CASCADE)
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, default=4)
     title = models.CharField(max_length=254)
     content = models.TextField()
     rating = models.IntegerField()

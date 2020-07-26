@@ -1,26 +1,56 @@
 {% extends 'base.html' %}
 {% load static %}
 
+{% block extra_header %}
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="{{ from_page }}">Back</a></li>
+    <li class="breadcrumb-item active" aria-current="page">{{ podcast.friendly_title }}</li>
+  </ol>
+</nav>
+{% endblock %}
 
 {% block content %}
     <div class="container">
         <div class="row">
             <div class="podcast-detail mt-5">
-            <div class="image-wrapper float-left">
-                {% if podcast.image_url %}
-                    <img src="{{ podcast.image_url }}" class="img-fluid rounded"
-                         alt="{{ podcast.title }} image" style="width: 200px;">
-                {% else %}
-                    <img src="https://is3-ssl.mzstatic.com/image/thumb/Features/v4/5f/88/96/5f8896e9-9be5-529a-af14-cc807367568a/mza_1382744875394257421.png/276x0w.png"
-                         class="img-fluid img-thumbnail" alt="{{ podcast.title }} no image">
-                {% endif %}
-            </div>
+                <div class="image-wrapper float-left">
+                    {% if podcast.image_url %}
+                        <img src="{{ podcast.image_url }}" class="img-fluid rounded"
+                             alt="{{ podcast.title }} image" style="width: 200px;">
+                    {% else %}
+                        <img src="https://is3-ssl.mzstatic.com/image/thumb/Features/v4/5f/88/96/5f8896e9-9be5-529a-af14-cc807367568a/mza_1382744875394257421.png/276x0w.png"
+                             class="img-fluid img-thumbnail" alt="{{ podcast.title }} no image">
+                    {% endif %}
+                </div>
                 <div class="podcast-details-info float-left mt-3">
                     <h5 class="podcast-detail-title">{{ podcast.friendly_title }}</h5>
-                    <span class="badge-pill badge badge-primary">{{ podcast.category.friendly_name }}</span>
+                    {% for cat in podcast.category.all %}
+                        <span class="badge-pill badge badge-primary">{{ cat.friendly_name }}</span>
+                    {% endfor %}
                     <p class="text-wrap">{{ podcast.description }}</p>
                 </div>
             </div>
         </div>
+    {% if reviews %}
+        <div class="podcast-detail-reviews">
+            {% for review in reviews %}
+                <div class="card mb-3">
+                    <div class="card-body bg-primary text-white">
+                        <h5 class="card-title">{{ review.friendly_title }}</h5>
+                        <p class="card-text text-wrap">{{ review.content }}</p>
+                        <span class="card-rating">
+                        {% with ''|center:review.rating as range %}
+                            {% for i in range %}
+                            <i class="fas fa-star text-warning"></i>
+                            {% endfor %}
+                        {% endwith %}
+                        </span>
+                        <span class="card-user">- {{ review.user }}</span>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
     </div>
 {% endblock %}

@@ -7,7 +7,7 @@ class PodcastAdmin(admin.ModelAdmin):
         'uuid',
         'title',
         'friendly_title',
-        'category',
+        'get_category',
         'description',
         'website',
         'itunes_url',

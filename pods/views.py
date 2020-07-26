@@ -1,10 +1,13 @@
 import csv, io
+from django.conf import settings
 from django.shortcuts import render, redirect, reverse, get_object_or_404
 from .forms import PodcastForm
 from .models import Podcast, Category
 from reviews.models import Review
 from django.contrib import messages
 from .tasks import upload_pods
+import requests
+
 
 
 
@@ -127,18 +130,34 @@ def add_podcast(request):
         return render(request, template, context)
 
 def podcast_detail(request, id):
-    """ A vew to show individual podcast page. """
-
+    """ A vew to show a specific podcast page. """
+    from_page = request.META.get("HTTP_REFERER", "/")
     podcast = get_object_or_404(Podcast, pk=id)
     all_reviews = Review.objects.all()
-    if all_reviews.get(podcast_id=id):
-        reviews = all_reviews.get(podcast_id=id)
+    if all_reviews.filter(podcast_id=id).count() > 0:
+        reviews = all_reviews.filter(podcast_id=id)
     else:
         reviews = None
 
     context = {
         "podcast": podcast,
         "reviews": reviews,
+        "from_page": from_page,
     }
 
     return render(request, "pods/podcast_detail.html", context)
+
+def import_from_itunes(request, itunes_id):
+    itunes_lookup = requests.get(f'{settings.ITUNES_LOOKUP_URL}{itunes_id}')
+    Podcast.objects.update_or_create(
+        itunes_id=itunes_lookup["results"]["collectionId"],
+        title=itunes_lookup["results"]["collectionName"].replace(" ", "_").lower(),
+        friendly_title=itunes_lookup["results"]["collectionName"],
+        image_url=itunes_lookup["results"]["artworkUrl600"],
+        itunes_url=itunes_lookup["results"]["collectionViewUrl"],
+    )
+    category_lookup = Category.objects.get(friendly_name=itunes_lookup["results"]["primaryGenreName"]).id
+    this_pod = Podcast.objects.get(itunes_id=itunes_id)
+    this_pod.category.set(category_lookup)
+
+    # return redirect() THIS SHOULD RETURN THE EDIT VIEW SO DESCRIPTION CAN BE ADDED
