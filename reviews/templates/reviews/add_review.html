@@ -2,6 +2,23 @@
 {% load static %}
 {% block extra_title %}- Add Review{% endblock %}
 {% block content %}
-
-
+<div class="container-fluid">
+        <div class="row">
+            <div class="col text-center mt-3">
+                <h2>Rate {{ podcast.friendly_title }}</h2>
+                <hr class="w-50 mb-1">
+            </div>
+        </div>
+        <div class="row">
+            {% if form %}
+                <form action="{% url 'add_review' podcast.id %}" method="POST">
+                    {% csrf_token %}
+                    <div class="form-group">
+                            {{ form|crispy }}
+                        <input type="hidden" name="reviews_review.podcast_id_id" value="{{ podcast.id }}">
+                    </div>
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                    <input type="hidden" name="redirect_url" value="{{ request.path }}">
+                </form>
+            {% endif %}
 {% endblock %}

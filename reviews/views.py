@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect, reverse, get_object_or_404
 from .models import Review, Podcast
 from .forms import ReviewForm
 from django.contrib import messages
@@ -35,14 +35,14 @@ def upload_review_data(request):
     return render(request, template, context)
 
 
-def add_review(request, id):
+def add_review(request, podcast_id):
     """
     A view for returning the add_review page
     and accepting using review submissions.
     """
+    podcast = get_object_or_404(Podcast, pk=podcast_id)
     try:
-        existing_review = Review.objects.filter(podcast_id=id, user_id=request.user.id)
-
+        existing_review = Review.objects.filter(podcast_id=podcast_id, user_id=request.user.id)
     except Review.DoesNotExist:
         existing_review = None
 
@@ -50,18 +50,25 @@ def add_review(request, id):
         form = ReviewForm(instance=existing_review)
 
     else:
-        form = ReviewForm()
-
+        form = ReviewForm({"podcast_id": podcast_id})
 
     template = "reviews/add_review.html"
     context = {
+        "podcast": podcast,
         "form": form,
     }
 
     if request.method == "GET":
         return render(request, template, context)
     else:
-        pass
+        form = ReviewForm(request.POST, {"podcast_id": podcast_id})
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Review added!")
+            return redirect(reverse('podcast_detail', args=[podcast.id]))
+        else:
+            messages.error(request, "Failed to add review. Please check the form is valid.")
+
 
 def delete_all_reviews(request):
     """ A view to delete all reviews in the db. """

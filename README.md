@@ -8,7 +8,6 @@ A podcast review platform.
 ### Technologies used
 - [Python](https://www.python.org/)
 - [Django](https://www.djangoproject.com/)
-- [pitunes](https://pypi.org/project/pitunes/)
 - [HTML](https://www.w3schools.com/html/), [CSS](https://www.w3schools.com/Css/), [JavaScript](https://en.wikipedia.org/wiki/JavaScript)
 - [Bootstrap](https://getbootstrap.com/)
 - [Google Fonts](https://fonts.google.com/)
@@ -78,3 +77,4 @@ A podcast review platform.
     - [this CodeLoop.org tutorial](https://codeloop.org/django-pagination-complete-example/)
     - [this tutorial](https://samulinatri.com/blog/django-pagination-tutorial/) by Samuli Natri
     - [this answer](https://stackoverflow.com/a/30864681) from [Blackeagle52](https://stackoverflow.com/users/2798610/blackeagle52) on StackOverflow
+- Login modal with help from [this answer](https://stackoverflow.com/questions/39197723/how-to-move-singup-signin-templates-into-dropdown-menu/39235634#39235634) on StackOverflow
