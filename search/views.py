@@ -24,7 +24,6 @@ def basic_search(request):
         return search_itunes(request, q)
     else:
         podcasts = all_pods.filter(queries)
-        print(podcasts)
 
         page = request.GET.get('page', 1)
         paginator = Paginator(podcasts, 20)
@@ -46,6 +45,7 @@ def basic_search(request):
             "results": results,
             "page_range": page_range
         })
+
 
 def search_itunes(request, q):
     """ A view to return results via the iTunes API """

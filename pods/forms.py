@@ -25,7 +25,6 @@ class PodcastForm(forms.ModelForm):
             "friendly_title": "Friendly name",
             "title": "Podcast name",
             "image_url": "URL for podcast image",
-            "image": "Upload an image",
             "itunes_url": "iTunes page for this podcast",
             # "itunes_id": "The iTunes ID for this podcast",
             "website": "Homepage of this podcast",
@@ -41,11 +40,11 @@ class PodcastForm(forms.ModelForm):
 
         for field in self.fields:
             self.fields[field].widget.attrs["class"] = "input-sm form-control"
-            if field != 'category':
+            if field != "category" and field != "image":
                 if self.fields[field].required:
                     placeholder = f'{placeholders[field]} *'
                     self.fields[field].widget.attrs["placeholder"] = placeholder
-                else:
+                elif field != "image":
                     placeholder = placeholders[field]
                     self.fields[field].widget.attrs["placeholder"] = placeholder
 

@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from .models import Review, Podcast
+from .forms import ReviewForm
 from django.contrib import messages
 from .tasks import upload_reviews
 
@@ -34,14 +35,33 @@ def upload_review_data(request):
     return render(request, template, context)
 
 
-def create_review(request):
+def add_review(request, id):
     """
     A view for returning the add_review page
     and accepting using review submissions.
     """
+    try:
+        existing_review = Review.objects.filter(podcast_id=id, user_id=request.user.id)
+
+    except Review.DoesNotExist:
+        existing_review = None
+
+    if existing_review:
+        form = ReviewForm(instance=existing_review)
+
+    else:
+        form = ReviewForm()
+
+
+    template = "reviews/add_review.html"
+    context = {
+        "form": form,
+    }
 
     if request.method == "GET":
-        return render(request, )
+        return render(request, template, context)
+    else:
+        pass
 
 def delete_all_reviews(request):
     """ A view to delete all reviews in the db. """

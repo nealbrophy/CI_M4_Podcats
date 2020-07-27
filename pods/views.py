@@ -4,12 +4,13 @@ from django.shortcuts import render, redirect, reverse, get_object_or_404
 from .forms import PodcastForm
 from .models import Podcast, Category
 from reviews.models import Review
+from reviews.forms import ReviewForm
 from django.contrib import messages
 from django.contrib.auth.models import User
 from .tasks import upload_pods
 import requests
 from django.contrib.auth.decorators import login_required
-from django.core.exceptions import ObjectDoesNotExist
+
 
 def pods(request):
     """ A view to return the Pods page """
@@ -72,6 +73,7 @@ def upload_category_data(request):
     context = {}
     return render(request, template, context)
 
+
 @login_required
 def delete_all(request):
     """ A view to delete all pods from db """
@@ -107,6 +109,7 @@ def delete_all(request):
         messages.error(request, "Sorry, you don't have permission to do that.")
         return render(request, 'pods/pods.html')
 
+
 @login_required
 def add_podcast(request):
     """
@@ -141,23 +144,53 @@ def add_podcast(request):
 
 def podcast_detail(request, id):
     """ A vew to show a specific podcast page. """
+    if request.user:
+        try:
+            profile = User.objects.get(pk=request.user.id).userprofile
+        except User.DoesNotExist:
+            profile = None
+        try:
+            this_user_review = Review.objects.filter(user_id=request.user.id, podcast_id=id)
+        except Review.DoesNotExist:
+            this_user_review = None
+
+    if this_user_review:
+        review_form = ReviewForm(instance=this_user_review.id)
+    else:
+        review_form = ReviewForm()
+
     from_page = request.META.get("HTTP_REFERER", "/")
     podcast = get_object_or_404(Podcast, pk=id)
     form = PodcastForm(instance=podcast)
     all_reviews = Review.objects.all()
     if all_reviews.filter(podcast_id=id).count() > 0:
+        total_rating = 0
+        review_count = 0
         reviews = all_reviews.filter(podcast_id=id)
+        for review in reviews:
+            review_count += 1
+            total_rating += review.rating
+        average_rating = total_rating / review_count
+
     else:
         reviews = None
+        average_rating = None
+        review_count = 0
 
     context = {
         "podcast": podcast,
         "reviews": reviews,
         "from_page": from_page,
         "form": form,
+        "average": average_rating,
+        "review_count": review_count,
+        "profile": profile,
+        "this_user_review": this_user_review,
+        "review_form": review_form,
     }
 
     return render(request, "pods/podcast_detail.html", context)
+
 
 @login_required()
 def import_from_itunes(request, id):
@@ -185,7 +218,6 @@ def import_from_itunes(request, id):
             messages.info(request, "Please populate the description field and categories.")
 
         this_uuid = Podcast.objects.get(itunes_id=id).uuid
-        print(f"UUID: {this_uuid}")
         pod = Podcast.objects.get(uuid=this_uuid)
 
         pod.category.set(str(category_lookup))
@@ -197,6 +229,7 @@ def import_from_itunes(request, id):
     else:
         messages.error(request, "Sorry, you need to have a Pro account to do that.")
         return render(request, 'pods/pods.html')
+
 
 @login_required
 def edit_podcast(request, id):
@@ -220,12 +253,13 @@ def edit_podcast(request, id):
         context = {
             "form": form,
             "podcast": podcast,
-            }
+        }
 
         return render(request, template, context)
     else:
         messages.error(request, "Sorry, you need to have a Pro account to do that.")
         return render(request, 'pods/pods.html')
+
 
 @login_required
 def delete_podcast(request, id):

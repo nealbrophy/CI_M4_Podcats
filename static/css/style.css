@@ -41,3 +41,34 @@
 }
 /* END hover */
 
+/* BOOTSTRAP form-control and form-control-sm */
+#loginBackdrop #id_login,
+#loginBackdrop #id_password{
+    display: block;
+    width: 100%;
+    height: calc(1.5em + 0.5rem + 2px);
+    padding: 0.25rem 0.5rem;
+    font-size: 0.875rem;
+    line-height: 1.5;
+    border-radius: 0.2rem;
+    font-weight: 400;
+    color: #495057;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #ced4da;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+label[for="id_login"],
+label[for="id_password"]{
+    margin-top: .5rem;
+}
+
+#socialSignIn a {
+    display: block;
+    margin: 3rem 4rem;
+}
+
+.tooltip-div {
+    display: inline-block;
+}

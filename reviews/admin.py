@@ -4,6 +4,7 @@ from .models import Review
 
 class ReviewAdmin(admin.ModelAdmin):
     list_display = (
+        'id',
         'podcast_id',
         'title',
         'content',

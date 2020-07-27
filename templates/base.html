@@ -107,25 +107,6 @@
     <div class="message-container"></div>
 {% endif %}
 <footer class="bg-primary text-white text-center text-lg-left fixed-bottom">
-    <!-- Grid container -->
-    {#    <div class="container p-4">#}
-    {#        <!--Grid row-->#}
-    {#        <div class="row">#}
-    {#            <!--Grid column-->#}
-    {#            <div class="col-lg-6 col-md-12 mb-4 mb-md-0">#}
-    {#                <h5 class="text-uppercase">Footer Content</h5>#}
-    {##}
-    {#                <p>#}
-    {#                    Lorem ipsum dolor sit amet consectetur, adipisicing elit. Iste atque ea quis#}
-    {#                    molestias. Fugiat pariatur maxime quis culpa corporis vitae repudiandae aliquam#}
-    {#                    voluptatem veniam, est atque cumque eum delectus sint!#}
-    {#                </p>#}
-    {#            </div>#}
-    {#        </div>#}
-    <!--Grid row-->
-    </div>
-    <!-- Grid container -->
-
     <!-- Copyright -->
     <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
     </div>
@@ -133,8 +114,13 @@
 </footer>
 {% block postload_js %}
     <!-- MDB -->
-    <script type="text/javascript"
+    <script
             src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/1.0.0-alpha3/mdb.min.js"></script>
+    <script>
+        $(function () {
+        $('[data-toggle="tooltip"]').tooltip()
+        })
+    </script>
 {% endblock %}
 </body>
 </html>
