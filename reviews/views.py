@@ -1,3 +1,4 @@
+from django.contrib.auth.models import User
 from django.shortcuts import render, redirect, reverse, get_object_or_404
 from .models import Review, Podcast
 from .forms import ReviewForm
@@ -40,34 +41,48 @@ def add_review(request, podcast_id):
     A view for returning the add_review page
     and accepting using review submissions.
     """
+    user = User.objects.get(id=request.user.id)
     podcast = get_object_or_404(Podcast, pk=podcast_id)
     try:
-        existing_review = Review.objects.filter(podcast_id=podcast_id, user_id=request.user.id)
+        existing_review = Review.objects.get(user=request.user, podcast_id=podcast_id)
     except Review.DoesNotExist:
         existing_review = None
-
-    if existing_review:
-        form = ReviewForm(instance=existing_review)
-
-    else:
-        form = ReviewForm({"podcast_id": podcast_id})
-
-    template = "reviews/add_review.html"
-    context = {
-        "podcast": podcast,
-        "form": form,
-    }
-
     if request.method == "GET":
+        if existing_review:
+            form = ReviewForm(instance=existing_review)
+        else:
+            form = ReviewForm({"podcast_id": podcast_id, "user": user.id})
+
+        template = "reviews/add_review.html"
+        context = {
+            "podcast": podcast,
+            "form": form,
+            "existing_review": existing_review,
+        }
         return render(request, template, context)
     else:
-        form = ReviewForm(request.POST, {"podcast_id": podcast_id})
+        for i in request.POST:
+            print(i)
+        form = ReviewForm(request.POST)
         if form.is_valid():
             form.save()
             messages.success(request, "Review added!")
             return redirect(reverse('podcast_detail', args=[podcast.id]))
         else:
             messages.error(request, "Failed to add review. Please check the form is valid.")
+            return
+
+
+def delete_review(request, review_id):
+    """ A view to delete a specific review from the db. """
+    review = Review.objects.get(id=review_id)
+    podcast = Podcast.objects.get(id=review.podcast_id_id)
+    if request.method == "POST":
+        review.delete()
+        return redirect(reverse("podcast_detail", args=[podcast.id]))
+    else:
+        messages.error(request, "You need to be logged in to do that")
+        return redirect(reverse("podcast_detail", args=[podcast.id]))
 
 
 def delete_all_reviews(request):

@@ -78,3 +78,4 @@ A podcast review platform.
     - [this tutorial](https://samulinatri.com/blog/django-pagination-tutorial/) by Samuli Natri
     - [this answer](https://stackoverflow.com/a/30864681) from [Blackeagle52](https://stackoverflow.com/users/2798610/blackeagle52) on StackOverflow
 - Login modal with help from [this answer](https://stackoverflow.com/questions/39197723/how-to-move-singup-signin-templates-into-dropdown-menu/39235634#39235634) on StackOverflow
+- Changed Review.podcast_id from (very slow) choices to raw id field with help from [this answer](https://stackoverflow.com/questions/980405/raw-id-fields-for-modelforms) on StackOverflow

@@ -4,6 +4,7 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, get_object_or_404
 from .models import UserProfile
 from .forms import ProfileForm
+from reviews.models import Review
 from django.contrib.auth.models import User
 
 def index(request):
@@ -17,6 +18,10 @@ def dashboard(request):
     """ A view to return the dashboard page. """
 
     profile = get_object_or_404(UserProfile, user=request.user)
+    try:
+        reviews = Review.objects.filter(user=request.user)
+    except Review.DoesNotExist:
+        reviews = None
     template = "home/dashboard.html"
     if request.method == "POST":
         form = ProfileForm(request.POST, instance=profile)
@@ -30,6 +35,7 @@ def dashboard(request):
     context = {
         "profile": profile,
         "form": form,
+        "reviews": reviews,
     }
 
     return render(request, template, context)

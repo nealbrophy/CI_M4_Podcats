@@ -3,14 +3,14 @@ from .models import Review
 
 
 class ReviewAdmin(admin.ModelAdmin):
+    raw_id_fields = ('podcast_id', 'user',)
     list_display = (
         'id',
         'podcast_id',
         'title',
-        'content',
         'rating',
         'created',
-        'user',
+        'user_id',
     )
 
     ordering = ('created',)

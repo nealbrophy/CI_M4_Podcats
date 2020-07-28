@@ -91,9 +91,9 @@
 
                             {% if user.is_authenticated %}
                                 <!-- RATE link -->
-                                    <a class="btn btn-success" href="{% url 'add_review' podcast.id %}">
-                                        <i class="fas fa-user-edit"></i> RATE
-                                    </a>
+                                <a class="btn btn-success" href="{% url 'add_review' podcast.id %}">
+                                    <i class="fas fa-user-edit"></i> RATE
+                                </a>
                                 {% if profile.pro_user %}
                                     <!-- EDIT modal trigger -->
                                     <button type="button" class="btn btn-primary" data-toggle="modal"
@@ -108,16 +108,18 @@
                                 {% endif %}
                             {% else %}
                                 <!-- RATE/LOGIN modal trigger -->
-                                    <button type="button" class="btn btn-success" data-toggle="modal"
-                                            data-target="#loginBackdrop">
-                                        <i class="fas fa-user-edit"></i> RATE
-                                    </button>
+                                <button type="button" class="btn btn-success" data-toggle="modal"
+                                        data-target="#loginBackdrop">
+                                    <i class="fas fa-user-edit"></i> RATE
+                                </button>
                                 <!-- EDIT modal trigger DISABLED -->
-                                <button type="button" data-toggle="tooltipped" title="Only for Pro users" class="btn disabled">
+                                <button type="button" data-toggle="tooltipped" title="Only for Pro users"
+                                        class="btn disabled">
                                     <i class="fas fa-user-edit"></i> EDIT
                                 </button>
                                 <!-- DELETE modal trigger DISABLED -->
-                                <button type="button" data-toggle="tooltipped" title="Only for Pro users" class="btn disabled">
+                                <button type="button" data-toggle="tooltipped" title="Only for Pro users"
+                                        class="btn disabled">
                                     <i class="fas fa-trash-alt"></i> DELETE
                                 </button>
                             {% endif %}
@@ -146,116 +148,123 @@
                 {% endfor %}
             </div>
         {% endif %}
+        {% if not user.is_authenticated %}
+            <!-- LOGIN Modal -->
+            <div class="modal fade" id="loginBackdrop" data-backdrop="static" data-keyboard="false" tabindex="-1"
+                 role="dialog" aria-labelledby="loginBackdropLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <ul class="nav nav-tabs" id="tabContent">
+                                <li class="nav-item"><a href="#signIn" class="nav-link active"
+                                                        data-toggle="tab">Sign-In</a>
+                                </li>
+                                <li class="nav-item"><a href="#socialSignIn" class="nav-link" data-toggle="tab">Google /
+                                    Twitter</a></li>
+                            </ul>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="tab-content">
+                            <div class="tab-pane active" id="signIn">
+                                <form method="POST" action="{% url 'account_login' %}" class="profile-form">
+                                    {% csrf_token %}
+                                    <div class="modal-body">
+                                        <table>
+                                            {{ loginctx }}
+                                        </table>
+                                        <input type="hidden" name="next" value="{{ request.path }}">
+                                    </div>
+                                    <div class="modal-footer">
 
-        <!-- LOGIN Modal -->
-        <div class="modal fade" id="loginBackdrop" data-backdrop="static" data-keyboard="false" tabindex="-1"
-             role="dialog" aria-labelledby="loginBackdropLabel" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <ul class="nav nav-tabs" id="tabContent">
-                            <li class="nav-item"><a href="#signIn" class="nav-link active" data-toggle="tab">Sign-In</a>
-                            </li>
-                            <li class="nav-item"><a href="#socialSignIn" class="nav-link" data-toggle="tab">Google /
-                                Twitter</a></li>
-                        </ul>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
+                                        <button type="button" class="btn btn-dark" data-dismiss="modal">Close</button>
+                                        <button type="submit" class="btn btn-primary">Submit</button>
+                                        <input type="hidden" name="redirect_url" value="{{ request.path }}">
+                                    </div>
+                                    <div class="member-prompt" style="width: 100%;">
+                                        <small class="text-muted ml-2">Not a member yet? <a
+                                                href="{% url 'account_signup' %}">Sign-Up</a></small>
+                                    </div>
+                                </form>
+                            </div>
+
+                            <div class="tab-pane" id="socialSignIn">
+                                <a href="{% url "google_login" %}" class="btn btn-success"><i class="fab fa-google"></i>
+                                    Google</a>
+                                <a href="{% url "twitter_login" %}" class="btn btn-primary"><i
+                                        class="fab fa-twitter"></i>
+                                    Twitter</a>
+                            </div>
+                        </div>
+
+
                     </div>
-                    <div class="tab-content">
-                        <div class="tab-pane active" id="signIn">
-                            <form method="POST" action="{% url 'account_login' %}" class="profile-form">
+                </div>
+            </div>
+        {% endif %}
+        {% if user.is_authenticated %}
+            {% if user.pro_user %}
+                <!-- EDIT Modal -->
+                <div class="modal fade" id="editBackdrop" data-backdrop="static" data-keyboard="false" tabindex="-1"
+                     role="dialog" aria-labelledby="editBackdropLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="editBackdropLabel">Edit Podcast</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <form method="POST" action="{% url 'edit_podcast' podcast.id %}" class="profile-form">
                                 {% csrf_token %}
                                 <div class="modal-body">
-                                    <table>
-                                        {{ loginctx }}
-                                    </table>
-                                    <input type="hidden" name="next" value="{{ request.path }}">
-                                </div>
-                                <div class="modal-footer">
-
-                                    <button type="button" class="btn btn-dark" data-dismiss="modal">Close</button>
-                                    <button type="submit" class="btn btn-primary">Submit</button>
+                                    {{ form|crispy }}
                                     <input type="hidden" name="redirect_url" value="{{ request.path }}">
                                 </div>
-                                <div class="member-prompt" style="width: 100%;">
-                                    <small class="text-muted ml-2">Not a member yet? <a
-                                            href="{% url 'account_signup' %}">Sign-Up</a></small>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                    <button type="submit" class="btn btn-primary">Save</button>
+                                    <input type="hidden" name="redirect_url" value="{{ request.path }}">
                                 </div>
                             </form>
                         </div>
-
-                        <div class="tab-pane" id="socialSignIn">
-                            <a href="{% url "google_login" %}" class="btn btn-success"><i class="fab fa-google"></i>
-                                Google</a>
-                            <a href="{% url "twitter_login" %}" class="btn btn-primary"><i class="fab fa-twitter"></i>
-                                Twitter</a>
+                    </div>
+                </div>
+                <!-- DELETE Modal -->If it
+                <div class="modal fade" id="deleteBackdrop" data-backdrop="static" data-keyboard="false" tabindex="-1"
+                     role="dialog" aria-labelledby="deleteBackdropLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="deleteBackdropLabel">
+                                    Delete {{ podcast.friendly_title }}</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <form method="POST" action="" class="profile-form">
+                                {% csrf_token %}
+                                <div class="modal-body">
+                                    <span class="text-danger">Are you <em>SURE</em>?</span>
+                                    {% if podcast.image_url %}
+                                        <img src="{{ podcast.image_url }}" class="img-fluid rounded mx-auto"
+                                             alt="{{ podcast.friendly_title }} image" style="width: 200px;">
+                                    {% else %}
+                                        <img src="https://is3-ssl.mzstatic.com/image/thumb/Features/v4/5f/88/96/5f8896e9-9be5-529a-af14-cc807367568a/mza_1382744875394257421.png/276x0w.png"
+                                             class="img-fluid img-thumbnail" alt="{{ podcast.title }} no image">
+                                    {% endif %}
+                                    <input type="hidden" name="redirect_url" value="{{ request.path }}">
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+                                    <button type="submit" class="btn btn-danger">Delete</button>
+                                </div>
+                            </form>
                         </div>
                     </div>
-
-
                 </div>
-            </div>
-        </div>
-
-        <!-- EDIT Modal -->
-        <div class="modal fade" id="editBackdrop" data-backdrop="static" data-keyboard="false" tabindex="-1"
-             role="dialog" aria-labelledby="editBackdropLabel" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="editBackdropLabel">Edit Podcast</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <form method="POST" action="{% url 'edit_podcast' podcast.id %}" class="profile-form">
-                        {% csrf_token %}
-                        <div class="modal-body">
-                            {{ form|crispy }}
-                            <input type="hidden" name="redirect_url" value="{{ request.path }}">
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                            <button type="submit" class="btn btn-primary">Save</button>
-                            <input type="hidden" name="redirect_url" value="{{ request.path }}">
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-        <!-- DELETE Modal -->
-        <div class="modal fade" id="deleteBackdrop" data-backdrop="static" data-keyboard="false" tabindex="-1"
-             role="dialog" aria-labelledby="deleteBackdropLabel" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="deleteBackdropLabel">Delete {{ podcast.friendly_title }}</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <form method="POST" action="" class="profile-form">
-                        {% csrf_token %}
-                        <div class="modal-body">
-                            <span class="text-danger">Are you <em>SURE</em>?</span>
-                            {% if podcast.image_url %}
-                                <img src="{{ podcast.image_url }}" class="img-fluid rounded mx-auto"
-                                     alt="{{ podcast.friendly_title }} image" style="width: 200px;">
-                            {% else %}
-                                <img src="https://is3-ssl.mzstatic.com/image/thumb/Features/v4/5f/88/96/5f8896e9-9be5-529a-af14-cc807367568a/mza_1382744875394257421.png/276x0w.png"
-                                     class="img-fluid img-thumbnail" alt="{{ podcast.title }} no image">
-                            {% endif %}
-                            <input type="hidden" name="redirect_url" value="{{ request.path }}">
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
-                            <button type="submit" class="btn btn-danger">Delete</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
+            {% endif %}
+        {% endif %}
     </div>
 {% endblock %}

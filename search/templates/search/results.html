@@ -75,7 +75,7 @@
                             <a href="{% url "podcast_detail" result.id %}">
                                 <img src="{{ result.image_url }}" class="card-img-top mt-2"
                                      alt="image for {{ result.title }}
-                    onerror=" this.onerror=null;this.src='{{ MEDIA_URL }}img-placeholder.png';">
+                    onerror=" function missingImg(this, 'missing')">
                             </a>
                         {% else %}
                             <a href="{% url "podcast_detail" result.id %}">
@@ -103,7 +103,7 @@
                         {% if result.image_url %}
                             <img src="{{ result.image_url }}" class="card-img-top mt-2"
                                  alt="image for {{ result.title }}
-                    onerror=" this.onerror=null;this.src='{{ MEDIA_URL }}img-placeholder.png';">
+                    onerror=" function missingImg(this, 'missing')">
                         {% else %}
                             <img src="/media/img-placeholder.png" class="card-img-top mt-2"
                                  alt="image for {{ result.title }}">
@@ -125,4 +125,14 @@
         </div>
     </div>
 
+{% endblock %}
+{% block postload_js %}
+    <script>onerror = "this.onerror=null;this.src='{{ MEDIA_URL }}img-placeholder.png';"
+
+    function missingImage(_this, status) {
+        console.log(_this, status)
+        _this.onerror = null;
+        _this.src = '{{ MEDIA_URL }}img-placeholder.png';
+    }
+    </script>
 {% endblock %}

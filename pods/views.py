@@ -127,7 +127,6 @@ def add_podcast(request):
         }
         if request.method == "POST":
             form = PodcastForm(request.POST, request.FILES)
-            form.clean_friendly_title()
             if form.is_valid():
                 form.clean_title()
                 form.save()
@@ -149,15 +148,15 @@ def podcast_detail(request, id):
             profile = User.objects.get(pk=request.user.id).userprofile
         except User.DoesNotExist:
             profile = None
-        try:
-            this_user_review = Review.objects.filter(user_id=request.user.id, podcast_id=id)
-        except Review.DoesNotExist:
-            this_user_review = None
-
-    if this_user_review:
-        review_form = ReviewForm(instance=this_user_review.id)
-    else:
-        review_form = ReviewForm()
+    #     try:
+    #         this_user_review = Review.objects.filter(user_id=request.user.id, podcast_id=id)
+    #     except Review.DoesNotExist:
+    #         this_user_review = None
+    #
+    # if this_user_review:
+    #     review_form = ReviewForm(instance=this_user_review.id)
+    # else:
+    #     review_form = ReviewForm()
 
     from_page = request.META.get("HTTP_REFERER", "/")
     podcast = get_object_or_404(Podcast, pk=id)
@@ -169,7 +168,7 @@ def podcast_detail(request, id):
         reviews = all_reviews.filter(podcast_id=id)
         for review in reviews:
             review_count += 1
-            total_rating += review.rating
+            total_rating += int(review.rating)
         average_rating = total_rating / review_count
 
     else:
@@ -185,8 +184,8 @@ def podcast_detail(request, id):
         "average": average_rating,
         "review_count": review_count,
         "profile": profile,
-        "this_user_review": this_user_review,
-        "review_form": review_form,
+        # "this_user_review": this_user_review,
+        # "review_form": review_form,
     }
 
     return render(request, "pods/podcast_detail.html", context)
