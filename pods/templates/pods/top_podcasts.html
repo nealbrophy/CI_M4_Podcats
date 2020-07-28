@@ -1,0 +1,76 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col text-center mt-3">
+                <h2>Podcasts</h2>
+                <hr class="w-50 mb-1">
+            </div>
+        </div>
+        <div class="row">
+            <table class="table">
+                <thead class="thead-dark">
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col"></th>
+                    <th scope="col">Podcast</th>
+                    <th scope="col">Qty of User Reviews</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <th scope="row"><span class="top-ten-num">01</span></th>
+                    <td><img class="top-ten-img"src="{{ top_ten.0.0 }}" alt="{{ top_ten.0.1 }} image"></td>
+                    <td>{{ top_ten.0.1 }}</td>
+                    <td><span class="badge badge-primary badge-pill">{{ top_ten.0.2 }}</span></td>
+                </tr>
+                <tr>
+                    <th scope="row"><span class="top-ten-num">02</span></th>
+                    <td><img class="top-ten-img"src="{{ top_ten.1.0 }}" alt="{{ top_ten.1.1 }} image"></td>
+                    <td>{{ top_ten.1.1 }}</td>
+                    <td><span class="badge badge-primary badge-pill">{{ top_ten.1.2 }}</span></td>
+                </tr>
+                <tr>
+                    <th scope="row"><span class="top-ten-num">03</span></th>
+                    <td><img class="top-ten-img"src="{{ top_ten.2.0 }}" alt="{{ top_ten.2.1 }} image"></td>
+                    <td>{{ top_ten.2.1 }}</td>
+                    <td><span class="badge badge-primary badge-pill">{{ top_ten.2.2 }}</span></td>
+                </tr>
+                <tr>
+                    <th scope="row"><span class="top-ten-num">04</span></th>
+                    <td><img class="top-ten-img"src="{{ top_ten.3.0 }}" alt="{{ top_ten.3.1 }} image"></td>
+                    <td>{{ top_ten.3.1 }}</td>
+                    <td><span class="badge badge-primary badge-pill">{{ top_ten.3.2 }}</span></td>
+                </tr>
+                <tr>
+                    <th scope="row"><span class="top-ten-num">05</span></th>
+                    <td><img class="top-ten-img"src="{{ top_ten.4.0 }}" alt="{{ top_ten.4.1 }} image"></td>
+                    <td>{{ top_ten.4.1 }}</td>
+                    <td><span class="badge badge-primary badge-pill">{{ top_ten.4.2 }}</span></td>
+                </tr>
+                <tr>
+                    <th scope="row"><span class="top-ten-num">06</span></th>
+                    <td><img class="top-ten-img"src="{{ top_ten.5.0 }}" alt="{{ top_ten.5.1 }} image"></td>
+                    <td>{{ top_ten.5.1 }}</td>
+                    <td><span class="badge badge-primary badge-pill">{{ top_ten.5.2 }}</span></td>
+                </tr>
+                <tr>
+                    <th scope="row"><span class="top-ten-num">07</span></th>
+                    <td><img class="top-ten-img"src="{{ top_ten.6.0 }}" alt="{{ top_ten.6.1 }} image"></td>
+                    <td>{{ top_ten.6.1 }}</td>
+                    <td><span class="badge badge-primary badge-pill">{{ top_ten.6.2 }}</span></td>
+                </tr>
+                <tr>
+                    <th scope="row"><span class="top-ten-num">08</span></th>
+                    <td><img class="top-ten-img"src="{{ top_ten.7.0 }}" alt="{{ top_ten.7.1 }} image"></td>
+                    <td>{{ top_ten.7.1 }}</td>
+                    <td><span class="badge badge-primary badge-pill">{{ top_ten.7.2 }}</span></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+{% endblock %}

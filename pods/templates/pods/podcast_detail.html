@@ -113,12 +113,12 @@
                                     <i class="fas fa-user-edit"></i> RATE
                                 </button>
                                 <!-- EDIT modal trigger DISABLED -->
-                                <button type="button" data-toggle="tooltipped" title="Only for Pro users"
+                                <button type="button" data-toggle="tooltipped" title="Upgrade to Pro"
                                         class="btn disabled">
                                     <i class="fas fa-user-edit"></i> EDIT
                                 </button>
                                 <!-- DELETE modal trigger DISABLED -->
-                                <button type="button" data-toggle="tooltipped" title="Only for Pro users"
+                                <button type="button" data-toggle="tooltipped" title="Upgrade to Pro"
                                         class="btn disabled">
                                     <i class="fas fa-trash-alt"></i> DELETE
                                 </button>
@@ -203,8 +203,6 @@
                 </div>
             </div>
         {% endif %}
-        {% if user.is_authenticated %}
-            {% if user.pro_user %}
                 <!-- EDIT Modal -->
                 <div class="modal fade" id="editBackdrop" data-backdrop="static" data-keyboard="false" tabindex="-1"
                      role="dialog" aria-labelledby="editBackdropLabel" aria-hidden="true">
@@ -231,7 +229,7 @@
                         </div>
                     </div>
                 </div>
-                <!-- DELETE Modal -->If it
+                <!-- DELETE Modal -->
                 <div class="modal fade" id="deleteBackdrop" data-backdrop="static" data-keyboard="false" tabindex="-1"
                      role="dialog" aria-labelledby="deleteBackdropLabel" aria-hidden="true">
                     <div class="modal-dialog">
@@ -243,7 +241,7 @@
                                     <span aria-hidden="true">&times;</span>
                                 </button>
                             </div>
-                            <form method="POST" action="" class="profile-form">
+                            <form method="POST" action="{% url 'delete_podcast' podcast.id %}" class="profile-form">
                                 {% csrf_token %}
                                 <div class="modal-body">
                                     <span class="text-danger">Are you <em>SURE</em>?</span>
@@ -264,7 +262,5 @@
                         </div>
                     </div>
                 </div>
-            {% endif %}
-        {% endif %}
     </div>
 {% endblock %}

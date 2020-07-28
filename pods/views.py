@@ -1,5 +1,6 @@
 import csv, io
 from django.conf import settings
+from django.db.models import Count
 from django.shortcuts import render, redirect, reverse, get_object_or_404
 from .forms import PodcastForm
 from .models import Podcast, Category
@@ -12,10 +13,28 @@ import requests
 from django.contrib.auth.decorators import login_required
 
 
-def pods(request):
+def top_podcasts(request):
     """ A view to return the Pods page """
+    pods = Podcast.objects.annotate(num_reviews=Count('review')).order_by('-num_reviews')[:10]
+    # podcasts = Podcast.objects.all()
+    # for podcast in podcasts:
+    #     try:
+    #         reviews = Review.objects.filter(podcast_id=podcast.id).count()
+    #     except Review.DoesNotExist:
+    #         reviews = 0
+    #     review_count.append((reviews, podcast.id))
 
-    return render(request, 'pods/pods.html')
+    top_ten = []
+    for pod in pods:
+        top_ten.append((pod.image_url, pod.friendly_title, pod.num_reviews))
+
+
+    context = {
+        "pods": pods,
+        "top_ten": top_ten,
+    }
+
+    return render(request, 'pods/top_podcasts.html', context)
 
 
 def upload_pod_data(request):

@@ -3,7 +3,7 @@ from . import views
 
 
 urlpatterns = [
-    path('pods/', views.pods, name='pods'),
+    path('top_podcasts/', views.top_podcasts, name='top_podcasts'),
     path('upload/', views.upload_pod_data, name='upload'),
     path('upload_cats/', views.upload_category_data, name='upload_category_data'),
     path('delete_all/', views.delete_all, name='delete_all'),

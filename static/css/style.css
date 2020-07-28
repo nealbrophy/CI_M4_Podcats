@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Bowlby+One+SC&display=swap');
+
 .podcast-card-img {
     max-width: 15rem;
 }
@@ -71,4 +73,15 @@ label[for="id_password"]{
 
 .tooltip-div {
     display: inline-block;
+}
+
+/* TOP TEN SECTION*/
+.top-ten-num {
+    font-family: 'Bowlby One SC', cursive;
+    font-size: 2.5rem;
+}
+
+.top-ten-img {
+    max-width: 5rem;
+    border-radius: 50%;
 }
