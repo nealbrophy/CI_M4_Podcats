@@ -85,3 +85,8 @@ label[for="id_password"]{
     max-width: 5rem;
     border-radius: 50%;
 }
+
+.table .badge {
+    margin-top: 1.5rem;
+    margin-left: 1rem;
+}

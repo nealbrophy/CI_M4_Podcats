@@ -26,7 +26,7 @@ def top_podcasts(request):
 
     top_ten = []
     for pod in pods:
-        top_ten.append((pod.image_url, pod.friendly_title, pod.num_reviews))
+        top_ten.append((pod.image_url, pod.friendly_title, pod.num_reviews, pod.id))
 
 
     context = {
