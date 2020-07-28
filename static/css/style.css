@@ -90,3 +90,18 @@ label[for="id_password"]{
     margin-top: 1.5rem;
     margin-left: 1rem;
 }
+
+/* BENEFITS page TESTIMONIALS */
+
+.testimonials {
+    margin-bottom: 5rem;
+    margin-top: 3rem;
+}
+
+.carousel-inner {
+    width: 100%;
+}
+
+.carousel-item {
+    margin: auto;
+}
