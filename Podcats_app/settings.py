@@ -130,7 +130,7 @@ ACCOUNT_EMAIL_VERIFICATION = 'mandatory'
 ACCOUNT_SIGNUP_EMAIL_ENTER_TWICE = True
 ACCOUNT_USERNAME_MIN_LENGTH = 4
 LOGIN_URL = '/accounts/login/'
-
+LOGIN_REDIRECT_URL = '/dashboard/'
 
 WSGI_APPLICATION = 'Podcats_app.wsgi.application'
 

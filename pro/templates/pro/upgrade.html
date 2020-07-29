@@ -3,17 +3,70 @@
 
 {% block content %}
     <div class="container-fluid">
-    <div class="row">
-            <div class="col text-center mt-3">
-                <h2>Upgrade to Pro</h2>
+        <div class="row">
+            <div class="col text-center mt-5">
+                <h2>Purchase Pro</h2>
                 <hr class="w-50 mx-auto mb-4">
             </div>
         </div>
-        <div class="stripe-card" id="card-element">
+        <div class="row mb-5">
+            <div class="col-md-5 mx-auto mt-2">
+                <span class="text-muted text-center">Order</span>
+                <table class="table mt-2">
+                    <thead class="thead-dark">
+                    <tr>
+                        <th scope="col">Item</th>
+                        <th scope="col">Cost</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <th scope="row">Pro Membership</th>
+                        <td>Cost</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-md-4 mx-auto">
+
+            </div>
 
         </div>
+        <div class="row mb-5">
+            <div class="col-md-5 purchase-details">
+                {% if form %}
+                    <span class="text-muted text-center">Enter Your Info Below</span>
+                    <form class="mt-3" action="{% url 'upgrade' %}" method="POST">
+                        {% csrf_token %}
 
+                        {{ form.full_name | as_crispy_field }}
+                        {{ form.email | as_crispy_field }}
+                        {{ form.phone_number | as_crispy_field }}
+                        {{ form.street_address1 | as_crispy_field }}
+                        {{ form.street_address2 | as_crispy_field }}
+                        {{ form.town_or_city | as_crispy_field }}
+                        {{ form.postcode | as_crispy_field }}
+                        {{ form.country | as_crispy_field }}
+                        <!-- stripe payment element -->
+                        <div class="stripe-card" id="card-element">
+                        </div>
 
+                        <!-- display form errors -->
+                        <div class="stripe-card" id="card-errors">
+                        </div>
+                        <div class="button-wrapper text-center">
+                            <button type="submit" class="btn btn-primary">Purchase</button>
+                        </div>
+                        <p class="small text-danger">
+                            <span class="icon">
+                                <i class="fas fa-exclamation-circle"></i>
+                            </span>
+                            <span>Your card will be charged!</span>
+                        </p>
+                    </form>
+                {% endif %}
+            </div>
+        </div>
     </div>
 {% endblock %}
 {% block postload_js %}

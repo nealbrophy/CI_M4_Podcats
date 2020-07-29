@@ -65,19 +65,17 @@
                     MyAccount
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" href="{% url 'dashboard' %}">Dashboard</a>
                     {% if request.user.is_authenticated %}
-                        <a class="dropdown-item" href="{% url 'add_podcast' %}">Add Podcast</a>
+                        <a class="dropdown-item" href="{% url 'dashboard' %}">Dashboard</a>
+                        {% if request.user.userprofile.pro_user %}
+                            <a class="dropdown-item" href="{% url 'add_podcast' %}">Add Podcast</a>
+                        {% endif %}
                         {% if request.user.is_superuser %}
                             <a class="dropdown-item" href="{% url 'upload' %}">Podcast Management</a>
                             <a class="dropdown-item" href="{% url 'upload_category_data' %}">Category Management</a>
                             <a class="dropdown-item" href="{% url 'upload_review_data' %}">Review Management</a>
                         {% else %}
-                            <a class="dropdown-item" href="#" disabled>Podcast Management <sup><i
-                                    class="fas fa-lock text-warning"> pro</i></sup></a>
-                            <a class="dropdown-item" href="#" disabled>Category Management <sup><i
-                                    class="fas fa-lock text-warning"> pro</i></sup></a>
-                            <a class="dropdown-item" href="#" disabled>Review Management <sup><i
+                            <a class="dropdown-item" href="{% url 'benefits' %}">Add Podcast <sup><i
                                     class="fas fa-lock text-warning"> pro</i></sup></a>
                         {% endif %}
                         <a class="dropdown-item" href="{% url 'account_logout' %}">Logout</a>
@@ -88,10 +86,12 @@
                     {% endif %}
                 </div>
             </li>
+            {% if user.is_authenticated and not user.userprofile.pro_user %}
             <li class="nav-item">
-                <a class="nav-link disabled" href="{% url 'upgrade' %}" tabindex="-1" aria-disabled="true">Upgrade to
+                <a class="nav-link" href="{% url 'upgrade' %}">Upgrade to
                     Pro</a>
             </li>
+            {% endif %}
         </ul>
         <form method="GET" action="{% url 'basic_search' %}" class="form-inline my-2 my-lg-0">
             <input class="form-control mr-sm-2" type="search" name="q" placeholder="Search" aria-label="Search">
@@ -102,7 +102,7 @@
     </div>
 </nav>
 {% block extra_header %}{% endblock %}
-{% block content %}{% endblock %}
+{% block content %}{{ request.user.userprofile.pro_user }}{% endblock %}
 {% if messages %}
     <div class="message-container"></div>
 {% endif %}
