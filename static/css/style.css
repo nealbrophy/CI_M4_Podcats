@@ -1,5 +1,10 @@
 @import url('https://fonts.googleapis.com/css2?family=Bowlby+One+SC&display=swap');
 
+.text-large {
+    font-size: 2rem;
+}
+
+
 .podcast-card-img {
     max-width: 15rem;
 }
@@ -25,6 +30,10 @@
     border-radius: 10rem !important;
 }
 
+.badge-sm {
+    font-size: .6rem !important;
+}
+
 .profile-modal-textbox {
     max-height: 8rem !important;
 }
@@ -38,8 +47,8 @@
 }
 
 .force-hover:hover {
-  -webkit-box-shadow: 0 8px 17px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-          box-shadow: 0 8px 17px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    -webkit-box-shadow: 0 8px 17px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    box-shadow: 0 8px 17px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 /* END hover */
 

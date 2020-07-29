@@ -8,7 +8,7 @@
             <hr class="w-50 mb-1" style="margin:auto !important">
         </div>
         <!-- Profile Card -->
-        <div class="row">
+        <div class="row mx-auto">
             <div class="card force-hover mt-5 col-md-4" style="width: 18rem;">
                 {% if profile.profile_image_url %}
                     <img class="card-img-top" src="{{ profile.profile_image_url }}"
@@ -51,7 +51,41 @@
                 </div>
             </div>
             <!-- Reviews -->
-        
+            <div class="col-md-6 mt-5">
+                {% if reviews %}
+                    {% for review in reviews %}
+                        <div class="card force-hover mx-auto mb-3">
+                            <div class="card-body">
+                                <h5 class="card-title">{{ review.title }}</h5>
+                                <h6 class="card-subtitle mb-2 text-muted">
+                                    {% for i in reviewed_pods %}
+                                        {% if i.0 == review.id %}
+                                            <a href="{% url "podcast_detail" review.podcast_id_id %}">{{ i.1.friendly_title }}</a>
+                                        {% endif %}
+                                    {% endfor %}
+                                </h6>
+                                <p class="card-text text-truncate">{{ review.content }}</p>
+                                <br>
+                                {% with ''|center:review.rating as range %}
+                                    {% for i in range %}
+                                        <span class="material-icons">star_rate</span>
+                                    {% endfor %}
+                                {% endwith %}
+                            </div>
+                            {% for i in reviewed_pods %}
+                                {% if i.0 == review.id %}
+                                    <a class="text-right mr-2 mb-1 text-danger" href="{% url 'add_review' i.1.id %}">
+                                        <span class="material-icons">create</span>
+                                    </a>
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+                    {% endfor %}
+                {% else %}
+                    <h5>Your reviews will show here!</h5>
+                {% endif %}
+            </div>
+
         </div>
         <!-- Modal -->
         <div class="modal fade" id="staticBackdrop" data-backdrop="static" data-keyboard="false" tabindex="-1"

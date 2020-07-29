@@ -2,5 +2,23 @@
 {% load static %}
 
 {% block content %}
-    <h2>Upgrade to Pro</h2>
+    <div class="container-fluid">
+    <div class="row">
+            <div class="col text-center mt-3">
+                <h2>Upgrade to Pro</h2>
+                <hr class="w-50 mx-auto mb-4">
+            </div>
+        </div>
+        <div class="stripe-card" id="card-element">
+
+        </div>
+
+
+    </div>
+{% endblock %}
+{% block postload_js %}
+    {{ block.super }}
+    {{ stripe_public_key|json_script:"id_stripe_public_key" }}
+    {{ client_secret|json_script:"id_client_secret" }}
+    <script src="{% static 'upgrade/js/stripe_elements.js' %}"></script>
 {% endblock %}

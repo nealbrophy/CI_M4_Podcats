@@ -10,101 +10,103 @@
             </div>
         </div>
         <div class="row">
-            <table class="table table-striped mb-5">
-                <thead class="thead-dark">
-                <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">Podcast</th>
-                    <th scope="col">User Reviews</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr>
-                    <th scope="row"><span class="top-ten-num">01</span></th>
-                    <td>
-                        <img src="{{ top_ten.0.0 }}" class="top-ten-img"
+            <div class="col-md-8 mx-auto">
+                <table class="table table-striped mb-5">
+                    <thead class="thead-dark">
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Podcast</th>
+                        <th scope="col">User Reviews</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <th scope="row"><span class="top-ten-num">01</span></th>
+                        <td>
+                            <img src="{{ top_ten.0.0 }}" class="top-ten-img"
                                  alt="image for {{ top_ten.0.1 }}"
-                    onerror="this.onerror=null;this.src='/media/img-placeholder.png';">
-                        <a href="{% url 'podcast_detail' top_ten.0.3 %}">{{ top_ten.0.1 }}</a>
-                    </td>
-                    <td><span class="badge badge-primary badge-pill">{{ top_ten.0.2 }}</span></td>
-                </tr>
-                <tr>
-                    <th scope="row"><span class="top-ten-num">02</span></th>
-                    <td>
-                        <img src="{{ top_ten.1.0 }}" class="top-ten-img"
+                                 onerror="this.onerror=null;this.src='/media/img-placeholder.png';">
+                            <a href="{% url 'podcast_detail' top_ten.0.3 %}">{{ top_ten.0.1 }}</a>
+                        </td>
+                        <td><span class="badge badge-primary badge-pill">{{ top_ten.0.2 }}</span></td>
+                    </tr>
+                    <tr>
+                        <th scope="row"><span class="top-ten-num">02</span></th>
+                        <td>
+                            <img src="{{ top_ten.1.0 }}" class="top-ten-img"
                                  alt="image for {{ top_ten.1.1 }}"
-                    onerror="this.onerror=null;this.src='/media/img-placeholder.png';">
-                        <a href="{% url 'podcast_detail' top_ten.1.3 %}">{{ top_ten.1.1 }}</a>
-                    </td>
-                    <td><span class="badge badge-primary badge-pill">{{ top_ten.1.2 }}</span></td>
-                </tr>
-                <tr>
-                    <th scope="row"><span class="top-ten-num">03</span></th>
-                    <td><img src="{{ top_ten.2.0 }}" class="top-ten-img"
+                                 onerror="this.onerror=null;this.src='/media/img-placeholder.png';">
+                            <a href="{% url 'podcast_detail' top_ten.1.3 %}">{{ top_ten.1.1 }}</a>
+                        </td>
+                        <td><span class="badge badge-primary badge-pill">{{ top_ten.1.2 }}</span></td>
+                    </tr>
+                    <tr>
+                        <th scope="row"><span class="top-ten-num">03</span></th>
+                        <td><img src="{{ top_ten.2.0 }}" class="top-ten-img"
                                  alt="image for {{ top_ten.2.1 }}"
-                    onerror="this.onerror=null;this.src='/media/img-placeholder.png';">
-                        <a href="{% url 'podcast_detail' top_ten.2.3 %}">{{ top_ten.2.1 }}</a></td>
-                    <td><span class="badge badge-primary badge-pill">{{ top_ten.2.2 }}</span></td>
-                </tr>
-                <tr>
-                    <th scope="row"><span class="top-ten-num">04</span></th>
-                    <td><img src="{{ top_ten.3.0 }}" class="top-ten-img"
+                                 onerror="this.onerror=null;this.src='/media/img-placeholder.png';">
+                            <a href="{% url 'podcast_detail' top_ten.2.3 %}">{{ top_ten.2.1 }}</a></td>
+                        <td><span class="badge badge-primary badge-pill">{{ top_ten.2.2 }}</span></td>
+                    </tr>
+                    <tr>
+                        <th scope="row"><span class="top-ten-num">04</span></th>
+                        <td><img src="{{ top_ten.3.0 }}" class="top-ten-img"
                                  alt="image for {{ top_ten.3.1 }}"
-                    onerror="this.onerror=null;this.src='/media/img-placeholder.png';">
-                        <a href="{% url 'podcast_detail' top_ten.3.3 %}">{{ top_ten.3.1 }}</a></td>
-                    <td><span class="badge badge-primary badge-pill">{{ top_ten.3.2 }}</span></td>
-                </tr>
-                <tr>
-                    <th scope="row"><span class="top-ten-num">05</span></th>
-                    <td><img src="{{ top_ten.4.0 }}" class="top-ten-img"
+                                 onerror="this.onerror=null;this.src='/media/img-placeholder.png';">
+                            <a href="{% url 'podcast_detail' top_ten.3.3 %}">{{ top_ten.3.1 }}</a></td>
+                        <td><span class="badge badge-primary badge-pill">{{ top_ten.3.2 }}</span></td>
+                    </tr>
+                    <tr>
+                        <th scope="row"><span class="top-ten-num">05</span></th>
+                        <td><img src="{{ top_ten.4.0 }}" class="top-ten-img"
                                  alt="image for {{ top_ten.4.1 }}"
-                    onerror="this.onerror=null;this.src='/media/img-placeholder.png';">
-                        <a href="{% url 'podcast_detail' top_ten.4.3 %}">{{ top_ten.4.1 }}</a></td>
-                    <td><span class="badge badge-primary badge-pill">{{ top_ten.4.2 }}</span></td>
-                </tr>
-                <tr>
-                    <th scope="row"><span class="top-ten-num">06</span></th>
-                    <td><img src="{{ top_ten.5.0 }}" class="top-ten-img"
+                                 onerror="this.onerror=null;this.src='/media/img-placeholder.png';">
+                            <a href="{% url 'podcast_detail' top_ten.4.3 %}">{{ top_ten.4.1 }}</a></td>
+                        <td><span class="badge badge-primary badge-pill">{{ top_ten.4.2 }}</span></td>
+                    </tr>
+                    <tr>
+                        <th scope="row"><span class="top-ten-num">06</span></th>
+                        <td><img src="{{ top_ten.5.0 }}" class="top-ten-img"
                                  alt="image for {{ top_ten.5.1 }}"
-                    onerror="this.onerror=null;this.src='/media/img-placeholder.png';">
-                        <a href="{% url 'podcast_detail' top_ten.5.3 %}">{{ top_ten.5.1 }}</a></td>
-                    <td><span class="badge badge-primary badge-pill">{{ top_ten.5.2 }}</span></td>
-                </tr>
-                <tr>
-                    <th scope="row"><span class="top-ten-num">07</span></th>
-                    <td><img src="{{ top_ten.6.0 }}" class="top-ten-img"
+                                 onerror="this.onerror=null;this.src='/media/img-placeholder.png';">
+                            <a href="{% url 'podcast_detail' top_ten.5.3 %}">{{ top_ten.5.1 }}</a></td>
+                        <td><span class="badge badge-primary badge-pill">{{ top_ten.5.2 }}</span></td>
+                    </tr>
+                    <tr>
+                        <th scope="row"><span class="top-ten-num">07</span></th>
+                        <td><img src="{{ top_ten.6.0 }}" class="top-ten-img"
                                  alt="image for {{ top_ten.6.1 }}"
-                    onerror="this.onerror=null;this.src='/media/img-placeholder.png';">
-                        <a href="{% url 'podcast_detail' top_ten.6.3 %}">{{ top_ten.6.1 }}</a></td>
-                    <td><span class="badge badge-primary badge-pill">{{ top_ten.6.2 }}</span></td>
-                </tr>
-                <tr>
-                    <th scope="row"><span class="top-ten-num">08</span></th>
-                    <td><img src="{{ top_ten.7.0 }}" class="top-ten-img"
+                                 onerror="this.onerror=null;this.src='/media/img-placeholder.png';">
+                            <a href="{% url 'podcast_detail' top_ten.6.3 %}">{{ top_ten.6.1 }}</a></td>
+                        <td><span class="badge badge-primary badge-pill">{{ top_ten.6.2 }}</span></td>
+                    </tr>
+                    <tr>
+                        <th scope="row"><span class="top-ten-num">08</span></th>
+                        <td><img src="{{ top_ten.7.0 }}" class="top-ten-img"
                                  alt="image for {{ top_ten.7.1 }}"
-                    onerror="this.onerror=null;this.src='/media/img-placeholder.png';">
-                        <a href="{% url 'podcast_detail' top_ten.7.3 %}">{{ top_ten.7.1 }}</a></td>
-                    <td><span class="badge badge-primary badge-pill">{{ top_ten.7.2 }}</span></td>
-                </tr>
-                <tr>
-                    <th scope="row"><span class="top-ten-num">09</span></th>
-                    <td><img src="{{ top_ten.8.0 }}" class="top-ten-img"
+                                 onerror="this.onerror=null;this.src='/media/img-placeholder.png';">
+                            <a href="{% url 'podcast_detail' top_ten.7.3 %}">{{ top_ten.7.1 }}</a></td>
+                        <td><span class="badge badge-primary badge-pill">{{ top_ten.7.2 }}</span></td>
+                    </tr>
+                    <tr>
+                        <th scope="row"><span class="top-ten-num">09</span></th>
+                        <td><img src="{{ top_ten.8.0 }}" class="top-ten-img"
                                  alt="image for {{ top_ten.8.1 }}"
-                    onerror="this.onerror=null;this.src='/media/img-placeholder.png';">
-                        <a href="{% url 'podcast_detail' top_ten.8.3 %}">{{ top_ten.8.1 }}</a></td>
-                    <td><span class="badge badge-primary badge-pill">{{ top_ten.8.2 }}</span></td>
-                </tr>
-                <tr>
-                    <th scope="row"><span class="top-ten-num">10</span></th>
-                    <td><img src="{{ top_ten.9.0 }}" class="top-ten-img"
+                                 onerror="this.onerror=null;this.src='/media/img-placeholder.png';">
+                            <a href="{% url 'podcast_detail' top_ten.8.3 %}">{{ top_ten.8.1 }}</a></td>
+                        <td><span class="badge badge-primary badge-pill">{{ top_ten.8.2 }}</span></td>
+                    </tr>
+                    <tr>
+                        <th scope="row"><span class="top-ten-num">10</span></th>
+                        <td><img src="{{ top_ten.9.0 }}" class="top-ten-img"
                                  alt="image for {{ top_ten.9.1 }}"
-                    onerror="this.onerror=null;this.src='/media/img-placeholder.png';">
-                        <a href="{% url 'podcast_detail' top_ten.9.3 %}">{{ top_ten.9.1 }}</a></td>
-                    <td><span class="badge badge-primary badge-pill">{{ top_ten.9.2 }}</span></td>
-                </tr>
-                </tbody>
-            </table>
+                                 onerror="this.onerror=null;this.src='/media/img-placeholder.png';">
+                            <a href="{% url 'podcast_detail' top_ten.9.3 %}">{{ top_ten.9.1 }}</a></td>
+                        <td><span class="badge badge-primary badge-pill">{{ top_ten.9.2 }}</span></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 

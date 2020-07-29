@@ -5,7 +5,9 @@ from django.shortcuts import render, get_object_or_404
 from .models import UserProfile
 from .forms import ProfileForm
 from reviews.models import Review
+from pods.models import Podcast
 from django.contrib.auth.models import User
+
 
 def index(request):
     """ A view to return the index page. """
@@ -16,13 +18,19 @@ def index(request):
 @login_required
 def dashboard(request):
     """ A view to return the dashboard page. """
-
+    template = "home/dashboard.html"
     profile = get_object_or_404(UserProfile, user=request.user)
+    podcasts = Podcast.objects.all()
+    reviewed_pods = []
     try:
         reviews = Review.objects.filter(user=request.user)
     except Review.DoesNotExist:
         reviews = None
-    template = "home/dashboard.html"
+
+    if reviews:
+        for review in reviews:
+            reviewed_pods.append((review.id, Podcast.objects.get(id=review.podcast_id_id)))
+
     if request.method == "POST":
         form = ProfileForm(request.POST, instance=profile)
         if form.is_valid():
@@ -36,9 +44,11 @@ def dashboard(request):
         "profile": profile,
         "form": form,
         "reviews": reviews,
+        "reviewed_pods": reviewed_pods,
     }
 
     return render(request, template, context)
+
 
 @login_required
 def upload_users(request):
