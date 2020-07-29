@@ -15,7 +15,7 @@ from django.contrib.auth.decorators import login_required
 
 def top_podcasts(request):
     """ A view to return the Pods page """
-    pods = Podcast.objects.annotate(num_reviews=Count('review')).order_by('-num_reviews')[:10]
+    pods = Podcast.objects.annotate(num_reviews=Count("review")).order_by("-num_reviews")[:10]
     # podcasts = Podcast.objects.all()
     # for podcast in podcasts:
     #     try:
@@ -34,7 +34,7 @@ def top_podcasts(request):
         "top_ten": top_ten,
     }
 
-    return render(request, 'pods/top_podcasts.html', context)
+    return render(request, "pods/top_podcasts.html", context)
 
 
 def upload_pod_data(request):
@@ -42,8 +42,8 @@ def upload_pod_data(request):
     template = "pods/upload_pods.html"
     data = Podcast.objects.all()
     prompt = {
-        'order': 'Order of the CSV should be uuid, title, friendly_title, image_url, language, categories, website',
-        'podcasts': data
+        "order": "Order of the CSV should be uuid, title, friendly_title, image_url, language, categories, website",
+        "podcasts": data
     }
     # if GET return template
     if request.method == "GET":
@@ -53,12 +53,12 @@ def upload_pod_data(request):
     for file in request.FILES:
         # check if file is CSV, if not present error
         file_count += 1
-        if not request.FILES[file].name.endswith('.csv'):
-            messages.error(request, 'THIS IS NOT A CSV FILE')
+        if not request.FILES[file].name.endswith(".csv"):
+            messages.error(request, "THIS IS NOT A CSV FILE")
     upload_pods(request)
     context = {}
     # messages.success(request, f'Upload complete! {upload} rows added to DB from {file_count} files.')
-    messages.success(request, f'Files added to upload queue.')
+    messages.success(request, f"Files added to upload queue.")
     return render(request, template, context)
 
 
@@ -67,17 +67,17 @@ def upload_category_data(request):
     template = "pods/upload_cats.html"
     data = Category.objects.all()
     prompt = {
-        'order': 'Order of the CSV should be pk, name, friendly_name',
-        'categories': data
+        "order": "Order of the CSV should be pk, name, friendly_name",
+        "categories": data
     }
     # if GET return template
     if request.method == "GET":
         return render(request, template, prompt)
     # otherwise capture file upload
-    csv_file = request.FILES['file']
+    csv_file = request.FILES["file"]
     # validate is csv
-    if not csv_file.name.endswith('.csv'):
-        messages.error(request, 'THIS IS NOT A CSV FILE')
+    if not csv_file.name.endswith(".csv"):
+        messages.error(request, "THIS IS NOT A CSV FILE")
     # read file
     data_set = csv_file.read().decode('UTF-8')
     io_string = io.StringIO(data_set)
@@ -99,7 +99,7 @@ def delete_all(request):
     template = "pods/delete_all.html"
     if request.user.is_superuser:
         if request.method == "GET":
-            return render(request, 'pods/delete_all.html')
+            return render(request, "pods/delete_all.html")
         else:
             if "duplicates" in request.POST:
                 for pod in Podcast.objects.all().reverse():
@@ -109,24 +109,24 @@ def delete_all(request):
                 # check if there are pods to delete in db
                 if int(Podcast.objects.all().count()) > 0:
                     Podcast.objects.all().delete()
-                    messages.success(request, 'Deleted successfully')
+                    messages.success(request, "Deleted successfully")
                     return render(request, template)
                 else:
-                    messages.error(request, 'Nothing to delete')
+                    messages.error(request, "Nothing to delete")
                     return render(request, template)
-            elif 'fix_description' in request.POST:
+            elif "fix_description" in request.POST:
                 for pod in Podcast.objects.all():
                     try:
                         if pod.description.count() < 10:
                             pod(description=f"The {pod.friendly_title} podcast.")
                             pod.save()
-                        messages.success(request, 'descriptions fixed')
+                        messages.success(request, "descriptions fixed")
                         return render(request, template)
                     except Exception as e:
-                        messages.error(request, f'Unable to complete due to {e}')
+                        messages.error(request, f"Unable to complete due to {e}")
     else:
         messages.error(request, "Sorry, you don't have permission to do that.")
-        return render(request, 'pods/pods.html')
+        return render(request, "pods/pods.html")
 
 
 @login_required
@@ -140,7 +140,7 @@ def add_podcast(request):
 
     if user.pro_user:
         podcast_form = PodcastForm()
-        template = 'pods/add_podcast.html'
+        template = "pods/add_podcast.html"
         context = {
             "form": podcast_form,
         }
@@ -157,7 +157,7 @@ def add_podcast(request):
             return render(request, template, context)
     else:
         messages.error(request, "Sorry, you need to have a Pro account to do that.")
-        return render(request, 'pods/pods.html')
+        return render(request, "pods/pods.html")
 
 
 def podcast_detail(request, id):
@@ -246,7 +246,7 @@ def import_from_itunes(request, id):
         return redirect(reverse("edit_podcast", args=[pod.id]))
     else:
         messages.error(request, "Sorry, you need to have a Pro account to do that.")
-        return render(request, 'pods/pods.html')
+        return render(request, "pods/pods.html")
 
 
 @login_required
@@ -261,7 +261,7 @@ def edit_podcast(request, id):
             if form.is_valid():
                 form.save()
                 messages.success(request, "Podcast updated!")
-                return redirect(reverse('podcast_detail', args=[podcast.id]))
+                return redirect(reverse("podcast_detail", args=[podcast.id]))
             else:
                 messages.error(request, "Failed to update. Please check the form is valid.")
         else:
@@ -276,7 +276,7 @@ def edit_podcast(request, id):
         return render(request, template, context)
     else:
         messages.error(request, "Sorry, you need to have a Pro account to do that.")
-        return render(request, 'pods/pods.html')
+        return render(request, "pods/pods.html")
 
 
 @login_required
@@ -299,4 +299,4 @@ def delete_podcast(request, id):
             return redirect(reverse("home"))
     else:
         messages.error(request, "Sorry, you need to have a Pro account to do that.")
-        return render(request, 'pods/pods.html')
+        return render(request, "pods/pods.html")

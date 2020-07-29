@@ -17,7 +17,7 @@ def basic_search(request):
             query = request.GET["q"]
             if not query:
                 messages.error(request, "You didn't enter any search criteria!")
-                return redirect(reverse('index'))
+                return redirect(reverse("index"))
     queries = Q(title__icontains=query) | Q(description__icontains=query) | Q(uuid__icontains=query)
     if not all_pods.filter(queries):
         q = request.GET["q"]
@@ -25,7 +25,7 @@ def basic_search(request):
     else:
         podcasts = all_pods.filter(queries)
 
-        page = request.GET.get('page', 1)
+        page = request.GET.get("page", 1)
         paginator = Paginator(podcasts, 20)
 
         try:
@@ -51,7 +51,7 @@ def search_itunes(request, q):
     """ A view to return results via the iTunes API """
     query = q
     itunes_results = []
-    raw_response = requests.get(f'{settings.ITUNES_SEARCH_URL}term={query}&entity=podcast,podcastAuthor')
+    raw_response = requests.get(f"{settings.ITUNES_SEARCH_URL}term={query}&entity=podcast,podcastAuthor")
     response = raw_response.json()
 
     for i in range(response["resultCount"]):
