@@ -99,7 +99,8 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
-                'home.context_processor.login_ctx.login_ctx_tag'
+                'django.template.context_processors.media',
+                'home.context_processor.login_ctx.login_ctx_tag',
             ],
             'builtins': [
                 'crispy_forms.templatetags.crispy_forms_tags',

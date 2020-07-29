@@ -2,7 +2,7 @@ const stripe_public_key = $('#id_stripe_public_key').text().slice(1, -1);
 const stripe_client_secret = $('#id_client_secret').text().slice(1, -1);
 const stripe = Stripe(stripe_public_key);
 const elements = stripe.elements();
-const card = elements.create('card');
+
 
 var style = {
   base: {
@@ -19,5 +19,5 @@ var style = {
     iconColor: '#dc3545'
   }
 };
-
-card.mount('#card-element', {style: style});
+const card = elements.create('card', {style: style});
+card.mount('#card-element');

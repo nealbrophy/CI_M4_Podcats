@@ -79,7 +79,7 @@
                             </a>
                         {% else %}
                             <a href="{% url "podcast_detail" result.id %}">
-                                <img src="/media/img-placeholder.png" class="card-img-top mt-2"
+                                <img src="{{ MEDIA_URL }}img-placeholder.png" class="card-img-top mt-2"
                                      alt="image for {{ result.title }}">
                             </a>
                         {% endif %}
@@ -105,7 +105,7 @@
                                  alt="image for {{ result.title }}"
                     onerror="this.onerror=null;this.src='{{ MEDIA_URL }}img-placeholder.png';">
                         {% else %}
-                            <img src="/media/img-placeholder.png" class="card-img-top mt-2"
+                            <img src="{{ MEDIA_URL }}img-placeholder.png" class="card-img-top mt-2"
                                  alt="image for {{ result.title }}">
                         {% endif %}
                         <div class="card-body d-flex flex-column">
