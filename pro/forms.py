@@ -1,13 +1,17 @@
 from django import forms
+from django.contrib.auth.models import User
 from .models import Purchase
 
 
+
 class PurchaseForm(forms.ModelForm):
+    user = forms.ModelChoiceField(queryset=User.objects.all(), widget=forms.TextInput)
     class Meta:
         model = Purchase
         fields = ("full_name", "email",
                   "phone_number", "country", "postcode",
-                  "town_or_city", "street_address1", "street_address2",)
+                  "town_or_city", "street_address1",
+                  "street_address2", "user")
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -21,6 +25,7 @@ class PurchaseForm(forms.ModelForm):
             "street_address1": "Street Address 1",
             "street_address2": "Street Address 2",
             "county": "County",
+            "user": "",
         }
 
         self.fields["full_name"].widget.attrs["autofocus"] = True
@@ -33,3 +38,5 @@ class PurchaseForm(forms.ModelForm):
                 self.fields[field].widget.attrs["placeholder"] = placeholder
             self.fields[field].widget.attrs["class"] = "stripe-style-input form-control"
             self.fields[field].label = False
+            if self.fields[field] == "user":
+                self.fields[field].widget.attrs["class"] = "d-none"

@@ -33,9 +33,10 @@
             <div class="col-md-4 mx-auto">
                 {% if form %}
                     <span class="text-muted text-center">Enter Your Info Below</span>
-                    <form class="mt-3" action="{% url 'upgrade' %}" method="POST">
+                    <form class="mt-3" id="purchase-form" action="{% url 'upgrade' %}" method="POST">
                         {% csrf_token %}
-
+                        <fieldset class="px-3">
+                        <legend class="fieldset-label small px-2 w-auto">Invoice Info</legend>
                         {{ form.full_name | as_crispy_field }}
                         {{ form.email | as_crispy_field }}
                         {{ form.phone_number | as_crispy_field }}
@@ -44,17 +45,21 @@
                         {{ form.town_or_city | as_crispy_field }}
                         {{ form.postcode | as_crispy_field }}
                         {{ form.country | as_crispy_field }}
-                        <!-- stripe payment element -->
-                        <div class="stripe-card" id="card-element">
-                        </div>
-
-                        <!-- display form errors -->
-                        <div class="stripe-card" id="card-errors">
-                        </div>
+                        </fieldset>
+                        <fieldset class="px-3">
+                            <legend class="fieldset-label small px-2 w-auto text-black">Payment Info</legend>
+                            <!-- stripe payment element -->
+                            <div class="stripe-card" id="card-element">
+                            </div>
+                            <!-- display form errors -->
+                            <div class="stripe-card" id="card-errors">
+                            </div>
+                            <input type="hidden" value="{{ client_secret }}" name="client_secret">
+                        </fieldset>
                         <div class="button-wrapper text-center mt-2">
-                            <button type="submit" class="btn btn-primary">Purchase</button>
+                            <button type="submit" class="purchase-button btn btn-primary">Purchase</button>
                             <p class="small text-warning bg-dark">
-                            <i class="fas fa-exclamation-triangle pt-3"></i> Your card will be charged!
+                                <i class="fas fa-exclamation-triangle pt-3"></i> Your card will be charged!
                             </p>
                         </div>
 
@@ -67,7 +72,7 @@
 {% block postload_js %}
     {{ block.super }}
     {{ stripe_public_key|json_script:"id_stripe_public_key" }}
-    {{ stripe_client_secret|json_script:"id_stripe_client_secret" }}
+    {{ client_secret|json_script:"id_client_secret" }}
     <script src="{% static "pro/js/stripe_elements.js" %}"></script>
 {% endblock %}
 {% static '' %}

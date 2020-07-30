@@ -1,15 +1,19 @@
 from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth.models import User
-from django.shortcuts import render, redirect, reverse
+from django.shortcuts import render, redirect, reverse, get_object_or_404
 from .models import Purchase
 from .forms import PurchaseForm
 
 import stripe
 
+
 def upgrade(request):
     """ A review to return the pro page. """
-    user = User.objects.get(id=request.user.id)
+    try:
+        user = User.objects.get(id=request.user.id)
+    except User.DoesNotExist:
+        return redirect('account_login')
     stripe_public_key = settings.STRIPE_PUBLIC_KEY
     stripe_secret_key = settings.STRIPE_SECRET_KEY
 
@@ -20,7 +24,7 @@ def upgrade(request):
             context = {
                 "profile": profile,
             }
-            return redirect('dashboard')
+            return redirect('dashboard', context)
         else:
             form = PurchaseForm()
             cost = settings.PRO_ANNUAL_CHARGE
@@ -52,6 +56,7 @@ def upgrade(request):
             "street_address1": request.POST["street_address1"],
             "street_address2": request.POST["street_address2"],
             "country": request.POST["country"],
+            "user": request.user,
         }
 
         purchase_form = PurchaseForm(form_data)
@@ -60,13 +65,22 @@ def upgrade(request):
             pid = request.POST.get("client_secret").split("_secret")[0]
             purchase.stripe_pid = pid
             purchase.save()
+            print("Success!")
+            return redirect(reverse("upgrade_success", args=[purchase.order_number]))
+        else:
+            messages.error(request, "Purchase failed. Please recheck your information.")
 
-        return redirect(reverse("upgrade_success", args=[purchase.order_number]))
 
 def upgrade_success(request, order_number):
     """ A view to handle successful upgrade purchase """
     if request.user.is_authenticated:
-        pass
+        purchase = get_object_or_404(Purchase, order_number=order_number)
+        messages.success(request,
+                         f"Purchase successful! Your order number is {purchase.order_number}. A confirmation email will be sent to {purchase.email}")
+        context = {
+            "purchase": purchase,
+        }
+        return render(request, "pro/upgrade_success.html", context)
 
 def benefits(request):
     """ A review to return the benefits page. """

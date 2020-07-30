@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% load static %}
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'pro/css/upgrade.css' %}">
+{% endblock %}
+
+{% block content %}
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col text-center mt-5">
+                <h2>Thank You!</h2>
+                <hr class="w-50 mx-auto mb-4">
+            </div>
+        </div>
+        <div class="row mb-5">
+            <div class="col-md-5 mx-auto mt-2">
+                <span class="text-muted text-center">Order</span>
+                <table class="table mt-2">
+                    <thead class="thead-dark">
+                    <tr>
+                        <th scope="col">Item</th>
+                        <th scope="col">Cost</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <th scope="row">Pro Membership (annual)</th>
+                        <td>${{ cost }}</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-md-4 mx-auto">
+                    <span class="text-muted text-center">Order Info</span>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
