@@ -1,9 +1,37 @@
 @import url('https://fonts.googleapis.com/css2?family=Bowlby+One+SC&display=swap');
 
+body {
+    background-color: #f4eeff !important;
+    color: #424874 !important;
+}
+
+.card {
+    background-color: #a6b1e1 !important;
+}
+
+.thead-light-blue {
+    background-color: #dcd6f7 !important;
+}
+
+.breadcrumb {
+    background-color: #a6b1e1 !important;
+}
+
+.darkest-bg {
+    background-color: #424874 !important;
+}
+
+.darkest-fg {
+    color: #424874 !important;
+}
+
+.dropdown-item:hover {
+    background-color: #a6b1e1 !important;
+}
+
 .text-large {
     font-size: 2rem;
 }
-
 
 .podcast-card-img {
     max-width: 15rem;
@@ -14,7 +42,7 @@
 }
 
 .pagination {
-   justify-content: center;
+    justify-content: center;
 }
 
 .page-link-inactive {
@@ -34,27 +62,36 @@
     font-size: .6rem !important;
 }
 
+/* Profile */
+
 .profile-modal-textbox {
     max-height: 8rem !important;
 }
 
+.profile-card,
+.profile-card .list-group-item {
+    background-color: #424874 !important;
+    color: white !important;
+}
+
 /* MATERIALIZE hover */
 .force-hover {
-  -webkit-transition: -webkit-box-shadow .25s;
-  transition: -webkit-box-shadow .25s;
-  transition: box-shadow .25s;
-  transition: box-shadow .25s, -webkit-box-shadow .25s;
+    -webkit-transition: -webkit-box-shadow .25s;
+    transition: -webkit-box-shadow .25s;
+    transition: box-shadow .25s;
+    transition: box-shadow .25s, -webkit-box-shadow .25s;
 }
 
 .force-hover:hover {
     -webkit-box-shadow: 0 8px 17px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
     box-shadow: 0 8px 17px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
+
 /* END hover */
 
 /* BOOTSTRAP form-control and form-control-sm */
 #loginBackdrop #id_login,
-#loginBackdrop #id_password{
+#loginBackdrop #id_password {
     display: block;
     width: 100%;
     height: calc(1.5em + 0.5rem + 2px);
@@ -71,7 +108,7 @@
 }
 
 label[for="id_login"],
-label[for="id_password"]{
+label[for="id_password"] {
     margin-top: .5rem;
 }
 
@@ -94,6 +131,7 @@ label[for="id_password"]{
 .top-ten-num {
     font-family: 'Bowlby One SC', cursive;
     font-size: 2.5rem;
+    color: #424874;
 }
 
 .top-ten-img {
@@ -119,4 +157,10 @@ label[for="id_password"]{
 
 .carousel-item {
     margin: auto;
+}
+
+/* Review cards*/
+
+.review-card-img {
+    border-radius: 50% 0;
 }

@@ -6,12 +6,22 @@ from django.contrib import messages
 from .tasks import upload_reviews
 
 
-def reviews(request):
-    all_reviews = Review.objects.all()[:10]
+def latest_reviews(request):
+    """ A view to return the 8 most recently added reviews """
+
+    reviews = Review.objects.order_by("created")[:8]
+    review_index = []
+    for review in reviews:
+        review_index.append({
+            "review": review,
+            "podcast": Podcast.objects.get(id=review.podcast_id_id)})
+
     context = {
-        "reviews": all_reviews,
+        "reviews": reviews,
+        "review_index": review_index,
     }
-    return render(request, "reviews/index.html", context)
+
+    return render(request, "reviews/latest_reviews.html", context)
 
 
 def upload_review_data(request):
@@ -61,16 +71,30 @@ def add_review(request, podcast_id):
         }
         return render(request, template, context)
     else:
-        for i in request.POST:
-            print(i)
         form = ReviewForm(request.POST)
-        if form.is_valid():
-            form.save()
-            messages.success(request, "Review added!")
-            return redirect(reverse("podcast_detail", args=[podcast.id]))
+        try:
+            existing_review = Review.objects.get(user=request.user, podcast_id=podcast_id)
+        except Review.DoesNotExist:
+            existing_review = None
+        if existing_review:
+            if form.is_valid():
+                existing_review.content = request.POST["content"]
+                existing_review.rating = request.POST["rating"]
+                existing_review.title = request.POST["title"]
+                existing_review.save()
+                messages.success(request, "Review updated!")
+                return redirect(reverse("podcast_detail", args=[podcast.id]))
+            else:
+                messages.error(request, "Update failed! Invalid form data. Please review.")
+                return redirect(reverse("podcast_detail", args=[podcast.id]))
         else:
-            messages.error(request, "Failed to add review. Please check the form is valid.")
-            return
+            if form.is_valid():
+                form.save()
+                messages.success(request, "Review added!")
+                return redirect(reverse("podcast_detail", args=[podcast.id]))
+            else:
+                messages.error(request, "Failed to add review. Please check the form is valid.")
+                return redirect(reverse("podcast_detail", args=[podcast.id]))
 
 
 def delete_review(request, review_id):

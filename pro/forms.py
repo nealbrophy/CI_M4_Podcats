@@ -11,7 +11,7 @@ class PurchaseForm(forms.ModelForm):
         fields = ("full_name", "email",
                   "phone_number", "country", "postcode",
                   "town_or_city", "street_address1",
-                  "street_address2", "user")
+                  "street_address2", "user", "purchase_amount")
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -26,6 +26,7 @@ class PurchaseForm(forms.ModelForm):
             "street_address2": "Street Address 2",
             "county": "County",
             "user": "",
+            "purchase_amount": "",
         }
 
         self.fields["full_name"].widget.attrs["autofocus"] = True
@@ -38,5 +39,5 @@ class PurchaseForm(forms.ModelForm):
                 self.fields[field].widget.attrs["placeholder"] = placeholder
             self.fields[field].widget.attrs["class"] = "stripe-style-input form-control"
             self.fields[field].label = False
-            if self.fields[field] == "user":
+            if self.fields[field] == "user" or self.fields[field] == "purchase_amount":
                 self.fields[field].widget.attrs["class"] = "d-none"

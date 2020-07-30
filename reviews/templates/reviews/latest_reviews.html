@@ -1,0 +1,134 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+    <div class="container-fluid">
+        <div class="row">
+            <div class="card-columns mt-5 mb-5">
+                <div class="card">
+                    <a class="text-decoration-none" href="{% url 'podcast_detail' review_index.0.podcast.id %}">
+                        <img src="{{ review_index.0.podcast.image_url }}" class="card-img-top review-card-img"
+                         alt="{{ review_index.0.podcast.friendly_title }} image" style="width: 18rem;">
+                        <small>{{ review_index.0.podcast.friendly_title }}</small>
+                    </a>
+                    <div class="card-body">
+                        <h5 class="card-title">{{ review_index.0.review.title }}</h5>
+                        {% with ''|center:review_index.0.review.rating as range %}
+                            {% for i in range %}
+                                <i class="fas fa-star"></i>
+                            {% endfor %}
+                        {% endwith %}
+                        <h6 class="text-black">{{ review_index.0.review.user }}</h6>
+                        <p class="card-text">"{{ review_index.0.review.content }}"</p>
+
+                    </div>
+                </div>
+                <div class="card">
+                    <a class="text-decoration-none" href="{% url 'podcast_detail' review_index.1.podcast.id %}">
+                        <img src="{{ review_index.1.podcast.image_url }}" class="card-img-top review-card-img"
+                         alt="{{ review_index.1.podcast.friendly_title }} image" style="width: 18rem;">
+                        <small>{{ review_index.1.podcast.friendly_title }}</small>
+                    </a>
+                    <div class="card-body">
+                        <h5 class="card-title">{{ review_index.1.review.title }}</h5>
+                        {% with ''|center:review_index.1.review.rating as range %}
+                            {% for i in range %}
+                                <i class="fas fa-star"></i>
+                            {% endfor %}
+                        {% endwith %}
+                        <h6 class="text-black">{{ review_index.1.review.user }}</h6>
+                        <p class="card-text">"{{ review_index.1.review.content }}"</p>
+
+                    </div>
+                </div>
+                <div class="card">
+                <a class="text-decoration-none" href="{% url 'podcast_detail' review_index.2.podcast.id %}">
+                    <img src="{{ review_index.2.podcast.image_url }}" class="card-img-top review-card-img"
+                         alt="{{ review_index.2.podcast.friendly_title }} image" style="width: 18rem;">
+                    <small>{{ review_index.2.podcast.friendly_title }}</small>
+                </a>
+                    <div class="card-body">
+                        <h5 class="card-title">{{ review_index.2.review.title }}</h5>
+                        {% with ''|center:review_index.0.review.rating as range %}
+                            {% for i in range %}
+                                <i class="fas fa-star"></i>
+                            {% endfor %}
+                        {% endwith %}
+                        <h6 class="text-black">{{ review_index.2.review.user }}</h6>
+                        <p class="card-text">{{ review_index.2.review.content }}</p>
+                    </div>
+                </div>
+                <div class="card">
+                    <a class="text-decoration-none" href="{% url 'podcast_detail' review_index.3.podcast.id %}">
+                        <img src="{{ review_index.3.podcast.image_url }}" class="card-img-top review-card-img"
+                         alt="{{ review_index.3.podcast.friendly_title }} image" style="width: 18rem;">
+                        <small>{{ review_index.3.podcast.friendly_title }}</small>
+                    </a>
+                    <div class="card-body">
+                        <h5 class="card-title">{{ review_index.3.review.title }}</h5>
+                        {% with ''|center:review_index.3.review.rating as range %}
+                            {% for i in range %}
+                                <i class="fas fa-star"></i>
+                            {% endfor %}
+                        {% endwith %}
+                        <h6 class="text-black">{{ review_index.3.review.user }}</h6>
+                        <p class="card-text">"{{ review_index.3.review.content }}"</p>
+
+                    </div>
+                </div>
+                <div class="card">
+                <a class="text-decoration-none" href="{% url 'podcast_detail' review_index.4.podcast.id %}">
+                    <img src="{{ review_index.4.podcast.image_url }}" class="card-img-top review-card-img"
+                         alt="{{ review_index.4.podcast.friendly_title }} image" style="width: 18rem;">
+                    <small>{{ review_index.4.podcast.friendly_title }}</small>
+                </a>
+                    <div class="card-body">
+                        <h5 class="card-title">{{ review_index.4.review.title }}</h5>
+                        {% with ''|center:review_index.4.review.rating as range %}
+                            {% for i in range %}
+                                <i class="fas fa-star"></i>
+                            {% endfor %}
+                        {% endwith %}
+                        <h6 class="text-black">{{ review_index.4.review.user }}</h6>
+                        <p class="card-text">{{ review_index.4.review.content }}</p>
+                    </div>
+                </div>
+                <div class="card">
+                    <a class="text-decoration-none" href="{% url 'podcast_detail' review_index.5.podcast.id %}">
+                        <img src="{{ review_index.5.podcast.image_url }}" class="card-img-top review-card-img"
+                         alt="{{ review_index.5.podcast.friendly_title }} image" style="width: 18rem;">
+                        <small>{{ review_index.5.podcast.friendly_title }}</small>
+                    </a>
+                    <div class="card-body">
+                        <h5 class="card-title">{{ review_index.5.review.title }}</h5>
+                        {% with ''|center:review_index.5.review.rating as range %}
+                            {% for i in range %}
+                                <i class="fas fa-star"></i>
+                            {% endfor %}
+                        {% endwith %}
+                        <h6 class="text-black">{{ review_index.5.review.user }}</h6>
+                        <p class="card-text">"{{ review_index.5.review.content }}"</p>
+
+                    </div>
+                </div>
+                <div class="card">
+                <a class="text-decoration-none" href="{% url 'podcast_detail' review_index.6.podcast.id %}">
+                    <img src="{{ review_index.6.podcast.image_url }}" class="card-img-top review-card-img"
+                         alt="{{ review_index.6.podcast.friendly_title }} image" style="width: 18rem;">
+                    <small>{{ review_index.6.podcast.friendly_title }}</small>
+                </a>
+                    <div class="card-body">
+                        <h5 class="card-title">{{ review_index.6.review.title }}</h5>
+                        {% with ''|center:review_index.6.review.rating as range %}
+                            {% for i in range %}
+                                <i class="fas fa-star"></i>
+                            {% endfor %}
+                        {% endwith %}
+                        <h6 class="text-black">{{ review_index.6.review.user }}</h6>
+                        <p class="card-text">{{ review_index.6.review.content }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

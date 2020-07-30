@@ -26,8 +26,8 @@ def upgrade(request):
             }
             return redirect('dashboard', context)
         else:
-            form = PurchaseForm()
-            cost = settings.PRO_ANNUAL_CHARGE
+            cost = settings.PRO_LIFETIME_CHARGE
+            form = PurchaseForm({"purchase_amount": cost})
             stripe_cost = round(cost * 100)
             stripe.api_key = stripe_secret_key
             intent = stripe.PaymentIntent.create(
@@ -57,8 +57,9 @@ def upgrade(request):
             "street_address2": request.POST["street_address2"],
             "country": request.POST["country"],
             "user": request.user,
+            "purchase_amount": request.POST.get("purchase_amount", settings.PRO_LIFETIME_CHARGE)
         }
-
+        print(request.POST.get("purchase_amount"))
         purchase_form = PurchaseForm(form_data)
         if purchase_form.is_valid():
             purchase = purchase_form.save(commit=False)
@@ -80,6 +81,10 @@ def upgrade_success(request, order_number):
         context = {
             "purchase": purchase,
         }
+        user = User.objects.get(username=purchase.user)
+        user.userprofile.pro_user = True
+        user.userprofile.save()
+        user.save()
         return render(request, "pro/upgrade_success.html", context)
 
 def benefits(request):

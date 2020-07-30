@@ -11,8 +11,18 @@ from django.contrib.auth.models import User
 
 def index(request):
     """ A view to return the index page. """
+    podcasts = Podcast.objects.order_by("?")[:7]
+    pod_index = []
+    for podcast in podcasts:
+        pod_index.append(
+            [podcast.friendly_title, podcast.description, podcast.image_url, podcast.id]
+        )
+    context = {
+        "podcasts": podcasts,
+        "pod_index": pod_index,
+    }
 
-    return render(request, 'home/index.html')
+    return render(request, 'home/index.html', context)
 
 
 @login_required

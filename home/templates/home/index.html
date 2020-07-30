@@ -2,11 +2,230 @@
 {% load static %}
 
 {% block content %}
-    <div class="container">
-        <div class="row">
-            <div class="col">
-                HOME PAGE
+    <div class="container-fluid">
+        <!-- TOP ROW -->
+        <div class="row mt-5 mb-2">
+
+            <!-- Grid column -->
+            <div class="col-md-6 col-12 mb-4">
+
+                <!--Card-->
+                <div class="card">
+
+                    <!--Card image-->
+                    <div class="view">
+                        <a href="{% url 'podcast_detail' pod_index.0.3 %}">
+                        <img src="{{ pod_index.0.2 }}" class="card-img-top"
+                             alt="{{ pod_index.0.0 }} image"
+                        onerror="this.onerror=null;this.src='{{ MEDIA_URL }}img-placeholder.png';">
+                        </a>
+                    </div>
+
+                    <!--Card content-->
+                    <div class="card-body text-center">
+                        <!--Title-->
+                        <h4 class="card-title">{{ pod_index.0.0 }}</h4>
+                        <!--Text-->
+                        <p class="card-text tex-truncate">{{ pod_index.0.1 }}</p>
+                    </div>
+
+                </div>
+                <!--/.Card-->
+
             </div>
+            <!-- Grid column -->
+
+            <!-- Grid column -->
+            <div class="col-md-6 col-12">
+
+                <!--Card-->
+                <div class="card green darken-3">
+
+                    <!--Card image-->
+                    <div class="view">
+                        <a href="{% url 'podcast_detail' pod_index.1.3 %}">
+                        <img src="{{ pod_index.1.2 }}"
+                             class="card-img-top"
+                             alt="{{ pod_index.1.0 }} image"
+                        onerror="this.onerror=null;this.src='{{ MEDIA_URL }}img-placeholder.png';">
+                        </a>
+                    </div>
+
+                    <!--Card content-->
+                    <div class="card-body text-center">
+                        <!--Title-->
+                        <h4 class="card-title white-text">{{ pod_index.1.0 }}</h4>
+                        <!--Text-->
+                        <p class="card-text white-text text-truncate">{{ pod_index.1.1 }}</p>
+                    </div>
+
+                </div>
+                <!--/.Card-->
+
+            </div>
+            <!-- Grid column -->
+
         </div>
+        <!-- MIDDLE ROW -->
+        <div class="row mb-5">
+
+            <!-- Grid column -->
+            <div class="col-lg-4 col-md-12">
+
+                <!--Card-->
+                <div class="card">
+
+                    <!--Card image-->
+                    <div class="view">
+                        <a href="{% url 'podcast_detail' pod_index.2.3 %}">
+                        <img src="{{ pod_index.2.2 }}"
+                             class="card-img-top"
+                             alt="{{ pod_index.2.0 }} image"
+                        onerror="this.onerror=null;this.src='{{ MEDIA_URL }}img-placeholder.png';">
+
+                        </a>
+                    </div>
+
+                    <!--Card content-->
+                    <div class="card-body">
+                        <!--Title-->
+                        <h4 class="card-title">{{ pod_index.2.0 }}</h4>
+                        <!--Text-->
+                        <p class="card-text text-truncate">{{ pod_index.2.1 }}</p>
+                    </div>
+
+                </div>
+                <!--/.Card-->
+
+            </div>
+            <!-- Grid column -->
+
+            <!-- Grid column -->
+            <div class="col-lg-4 col-md-6">
+
+                <!--Card-->
+                <div class="card">
+
+                    <!--Card image-->
+                    <div class="view">
+                        <a href="{% url 'podcast_detail' pod_index.3.3 %}">
+                        <img src="{{ pod_index.3.2 }}" class="card-img-top"
+                             alt="{{ pod_index.3.0 }} image"
+                        onerror="this.onerror=null;this.src='{{ MEDIA_URL }}img-placeholder.png';">
+
+                        </a>
+                    </div>
+
+                    <!--Card content-->
+                    <div class="card-body elegant-color white-text">
+                        <!--Title-->
+                        <h4 class="card-title">{{ pod_index.3.0 }}</h4>
+                        <!--Text-->
+                        <p class="card-text white-text text-truncate">{{ pod_index.3.1 }}</p>
+                    </div>
+
+                </div>
+                <!--/.Card-->
+
+            </div>
+            <!-- Grid column -->
+
+            <!-- Grid column -->
+            <div class="col-lg-4 col-md-6">
+
+               <!--Card-->
+                <div class="card">
+
+                    <!--Card image-->
+                    <div class="view">
+                        <a href="{% url 'podcast_detail' pod_index.4.3 %}">
+                        <img src="{{ pod_index.4.2 }}" class="card-img-top"
+                             alt="{{ pod_index.4.0 }} image"
+                        onerror="this.onerror=null;this.src='{{ MEDIA_URL }}img-placeholder.png';">
+
+                        </a>
+                    </div>
+
+                    <!--Card content-->
+                    <div class="card-body elegant-color white-text">
+                        <!--Title-->
+                        <h4 class="card-title">{{ pod_index.4.0 }}</h4>
+                        <!--Text-->
+                        <p class="card-text white-text text-truncate">{{ pod_index.4.1 }}</p>
+                    </div>
+
+                </div>
+                <!--/.Card-->
+
+            </div>
+            <!-- Grid column -->
+
+        </div>
+        <!-- BOTTOM ROW -->
+        <div class="row mb-5">
+
+            <!-- Grid column -->
+            <div class="col-md-6 mb-4">
+
+                <!--Card-->
+                <div class="card default-color-dark">
+
+                    <!--Card image-->
+                    <div class="view">
+                        <a href="{% url 'podcast_detail' pod_index.5.3 %}">
+                        <img src="{{ pod_index.5.2 }}" class="card-img-top"
+                             alt="{{ pod_index.5.0 }} image"
+                        onerror="this.onerror=null;this.src='{{ MEDIA_URL }}img-placeholder.png';">
+
+                        </a>
+                    </div>
+
+                    <!--Card content-->
+                    <div class="card-body text-center">
+                        <!--Title-->
+                        <h4 class="card-title white-text">{{ pod_index.5.0 }}</h4>
+                        <!--Text-->
+                        <p class="card-text white-text text-truncate">{{ pod_index.5.1 }}</p>
+                    </div>
+
+                </div>
+                <!--/.Card-->
+
+            </div>
+            <!-- Grid column -->
+
+            <!-- Grid column -->
+            <div class="col-md-6 mb-4">
+
+                <!--Card-->
+                <div class="card primary-color-dark">
+
+                    <!--Card image-->
+                    <div class="view">
+                        <a href="{% url 'podcast_detail' pod_index.6.3 %}">
+                        <img src="{{ pod_index.6.2 }}" class="card-img-top"
+                             alt="{{ pod_index.6.0 }}"
+                        onerror="this.onerror=null;this.src='{{ MEDIA_URL }}img-placeholder.png';">
+
+                        </a>
+                    </div>
+
+                    <!--Card content-->
+                    <div class="card-body text-center">
+                        <!--Title-->
+                        <h4 class="card-title white-text">{{ pod_index.6.0 }}</h4>
+                        <!--Text-->
+                        <p class="card-text white-text text-truncate">{{ pod_index.6.1 }}</p>
+                    </div>
+
+                </div>
+                <!--/.Card-->
+
+            </div>
+            <!-- Grid column -->
+
+        </div>
+        <!-- Grid row -->
+
     </div>
 {% endblock %}

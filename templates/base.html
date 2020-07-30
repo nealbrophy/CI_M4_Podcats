@@ -44,7 +44,7 @@
     <title>Podcats {% block extra_title %}{% endblock %}</title>
 </head>
 <body>
-<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+<nav class="navbar navbar-expand-lg navbar-dark darkest-bg">
     <a class="navbar-brand" href="{% url 'home' %}"><i class="fas fa-headphones-alt"></i> Podcats</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
             aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -53,49 +53,51 @@
 
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
-            <li class="nav-item active">
-                <a class="nav-link" href="{% url 'top_podcasts' %}">Top Podcasts <span class="sr-only">(current)</span></a>
+            <li class="nav-item">
+                <a class="nav-link{% if 'top_podcasts' in request.path %} active{% endif %}"
+                   href="{% url 'top_podcasts' %}">Top Podcasts</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">Latest Reviews</a>
+                <a class="nav-link{% if 'latest_reviews' in request.path %} active{% endif %}"
+                   href="{% url 'latest_reviews' %}">Latest Reviews</a>
             </li>
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
                    aria-haspopup="true" aria-expanded="false">
                     MyAccount
                 </a>
-                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <div class="dropdown-menu darkest-bg" aria-labelledby="navbarDropdown">
                     {% if request.user.is_authenticated %}
-                        <a class="dropdown-item" href="{% url 'dashboard' %}">Dashboard</a>
-                        {% if request.user.userprofile.pro_user %}
-                            <a class="dropdown-item" href="{% url 'add_podcast' %}">Add Podcast</a>
-                        {% endif %}
-                        {% if request.user.is_superuser %}
-                            <a class="dropdown-item" href="{% url 'upload' %}">Podcast Management</a>
-                            <a class="dropdown-item" href="{% url 'upload_category_data' %}">Category Management</a>
-                            <a class="dropdown-item" href="{% url 'upload_review_data' %}">Review Management</a>
-                        {% else %}
-                            <a class="dropdown-item" href="{% url 'benefits' %}">Add Podcast <sup><i
+                        <a class="dropdown-item text-white" href="{% url 'dashboard' %}">Dashboard</a>
+                        {% if request.user.userprofile.pro_user or request.user.is_superuser %}
+                            <a class="dropdown-item text-white" href="{% url 'add_podcast' %}">Add Podcast</a>
+                        {% elif request.user.is_superuser %}
+                            <a class="dropdown-item text-white" href="{% url 'benefits' %}">Add Podcast <sup><i
                                     class="fas fa-lock text-warning"> pro</i></sup></a>
+                            <a class="dropdown-item text-white" href="{% url 'upload' %}">Podcast Management</a>
+                            <a class="dropdown-item text-white" href="{% url 'upload_category_data' %}">Category
+                                Management</a>
+                            <a class="dropdown-item text-white" href="{% url 'upload_review_data' %}">Review
+                                Management</a>
                         {% endif %}
-                        <a class="dropdown-item" href="{% url 'account_logout' %}">Logout</a>
+                        <a class="dropdown-item text-white" href="{% url 'account_logout' %}">Logout</a>
                     {% else %}
-                        <a class="dropdown-item" href="{% url 'account_login' %}">Login</a>
-                        <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="{% url 'account_signup' %}">Register</a>
+                    <a class="dropdown-item text-white" href="{% url 'account_login' %}">Login</a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item text-white" href="{% url 'account_signup' %}">Register</a>
                     {% endif %}
                 </div>
             </li>
             {% if user.is_authenticated and not user.userprofile.pro_user %}
-            <li class="nav-item">
-                <a class="nav-link" href="{% url 'upgrade' %}">Upgrade to
-                    Pro</a>
-            </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'upgrade' %}">Upgrade to
+                        Pro</a>
+                </li>
             {% endif %}
         </ul>
         <form method="GET" action="{% url 'basic_search' %}" class="form-inline my-2 my-lg-0">
             <input class="form-control mr-sm-2" type="search" name="q" placeholder="Search" aria-label="Search">
-            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">
+            <button class="btn btn-outline-white my-2 my-sm-0" type="submit">
                 <i class="fas fa-search"></i> Search
             </button>
         </form>
@@ -106,7 +108,7 @@
 {% if messages %}
     <div class="message-container"></div>
 {% endif %}
-<footer class="bg-primary text-white text-center text-lg-left fixed-bottom">
+<footer class="darkest-bg text-white text-center text-lg-left fixed-bottom">
     <!-- Copyright -->
     <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
     </div>

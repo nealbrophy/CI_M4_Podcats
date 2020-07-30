@@ -25,13 +25,16 @@
                     <tbody>
                     <tr>
                         <th scope="row">Pro Membership (annual)</th>
-                        <td>${{ cost }}</td>
+                        <td>${{ purchase.purchase_amount }}</td>
                     </tr>
                     </tbody>
                 </table>
             </div>
             <div class="col-md-4 mx-auto">
                     <span class="text-muted text-center">Order Info</span>
+                    NAME: {{ purchase.full_name }}
+                    USERNAME: {{ purchase.user }}
+                    MEMBERSHIP: Pro (Lifetime)
             </div>
         </div>
     </div>

@@ -40,6 +40,8 @@ class PodcastForm(forms.ModelForm):
 
         for field in self.fields:
             self.fields[field].widget.attrs["class"] = "input-sm form-control"
+            self.fields[field].widget.attrs["autocomplete"] = "off"
+            self.fields["image"].widget.attrs["class"] = "btn btn-dark"
             if field != "category" and field != "image":
                 if self.fields[field].required:
                     placeholder = f'{placeholders[field]} *'

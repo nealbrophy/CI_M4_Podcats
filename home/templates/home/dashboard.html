@@ -8,13 +8,13 @@
             <hr class="w-50 mb-1" style="margin:auto !important">
         </div>
         <!-- Profile Card -->
-        <div class="row mx-auto">
-            <div class="card force-hover mt-5 col-md-4" style="width: 18rem;">
+        <div class="row mx-auto no-gutters">
+            <div class="card profile-card force-hover mt-5 col-md-4" style="width: 18rem;">
                 {% if profile.profile_image_url %}
-                    <img class="card-img-top" src="{{ profile.profile_image_url }}"
+                    <img class="card-img-top profile-card-img" src="{{ profile.profile_image_url }}"
                          alt="{{ profile.username }} profile image">
                 {% else %}
-                    <img class="card-img-top"
+                    <img class="card-img-top profile-card-img"
                          src="https://via.placeholder.com/300.jpg?text=No+Image+Added+Yet"
                          alt="{{ profile.username }} profile image">
                 {% endif %}
@@ -26,7 +26,7 @@
                             {{ profile.user }}
                         {% endif %}
                         {% if profile.pro_user %}
-                            <sup class="badge badge-warning"><i class="fas fa-star"></i> Pro</sup>
+                            <sup class="badge badge-warning text-black"><i class="fas fa-star"></i> Pro</sup>
                         {% endif %}
                     </h5>
                     <p class="card-text">Bio: {% if profile.bio %}{{ profile.bio }}{% endif %}</p>
@@ -39,19 +39,19 @@
                     <li class="list-group-item">Favourite Genres:
                         <br>
                         {% for fav in profile.fav_genre.all %}
-                            <span class="badge badge-dark">{{ fav.friendly_name }}</span>
+                            <span class="badge badge-danger">{{ fav.friendly_name }}</span>
                         {% endfor %}
                     </li>
                 </ul>
                 <div class="card-body">
                     <!-- Button trigger modal -->
-                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#staticBackdrop">
+                    <button type="button" class="btn btn-outline-white text-white" data-toggle="modal" data-target="#staticBackdrop">
                         <i class="fas fa-user-edit"></i> EDIT
                     </button>
                 </div>
             </div>
             <!-- Reviews -->
-            <div class="col-md-8 mt-5">
+            <div class="col-md-8 mt-5 ml-3">
                 {% if reviews %}
                     {% for review in reviews %}
                         <div class="card force-hover mx-auto mb-3">
