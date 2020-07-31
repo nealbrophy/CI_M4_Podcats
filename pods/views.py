@@ -15,11 +15,10 @@ from django.contrib.auth.decorators import login_required
 
 def top_podcasts(request):
     """ A view to return the Pods page """
-    # try:
-    #     pods = Podcast.objects.annotate(num_reviews=Count("review")).order_by("-num_reviews")[:10]
-    # except Podcast.DoesNotExist:
-    #     pods = None
-    pods = Podcast.objects.annotate(num_reviews=Count("review")).order_by("-num_reviews")[:10]
+    try:
+        pods = Podcast.objects.annotate(num_reviews=Count("review")).order_by("-num_reviews")[:10]
+    except Podcast.DoesNotExist:
+        pods = None
     top_ten = []
     if pods:
         for pod in pods:
@@ -53,7 +52,6 @@ def upload_pod_data(request):
             messages.error(request, "THIS IS NOT A CSV FILE")
     upload_pods(request)
     context = {}
-    # messages.success(request, f'Upload complete! {upload} rows added to DB from {file_count} files.')
     messages.success(request, f"Files added to upload queue.")
     return render(request, template, context)
 
@@ -164,15 +162,6 @@ def podcast_detail(request, id):
             profile = User.objects.get(pk=request.user.id).userprofile
         except User.DoesNotExist:
             profile = None
-    #     try:
-    #         this_user_review = Review.objects.filter(user_id=request.user.id, podcast_id=id)
-    #     except Review.DoesNotExist:
-    #         this_user_review = None
-    #
-    # if this_user_review:
-    #     review_form = ReviewForm(instance=this_user_review.id)
-    # else:
-    #     review_form = ReviewForm()
 
     from_page = request.META.get("HTTP_REFERER", "/")
     podcast = get_object_or_404(Podcast, pk=id)
@@ -200,8 +189,6 @@ def podcast_detail(request, id):
         "average": average_rating,
         "review_count": review_count,
         "profile": profile,
-        # "this_user_review": this_user_review,
-        # "review_form": review_form,
     }
 
     return render(request, "pods/podcast_detail.html", context)
@@ -214,8 +201,6 @@ def import_from_itunes(request, id):
     if user.pro_user:
         itunes_lookup = requests.get(f'{settings.ITUNES_LOOKUP_URL}{id}')
         result = itunes_lookup.json()
-        # this_id = result["results"][0]["collectionId"]
-        # this_title = result["results"]["collectionName"].replace(" ", "_").lower()
 
         Podcast.objects.update_or_create(
             itunes_id=result["results"][0]["collectionId"],

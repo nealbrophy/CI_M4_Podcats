@@ -8,11 +8,10 @@ from .tasks import upload_reviews
 
 def latest_reviews(request):
     """ A view to return the 8 most recently added reviews """
-    # try:
-    #     reviews = Review.objects.order_by("created")[:8]
-    # except Review.DoesNotExist:
-    #     reviews = None
-    reviews = Review.objects.order_by("created")[:8]
+    try:
+        reviews = Review.objects.order_by("created")[:8]
+    except Review.DoesNotExist:
+        reviews = None
     review_index = []
     if reviews:
         for review in reviews:
