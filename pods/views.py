@@ -15,10 +15,11 @@ from django.contrib.auth.decorators import login_required
 
 def top_podcasts(request):
     """ A view to return the Pods page """
-    try:
-        pods = Podcast.objects.annotate(num_reviews=Count("review")).order_by("-num_reviews")[:10]
-    except Podcast.DoesNotExist:
-        pods = None
+    # try:
+    #     pods = Podcast.objects.annotate(num_reviews=Count("review")).order_by("-num_reviews")[:10]
+    # except Podcast.DoesNotExist:
+    #     pods = None
+    pods = Podcast.objects.annotate(num_reviews=Count("review")).order_by("-num_reviews")[:10]
     top_ten = []
     if pods:
         for pod in pods:
