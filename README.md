@@ -86,11 +86,41 @@ To make a local copy of the repo on your machine:
 ### To run locally
 #### requirements
 In order to run the app locally you'll need:
-- 1.) A MongoDB a/c
-- 2.) A google account
-- 3.) A sendgrid account
+- 1.) Stripe a/c (once you obtain API keys you can save them in your settings file if you DON'T plan on pushing to Git. If you want to push to git it is HIGHLY recommended that you save your various SECRET KEYS in a git-ignored file).
+- 2.) A google developer a/c
+- 3.) A twitter developer a/c
 - 4.) Python 3.6 or later and pip package manager (I recommend [using pipenv to create a virtual environment](https://www.youtube.com/watch?v=6Qmnh5C4Pmo) before completing the `pip install` steps below)
 - 5.) To declare some environment variables
+- 6.) A code editor (I recommend PyCharm Pro, it has a generous free trial)
+- 7.) Install the requirements (pip3 install -r requirements.txt)
+
+Example using PyCharm Pro or Community Edition:
+- After you've git cloned as outlined above.
+- Open PyCharm and click "Open Project" and select the Podcats folder.
+- Before install requirements etc you''ll want to set-up a virtual environment. PyCharm makes this easy:
+    - Click the area at the bottom right where it says "Python 3.8 (no interpreter)" or perhaps just "No interpreter"
+    - Click "Add interpreter"
+    - Choose "New Environment" and just stick with the PyCharm defaults
+    - Create accounts for or login to the following services and obtain API keys
+        - https://console.developers.google.com/
+        - https://developer.twitter.com/en/portal/projects-and-apps
+        - https://stripe.com/ie
+    - Create a file called env.py and at the top of it type:
+        `import os`
+    - Add your various API keys to it as follows:
+        `os.environ.["STRIPE_PUBLIC_KEY"] = "your stripe public key"`
+        `os.environ.["STRIPE_SECRET_KEY"] = "your stripe secret key"`
+        `os.environ.["GOOGLE_OAUTH_ID"] = "your google oauth id"`
+        `os.environ.["GOOGLE_OAUTH_SECRET"] = "your google oauth secret"`
+        `os.environ.["TWITTER_KEY"] = "your twitter API key"`
+        `os.environ.["TWITTER_SECRET"] = "your twitter secret"`
+    - Once you have those added you can try running the app with:
+        `python3 manage.py runserver`
+    - If it runs ok you'll want to run the pending migrations with:
+        `python3 manage.py migrate`
+    - Next, create a super user for yourself:
+        `python3 manage.py createsuperuser`
+    - You can now start adding data to the app either by uploading via the provided CSV functionality, importing from iTunes, or manually adding.
 
 ### Instructions for deploying to Heroku
 
