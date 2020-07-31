@@ -1,9 +1,13 @@
 # Code Institute Milestone 4 - Full Stack Frameworks with Django
 
-## Podcats
+## Podcat(s)
 
 ### Project Description/Goals
-A podcast review platform.
+Podcat(s) The Podcast Catalogue(s) is a Podcast review platform where user can search for, add, review, and import podcasts from iTunes.
+
+Podcat(s) is deployed to Heroku from the master branch and will automatically update to reflect any new changes pushed.
+
+You can view the deployed site on [Heroku](https://podcats.herokuapp.com/)
 
 ### Technologies used
 - [Python](https://www.python.org/)
@@ -13,7 +17,6 @@ A podcast review platform.
 - [Google Fonts](https://fonts.google.com/)
 - [Font Awesome](https://fontawesome.com/)
 - [Material Icons](https://material.io/resources/icons/?style=baseline)
-- [Material Design for Bootstrap](https://mdbootstrap.com/)
 - [iTunes API](https://affiliate.itunes.apple.com/resources/documentation/itunes-store-web-service-search-api/)
 
  
@@ -23,16 +26,17 @@ A podcast review platform.
 | AS A                                              | I WANT                                                 | SO THAT                                 |
 | ----------------------------------------------------- | ------------------------------------------------------- | ------------------------------------------ |
 | Podcast consumer     | a way to search for podcasts by genre     | I can discover new podcasts |
-| Podcast consumer     | a way to filter podcasts by tags     | I refine the list of available  new podcasts |
-| Podcast consumer     | a way to bookmark podcasts     | I can come back later when I'm looking for something new to listen to |
 | Podcast consumer     | the ability to pay to unlock additional features    | I can get extra features |
 | Podcast consumer | to read reviews of podcasts | I can find out if a podcast is worth my attention |
 | Podcast consumer | to write reviews for podcasts I've listened to| I can help others find out if podcasts are worth listening to
+| Podcast consumer| a way to easily add or import missing podcasts| I can make sure my favourite pods are included|
 
 
 ### Strategy
+The idea here was to primarly be a place users could look up information and reviews about Podcast. A "Rotten Tomatoes or IMDb" but for podcasts.
 
 ### Scope
+Initially I wanted to have multiple APIs linked in so that the app could look for podcasts on various platforms. However, some early teething problems on that front caused me to scale back and instead add just one API which would serve as a fallback should the podcast being searched for not be present (and to allow easy import of said missing podcast). The API chosen for this was iTunes API as it fit the bill and was surprisingly easy to get set-up.
 
 ### Skeleton
 #### Wireframes
