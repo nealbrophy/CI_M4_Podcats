@@ -1,1 +1,1 @@
-web: gunicorn podcast.wsgi:application
+web: gunicorn podcats.wsgi:application
