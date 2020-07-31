@@ -9,7 +9,9 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col text-center mt-3">
-                <h2><span class="bg-orange text-white">Results for:</span><em class="normal-font">"{% if request.GET.q %}{{ request.GET.q }}{% else %}{{ q }}{% endif %}"</em></h2>
+                <h2><span class="bg-orange text-white">Results for:</span><em
+                        class="normal-font">"{% if request.GET.q %}{{ request.GET.q }}{% else %}{{ q }}{% endif %}"</em>
+                </h2>
                 <hr class="w-50 mx-auto mb-1">
                 {% if itunes_results %}
                     <span class="text-muted">
@@ -131,9 +133,12 @@
 
             {% endif %}
         </div>
-        <div class="row">
-            <span class="text-muted mx-auto">Not what you're looking for? <a href="{% if request.GET.q %}{% url "search_itunes" request.GET.q %}{% else %}{% url "search_itunes" q %}{% endif %}">Search iTunes</a></span>
-        </div>
+        {% if not itunes_results %}
+            <div class="row">
+                <span class="text-muted mx-auto">Not what you're looking for? <a href="
+                        {% if request.GET.q %}{% url "search_itunes" request.GET.q %}{% else %}{% url "search_itunes" q %}{% endif %}">Search iTunes</a></span>
+            </div>
+        {% endif %}
     </div>
 
 {% endblock %}
