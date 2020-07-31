@@ -9,7 +9,7 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col text-center mt-3">
-                <h2>Results for "{% if request.GET.q %}{{ request.GET.q }}{% else %}{{ q }}{% endif %}"</h2>
+                <h2><span class="bg-orange text-white">Results for:</span><em class="normal-font">"{% if request.GET.q %}{{ request.GET.q }}{% else %}{{ q }}{% endif %}"</em></h2>
                 <hr class="w-50 mx-auto mb-1">
                 {% if itunes_results %}
                     <span class="text-muted">

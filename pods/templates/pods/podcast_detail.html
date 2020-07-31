@@ -6,7 +6,8 @@
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
             {% if redirect_url %}
-                <li class="breadcrumb-item"><a href="{{ request.redirect_url }}">Back</a></li>
+                <li class="breadcrumb-item text-decoration-none text-pink"><a href="{{ request.redirect_url }}">Back</a>
+                </li>
             {% else %}
                 <li class="breadcrumb-item"><a href="{{ from_page }}">Back</a></li>
             {% endif %}
@@ -18,7 +19,7 @@
 {% block content %}
     <div class="container">
         <div class="row">
-            <div class="card mb-3">
+            <div class="card mb-3 mx-auto">
                 <div class="row no-gutters">
                     <div class="col-md-4">
                         {% if podcast.image_url %}
@@ -26,14 +27,14 @@
                                  alt="{{ podcast.friendly_title }} image">
                         {% else %}
                             <img src="https://is3-ssl.mzstatic.com/image/thumb/Features/v4/5f/88/96/5f8896e9-9be5-529a-af14-cc807367568a/mza_1382744875394257421.png/276x0w.png"
-                                 class="img-fluid img-thumbnail" alt="{{ podcast.title }} no image">
+                                 class="img-thumbnail" alt="{{ podcast.title }} no image">
                         {% endif %}
                     </div>
                     <div class="col-md-8">
-                        <div class="card-body">
+                        <div class="card-body detail-card">
                             <h5 class="card-title">{{ podcast.friendly_title }}</h5>
                             {% for cat in podcast.category.all %}
-                                <span class="badge-pill badge badge-primary">{{ cat.friendly_name }}</span>
+                                <span class="badge-pill badge bg-orange">{{ cat.friendly_name }}</span>
                             {% endfor %}
                             <br>
                             {% if average %}
@@ -86,42 +87,35 @@
                                         class="fas fa-globe"></i> Homepage</a>
                             {% endif %}
                             <br>
-                            {#                            <a href="{% url "edit_podcast" podcast.id %}" class="btn btn-primary">Edit</a>#}
-                            {#                            <a href="{% url "delete_podcast" podcast.id %}" class="btn btn-danger">Delete</a>#}
 
                             {% if user.is_authenticated %}
                                 <!-- RATE link -->
-                                <a class="btn btn-success" href="{% url 'add_review' podcast.id %}">
+                                <a class="btn btn-outline-orange" href="{% url 'add_review' podcast.id %}">
                                     <i class="fas fa-user-edit"></i> RATE
                                 </a>
                                 {% if profile.pro_user %}
                                     <!-- EDIT modal trigger -->
-                                    <button type="button" class="btn btn-primary" data-toggle="modal"
+                                    <button type="button" class="btn btn-outline-mid-blue" data-toggle="modal"
                                             data-target="#editBackdrop">
                                         <i class="fas fa-user-edit"></i> EDIT
                                     </button>
                                     <!-- DELETE modal trigger -->
-                                    <button type="button" class="btn btn-danger" data-toggle="modal"
+                                    <button type="button" class="btn btn-outline-pink" data-toggle="modal"
                                             data-target="#deleteBackdrop">
                                         <i class="fas fa-trash-alt"></i> DELETE
                                     </button>
+                                {% else %}
+                                    <!-- EDIT modal trigger DISABLED -->
+                                    <a href="{% url 'benefits' %}" data-toggle="tooltipped" title="Upgrade to Pro"
+                                            class="btn btn-secondary">
+                                        <i class="fas fa-user-edit"></i> EDIT
+                                    </a>
+                                    <!-- DELETE modal trigger DISABLED -->
+                                    <a href="{% url 'benefits' %}" type="button" data-toggle="tooltipped" title="Upgrade to Pro"
+                                            class="btn btn-secondary">
+                                        <i class="fas fa-trash-alt"></i> DELETE
+                                    </a>
                                 {% endif %}
-                            {% else %}
-                                <!-- RATE/LOGIN modal trigger -->
-                                <button type="button" class="btn btn-success" data-toggle="modal"
-                                        data-target="#loginBackdrop">
-                                    <i class="fas fa-user-edit"></i> RATE
-                                </button>
-                                <!-- EDIT modal trigger DISABLED -->
-                                <button type="button" data-toggle="tooltipped" title="Upgrade to Pro"
-                                        class="btn disabled">
-                                    <i class="fas fa-user-edit"></i> EDIT
-                                </button>
-                                <!-- DELETE modal trigger DISABLED -->
-                                <button type="button" data-toggle="tooltipped" title="Upgrade to Pro"
-                                        class="btn disabled">
-                                    <i class="fas fa-trash-alt"></i> DELETE
-                                </button>
                             {% endif %}
                         </div>
                     </div>
@@ -132,8 +126,8 @@
             <div class="podcast-detail-reviews">
                 {% for review in reviews %}
                     <div class="card mb-3">
-                        <div class="card-body bg-primary text-white">
-                            <h5 class="card-title">{{ review.title }}</h5>
+                        <div class="card-body bg-mid-blue text-white">
+                            <h5 class="card-title funky-font">{{ review.title }}</h5>
                             <p class="card-text text-wrap">{{ review.content }}</p>
                             <span class="card-rating">
                         {% with ''|center:review.rating as range %}
@@ -246,11 +240,11 @@
                         <div class="modal-body">
                             <span class="text-danger">Are you <em>SURE</em>?</span>
                             {% if podcast.image_url %}
-                                <img src="{{ podcast.image_url }}" class="img-fluid rounded mx-auto"
+                                <img src="{{ podcast.image_url }}" class="rounded mx-auto"
                                      alt="{{ podcast.friendly_title }} image" style="width: 200px;">
                             {% else %}
                                 <img src="https://is3-ssl.mzstatic.com/image/thumb/Features/v4/5f/88/96/5f8896e9-9be5-529a-af14-cc807367568a/mza_1382744875394257421.png/276x0w.png"
-                                     class="img-fluid img-thumbnail" alt="{{ podcast.title }} no image">
+                                     class="img-thumbnail" alt="{{ podcast.title }} no image">
                             {% endif %}
                             <input type="hidden" name="redirect_url" value="{{ request.path }}">
                         </div>

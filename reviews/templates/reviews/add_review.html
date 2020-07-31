@@ -5,7 +5,7 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col text-center mt-3">
-                <h2><span class="badge pink-bg text-white">Rate Podcast: {{ podcast.friendly_title }}</span></h2>
+                <h2><span class="bg-orange text-white">Rate Podcast: {{ podcast.friendly_title }}</span></h2>
                 <hr class="w-50 mx-auto mb-1">
             </div>
         </div>
@@ -18,7 +18,8 @@
                             {{ form|crispy }}
                         </div>
 
-                        <button type="submit" class="btn darkest-bg text-white"><i class="fas fa-save"></i> Save</button>
+                        <button type="submit" class="btn btn-darkest text-white"><i class="fas fa-save"></i> Save</button>
+                        <a class="btn btn-orange" href="{% url 'podcast_detail' podcast.id %}">Cancel</a>
                         {% if existing_review %}
                             <!-- DELETE modal trigger -->
                             <button type="button" class="btn btn-danger" data-toggle="modal"
@@ -38,7 +39,7 @@
                         <div class="modal-dialog">
                             <div class="modal-content">
                                 <div class="modal-header">
-                                    <h5 class="modal-title" id="deleteReviewBackdropLabel">Delete this review?</h5>
+                                    <h5 class="modal-title funky-font bg-pink" id="deleteReviewBackdropLabel">Delete this review?</h5>
                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                         <span aria-hidden="true">&times;</span>
                                     </button>

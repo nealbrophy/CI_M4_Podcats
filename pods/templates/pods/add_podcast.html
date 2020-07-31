@@ -4,8 +4,8 @@
 {% block content %}
     <div class="container-fluid">
         <div class="row">
-            <div class="col text-center mt-2">
-                <h2><span class="badge badge-dark">Add Podcast</span></h2>
+            <div class="col text-center mt-3">
+                <h2><span class="bg-orange text-white">Add Podcast</span></h2>
                 <hr class="w-50 mx-auto mb-1">
             </div>
         </div>
@@ -25,7 +25,7 @@
                                 {{ form.website | as_crispy_field }}
                             </fieldset>
                         </div>
-                        <button type="submit" class="btn darkest-bg text-white">Submit</button>
+                        <button type="submit" class="btn btn-darkest">Submit</button>
                         <input type="hidden" name="redirect_url" value="{{ request.path }}">
                     </form>
                 {% endif %}

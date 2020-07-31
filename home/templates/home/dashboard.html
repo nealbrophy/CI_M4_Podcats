@@ -2,13 +2,13 @@
 {% load static %}
 
 {% block content %}
-    <div class="container-fluid">
+    <div class="container">
         <div class="col-12 text-center mt-2">
-            <h2><span class="badge darkest-bg text-white">{{ profile.user|capfirst }}'s Dashboard</span></h2>
+            <h2><span class="bg-orange text-white">{{ profile.user|capfirst }}'s Dashboard</span></h2>
         </div>
         <!-- Profile Card -->
         <div class="row mx-auto no-gutters mb-5">
-            <div class="card profile-card force-hover mt-2 col-md-3 col-12">
+            <div class="card profile-card force-hover col-md-4 col-12">
                 {% if profile.profile_image_url %}
                     <img class="card-img-top profile-card-img" src="{{ profile.profile_image_url }}"
                          alt="{{ profile.username }} profile image">
@@ -38,7 +38,7 @@
                     <li class="list-group-item">Favourite Genres:
                         <br>
                         {% for fav in profile.fav_genre.all %}
-                            <span class="badge badge-light">{{ fav.friendly_name }}</span>
+                            <span class="badge badge-pill bg-danger">{{ fav.friendly_name }}</span>
                         {% endfor %}
                     </li>
                 </ul>
@@ -50,16 +50,16 @@
                 </div>
             </div>
             <!-- Reviews -->
-            <div class="col-md-6 col-12 mt-2 ml-3">
+            <div class="col-md-6 col-12 ml-3">
                 {% if reviews %}
                     {% for review in reviews %}
                         <div class="card force-hover mx-auto mb-3">
                             <div class="card-body">
                                 <h5 class="card-title">{{ review.title }}</h5>
-                                <h6 class="card-subtitle mb-2 text-muted">
+                                <h6 class="card-subtitle mb-2 funky-font text-muted">
                                     {% for i in reviewed_pods %}
                                         {% if i.0 == review.id %}
-                                            <a href="{% url "podcast_detail" review.podcast_id_id %}">{{ i.1.friendly_title }}</a>
+                                            <a class="text-decoration-none text-pink" href="{% url "podcast_detail" review.podcast_id_id %}">{{ i.1.friendly_title }}</a>
                                         {% endif %}
                                     {% endfor %}
                                 </h6>
@@ -92,7 +92,7 @@
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="staticBackdropLabel">Update Profile</h5>
+                        <h5 class="modal-title funky-font bg-pink" id="staticBackdropLabel">Update Profile</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -106,7 +106,7 @@
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                            <button type="submit" class="btn darkest-bg">Save</button>
+                            <button type="submit" class="btn btn-darkest">Save</button>
                         </div>
                     </form>
                 </div>

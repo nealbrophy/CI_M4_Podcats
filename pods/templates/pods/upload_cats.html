@@ -1,40 +1,74 @@
 {% extends "base.html" %}
 {% load static %}
 {% block content %}
-
-    {% if messages %}
-        {% for message in messages %}
-            <div>
-                <!--                | means OR operator-->
-                <strong>{{ message|safe }}</strong>
+    <div class="container">
+        <div class="row">
+            <div class="col text-center mt-3">
+                <h2><span class="bg-orange text-white">Add Categories</span></h2>
+                <hr class="w-50 mx-auto mb-1">
             </div>
-        {% endfor %}
-    {% else %}
-
-        {% if request.user.is_authenticated %}
-            {% if request.user.is_superuser %}
-                <div class="row mt-5">
-                    <div class="col-3 mx-auto">
-                        <div class="card bg-dark text-white">
-                            <form action="" method="POST" enctype="multipart/form-data">
-                                <div class="card-header">Upload Category Data</div>
-                                <div class="card-body">
-                                    <div class="form-group">
-                                        {% csrf_token %}
-                                        <label for="file1"> Upload a file</label>
-                                        <br>
-                                        <input type="file" class="form-control-file" id="file1" name="file">
-                                        <br>
-                                        <small>Only accepts CSV files</small>
-                                        <br>
-                                    </div>
-                                    <button class="btn btn-danger text-center" type="submit">Upload</button>
-                                </div>
-                            </form>
-                        </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <div class="card border-danger mb-3">
+                    <div class="card-body text-white">
+                        <h5 class="card-title">Instructions</h5>
+                        <p class="card-text">Using this page you can upload a CSV of Categories.
+                            It's recommended to keep the CSV to less than 50,000 rows per file.
+                            The format of the files should be:</p>
+                        <table class="table text-white">
+                            <thead>
+                            <tr>
+                                <th scope="col">UUID</th>
+                                <th scope="col">iTunes ID</th>
+                                <th scope="col">Title</th>
+                                <th scope="col">Friendly Title</th>
+                                <th scope="col">iTunes URL</th>
+                                <th scope="col">Image URL</th>
+                                <th scope="col">Description</th>
+                                <th scope="col">Website</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td>12345</td>
+                                <td>12345</td>
+                                <td>pod_title</td>
+                                <td>Friendly Title</td>
+                                <td>www.itunes...</td>
+                                <td>www.imgur...</td>
+                                <td>pod desc...</td>
+                                <td>homepage</td>
+                            </tr>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
+            </div>
+            {% if request.user.is_authenticated %}
+                {% if request.user.is_superuser %}
+                    <div class="row mt-3">
+                        <div class="col-12 mx-auto">
+                            <div class="card bg-dark text-white">
+                                <form action="" method="POST" enctype="multipart/form-data">
+                                    <div class="card-header">Upload Category Data</div>
+                                    <div class="card-body">
+                                        <div class="form-group">
+                                            {% csrf_token %}
+                                            <label for="file1"> Upload a file</label>
+                                            <br>
+                                            <input type="file" class="form-control-file" id="file1" name="file">
+                                            <br>
+                                            <small>Only accepts CSV files</small>
+                                            <br>
+                                        </div>
+                                        <button class="btn btn-danger text-center" type="submit">Upload</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                {% endif %}
             {% endif %}
-        {% endif %}
-    {% endif %}
+        </div>
 {% endblock %}

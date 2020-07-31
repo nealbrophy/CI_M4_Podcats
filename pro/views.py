@@ -27,7 +27,7 @@ def upgrade(request):
             return redirect('dashboard', context)
         else:
             cost = settings.PRO_LIFETIME_CHARGE
-            form = PurchaseForm({"purchase_amount": cost})
+            form = PurchaseForm(initial={"purchase_amount": cost})
             stripe_cost = round(cost * 100)
             stripe.api_key = stripe_secret_key
             intent = stripe.PaymentIntent.create(

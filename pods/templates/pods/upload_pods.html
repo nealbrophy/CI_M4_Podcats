@@ -1,59 +1,96 @@
 {% extends "base.html" %}
 {% load static %}
 {% block content %}
-    {% if messages %}
-        {% for message in messages %}
-            <div>
-                <!--                | means OR operator-->
-                <strong>{{ message|safe }}</strong>
-            </div>
-        {% endfor %}
-    {% else %}
+    <div class="container">
         {% if request.user.is_authenticated %}
             {% if request.user.is_superuser %}
+
                 <div class="row">
-                    <div class="col-3 mx-auto">
+                    <div class="col text-center mt-3">
+                        <h2><span class="bg-orange text-white">Add Podcast</span></h2>
+                        <hr class="w-50 mx-auto mb-1">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card border-danger mb-3">
+                            <div class="card-body text-white">
+                                <h5 class="card-title">Instructions</h5>
+                                <p class="card-text">Using this page you can upload up-to 8 CSV files of podcast data.
+                                    It's recommended to keep the CSV to less than 50,000 rows per file.
+                                    The format of the files should be:</p>
+                                <table class="table text-white">
+                                    <thead>
+                                    <tr>
+                                        <th scope="col">UUID</th>
+                                        <th scope="col">iTunes ID</th>
+                                        <th scope="col">Title</th>
+                                        <th scope="col">Friendly Title</th>
+                                        <th scope="col">iTunes URL</th>
+                                        <th scope="col">Image URL</th>
+                                        <th scope="col">Description</th>
+                                        <th scope="col">Website</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr>
+                                        <td>12345</td>
+                                        <td>12345</td>
+                                        <td>pod_title</td>
+                                        <td>Friendly Title</td>
+                                        <td>www.itunes...</td>
+                                        <td>www.imgur...</td>
+                                        <td>pod desc...</td>
+                                        <td>homepage</td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 mx-auto mt-2">
                         <div class="card bg-dark text-white">
                             <form action="" method="POST" enctype="multipart/form-data">
-                                <div class="card-header">Upload Podcast Data</div>
+                                <div class="card-header text-center">Upload Podcast Data CSVs</div>
                                 <div class="card-body">
-                                    <div class="form-group">
+                                    <div class="form-group upload">
                                         {% csrf_token %}
-                                        <label for="file1"> Upload a file</label>
+                                        <label for="file1"> Select file 1</label>
                                         <br>
-                                        <input type="file" class="form-control-file" id="file1" name="file1">
-                                        <br>
-                                        <label for="file2"> Upload a file</label>
+                                        <input type="file" class="form-control-file inline" id="file1" name="file1">
+                                        <label for="file2"> Select file 2</label>
                                         <br>
                                         <input type="file" class="form-control-file" id="file2" name="file2">
                                         <br>
-                                        <label for="file3"> Upload a file</label>
+                                        <label for="file3"> Select file 3</label>
                                         <br>
                                         <input type="file" class="form-control-file" id="file3" name="file3">
                                         <br>
-                                        <label for="file4"> Upload a file</label>
+                                        <label for="file4"> Select file 4</label>
                                         <br>
                                         <input type="file" class="form-control-file" id="file3" name="file4">
                                         <br>
-                                        <label for="file5"> Upload a file</label>
+                                        <label for="file5"> Select file 5</label>
                                         <br>
                                         <input type="file" class="form-control-file" id="file5" name="file5">
                                         <br>
-                                        <label for="file6"> Upload a file</label>
+                                        <label for="file6"> Select file 6</label>
                                         <br>
                                         <input type="file" class="form-control-file" id="file6" name="file6">
                                         <br>
-                                        <label for="file7"> Upload a file</label>
+                                        <label for="file7"> Select file 7</label>
                                         <br>
                                         <input type="file" class="form-control-file" id="file7" name="file7">
                                         <br>
-                                        <label for="file8"> Upload a file</label>
+                                        <label for="file8"> Select file 8</label>
                                         <br>
                                         <input type="file" class="form-control-file" id="file8" name="file8">
                                         <small>Only accepts CSV files</small>
                                         <br>
                                     </div>
-                                    <button class="btn btn-danger text-center" type="submit">Upload</button>
+                                    <div>
+                                        <button class="btn btn-outline-orange" type="submit">Upload</button>
+                                    </div>
                                 </div>
                             </form>
                         </div>
@@ -61,5 +98,5 @@
                 </div>
             {% endif %}
         {% endif %}
-    {% endif %}
+    </div>
 {% endblock %}

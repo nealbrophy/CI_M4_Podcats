@@ -2,8 +2,13 @@
 {% load static %}
 {% block content %}
     <div class="container content-row">
+    <div class="row">
+            <div class="col text-center mt-3">
+                <h2><span class="bg-orange text-white">Latest Reviews</span></h2>
+            </div>
+        </div>
         <div class="row">
-            <div class="card-columns align-items-stretch mt-5 mb-5">
+            <div class="card-columns align-items-stretch mb-5">
                 <div class="card">
                     <a class="text-decoration-none" href="{% url 'podcast_detail' review_index.0.podcast.id %}">
                         <img src="{{ review_index.0.podcast.image_url }}" class="card-img-top review-card-img"
@@ -18,7 +23,7 @@
                         {% endwith %}
                         <h6 class="text-black">~ {{ review_index.0.review.user }}</h6>
                         <p class="card-text">"{{ review_index.0.review.content }}"</p>
-                    <i class="fas fa-tag text-pink"></i> <small class="text-pink">{{ review_index.0.podcast.friendly_title }}</small>
+                    <i class="fas fa-tag text-pink"></i> <small class="text-pink funky-font">{{ review_index.0.podcast.friendly_title }}</small>
                     </div>
                 </div>
                 <div class="card">
@@ -35,7 +40,7 @@
                         {% endwith %}
                         <h6 class="text-black">~ {{ review_index.1.review.user }}</h6>
                         <p class="card-text">"{{ review_index.1.review.content }}"</p>
-                    <i class="fas fa-tag text-pink"></i> <small class="text-pink">{{ review_index.1.podcast.friendly_title }}</small>
+                    <i class="fas fa-tag text-pink"></i> <small class="text-pink funky-font">{{ review_index.1.podcast.friendly_title }}</small>
                     </div>
                 </div>
                 <div class="card">
@@ -52,7 +57,7 @@
                         {% endwith %}
                         <h6 class="text-black">~ {{ review_index.2.review.user }}</h6>
                         <p class="card-text">{{ review_index.2.review.content }}</p>
-                    <i class="fas fa-tag text-pink"></i> <small class="text-pink">{{ review_index.2.podcast.friendly_title }}</small>
+                    <i class="fas fa-tag text-pink"></i> <small class="text-pink funky-font">{{ review_index.2.podcast.friendly_title }}</small>
                     </div>
                 </div>
                 <div class="card">
@@ -69,7 +74,7 @@
                         {% endwith %}
                         <h6 class="text-black">~ {{ review_index.3.review.user }}</h6>
                         <p class="card-text">"{{ review_index.3.review.content }}"</p>
-                    <i class="fas fa-tag text-pink"></i> <small class="text-pink">{{ review_index.3.podcast.friendly_title }}</small>
+                    <i class="fas fa-tag text-pink"></i> <small class="text-pink funky-font">{{ review_index.3.podcast.friendly_title }}</small>
                     </div>
                 </div>
                 <div class="card">
@@ -86,7 +91,7 @@
                         {% endwith %}
                         <h6 class="text-black">~ {{ review_index.4.review.user }}</h6>
                         <p class="card-text">{{ review_index.4.review.content }}</p>
-                    <i class="fas fa-tag text-pink"></i> <small class="text-pink">{{ review_index.4.podcast.friendly_title }}</small>
+                    <i class="fas fa-tag text-pink"></i> <small class="text-pink funky-font">{{ review_index.4.podcast.friendly_title }}</small>
                     </div>
                 </div>
                 <div class="card">
@@ -103,7 +108,7 @@
                         {% endwith %}
                         <h6 class="text-black">~ {{ review_index.5.review.user }}</h6>
                         <p class="card-text">"{{ review_index.5.review.content }}"</p>
-                    <i class="fas fa-tag text-pink"></i> <small class="text-pink">{{ review_index.5.podcast.friendly_title }}</small>
+                    <i class="fas fa-tag text-pink"></i> <small class="text-pink funky-font">{{ review_index.5.podcast.friendly_title }}</small>
                     </div>
                 </div>
                 <div class="card">
@@ -120,7 +125,7 @@
                         {% endwith %}
                         <h6 class="text-black">~ {{ review_index.6.review.user }}</h6>
                         <p class="card-text">{{ review_index.6.review.content }}</p>
-                        <i class="fas fa-tag text-pink"></i> <small class="text-pink">{{ review_index.6.podcast.friendly_title }}</small>
+                        <i class="fas fa-tag text-pink"></i> <small class="text-pink funky-font">{{ review_index.6.podcast.friendly_title }}</small>
                     </div>
                 </div>
             </div>

@@ -21,6 +21,9 @@
         <link href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" rel="stylesheet">
         <!-- Google Fonts -->
         <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Peralta&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Zilla+Slab+Highlight:wght@700&display=swap"
+              rel="stylesheet">
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     {% endblock %}
     {% block extra_css %}{% endblock %}
@@ -43,7 +46,7 @@
 </head>
 <body>
 <nav class="navbar navbar-expand-lg navbar-dark darkest-bg">
-    <a class="navbar-brand" href="{% url 'home' %}"><i class="fas fa-headphones-alt"></i> Podcats</a>
+    <a class="navbar-brand" href="{% url 'home' %}"><i class="fas fa-headphones-alt"></i> Podcat(s)</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
             aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -67,16 +70,20 @@
                 <div class="dropdown-menu darkest-bg" aria-labelledby="navbarDropdown">
                     {% if request.user.is_authenticated %}
                         <a class="dropdown-item text-white" href="{% url 'dashboard' %}">Dashboard</a>
-                        {% if request.user.userprofile.pro_user or request.user.is_superuser %}
+                        {% if request.user.is_superuser %}
                             <a class="dropdown-item text-white" href="{% url 'add_podcast' %}">Add Podcast</a>
-                        {% elif request.user.is_superuser %}
-                            <a class="dropdown-item text-white" href="{% url 'benefits' %}">Add Podcast <sup><i
-                                    class="fas fa-lock text-warning"> pro</i></sup></a>
                             <a class="dropdown-item text-white" href="{% url 'upload' %}">Podcast Management</a>
                             <a class="dropdown-item text-white" href="{% url 'upload_category_data' %}">Category
                                 Management</a>
                             <a class="dropdown-item text-white" href="{% url 'upload_review_data' %}">Review
                                 Management</a>
+                        {% endif %}
+                        {% if user.userprofile.pro_user and not request.user.is_superuser %}
+                            <a class="dropdown-item text-white" href="{% url 'add_podcast' %}">Add Podcast</a>
+                        {% endif %}
+                        {% if not user.userprofile.pro_user %}
+                            <a class="dropdown-item text-white" href="{% url 'benefits' %}">Add Podcast <sup><i
+                                    class="fas fa-star"></i>Pro</sup></a>
                         {% endif %}
                         <a class="dropdown-item text-white" href="{% url 'account_logout' %}">Logout</a>
                     {% else %}
@@ -122,12 +129,6 @@
 {% endif %}
 {% block content %}{% endblock %}
 
-<footer class="darkest-bg text-white text-center text-lg-left fixed-bottom">
-    <!-- Copyright -->
-    <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
-    </div>
-    <!-- Copyright -->
-</footer>
 {% block postload_js %}
     <script>
         $('.toast').toast("show")
