@@ -4,11 +4,11 @@
 {% block content %}
     <div class="container-fluid">
         <div class="col-12 text-center mt-2">
-            <h2>{{ profile.user|capfirst }}'s Dashboard</h2>
+            <h2><span class="badge darkest-bg text-white">{{ profile.user|capfirst }}'s Dashboard</span></h2>
         </div>
         <!-- Profile Card -->
         <div class="row mx-auto no-gutters mb-5">
-            <div class="card profile-card force-hover mt-2 col-md-3 col-12" style="width: 18rem;">
+            <div class="card profile-card force-hover mt-2 col-md-3 col-12">
                 {% if profile.profile_image_url %}
                     <img class="card-img-top profile-card-img" src="{{ profile.profile_image_url }}"
                          alt="{{ profile.username }} profile image">
@@ -106,7 +106,7 @@
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                            <button type="submit" class="btn btn-primary">Save</button>
+                            <button type="submit" class="btn darkest-bg">Save</button>
                         </div>
                     </form>
                 </div>

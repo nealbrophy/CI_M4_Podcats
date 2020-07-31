@@ -61,7 +61,7 @@ def add_review(request, podcast_id):
         if existing_review:
             form = ReviewForm(instance=existing_review)
         else:
-            form = ReviewForm({"podcast_id": podcast_id, "user": user.id})
+            form = ReviewForm(initial={"podcast_id": podcast_id, "user": user.id})
 
         template = "reviews/add_review.html"
         context = {

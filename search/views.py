@@ -17,7 +17,7 @@ def basic_search(request):
             query = request.GET["q"]
             if not query:
                 messages.error(request, "You didn't enter any search criteria!")
-                return redirect(reverse("index"))
+                return redirect(reverse("home"))
     queries = Q(title__icontains=query) | Q(description__icontains=query) | Q(uuid__icontains=query)
     if not all_pods.filter(queries):
         q = request.GET["q"]
@@ -62,6 +62,8 @@ def search_itunes(request, q):
             "image_url": response["results"][i]["artworkUrl600"],
             "category": response["results"][i]["genres"],
         })
-    return render(request, 'search/results.html', {
+    context = {
+        "q": query,
         "itunes_results": itunes_results,
-    })
+    }
+    return render(request, 'search/results.html', context)

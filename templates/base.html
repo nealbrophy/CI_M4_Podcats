@@ -80,9 +80,9 @@
                         {% endif %}
                         <a class="dropdown-item text-white" href="{% url 'account_logout' %}">Logout</a>
                     {% else %}
-                    <a class="dropdown-item text-white" href="{% url 'account_login' %}">Login</a>
-                    <div class="dropdown-divider"></div>
-                    <a class="dropdown-item text-white" href="{% url 'account_signup' %}">Register</a>
+                        <a class="dropdown-item text-white" href="{% url 'account_login' %}">Login</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item text-white" href="{% url 'account_signup' %}">Register</a>
                     {% endif %}
                 </div>
             </li>
@@ -94,7 +94,8 @@
             {% endif %}
         </ul>
         <form method="GET" action="{% url 'basic_search' %}" class="form-inline my-2 my-lg-0">
-            <input class="form-control mr-sm-2" type="search" name="q" placeholder="Search" aria-label="Search" required>
+            <input class="form-control mr-sm-2" type="search" name="q" placeholder="Search" aria-label="Search"
+                   required>
             <button class="btn btn-outline-light my-2 my-sm-0" type="submit">
                 <i class="fas fa-search"></i> Search
             </button>
@@ -102,10 +103,25 @@
     </div>
 </nav>
 {% block extra_header %}{% endblock %}
-{% block content %}{{ request.user.userprofile.pro_user }}{% endblock %}
 {% if messages %}
-    <div class="message-container"></div>
+    <div class="message-container">
+        <div aria-live="polite" aria-atomic="true" style="position: relative;">
+            <!-- Position it -->
+            <div style="position: absolute; top: 3rem; right: 3rem;">
+                {% for message in messages %}
+                    {% with message.level as level %}
+                        {% if level == 25 %}
+                            {% include 'includes/toast_success.html' %}
+                        {% endif %}
+                    {% endwith %}
+                {% endfor %}
+            </div>
+        </div>
+
+    </div>
 {% endif %}
+{% block content %}{% endblock %}
+
 <footer class="darkest-bg text-white text-center text-lg-left fixed-bottom">
     <!-- Copyright -->
     <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
@@ -113,6 +129,9 @@
     <!-- Copyright -->
 </footer>
 {% block postload_js %}
+    <script>
+        $('.toast').toast("show")
+    </script>
 {% endblock %}
 </body>
 </html>

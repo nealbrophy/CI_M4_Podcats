@@ -8,9 +8,21 @@
 {% block content %}
     <div class="container-fluid">
         <div class="row">
+            <div class="col text-center mt-3">
+                <h2>Results for "{% if request.GET.q %}{{ request.GET.q }}{% else %}{{ q }}{% endif %}"</h2>
+                <hr class="w-50 mx-auto mb-1">
+                {% if itunes_results %}
+                    <span class="text-muted">
+                    The below results are from iTunes.
+                </span>
+                {% endif %}
+            </div>
+        </div>
+        <div class="row">
             <div class="text-center mt-3">
-                <h2>Results for "{{ request.GET.q }}"</h2>
-                {% if results %} <!-- results from the database -->
+
+                <!-- results from the database -->
+                {% if results %}
                     <!-- pagination start -->
                     {% if results.has_other_pages %}
                         <nav aria-label="Search results pages">
@@ -75,7 +87,7 @@
                             <a href="{% url "podcast_detail" result.id %}">
                                 <img src="{{ result.image_url }}" class="card-img-top"
                                      alt="image for {{ result.title }}"
-                    onerror="this.onerror=null;this.src='{{ MEDIA_URL }}img-placeholder.png';">
+                                     onerror="this.onerror=null;this.src='{{ MEDIA_URL }}img-placeholder.png';">
                             </a>
                         {% else %}
                             <a href="{% url "podcast_detail" result.id %}">
@@ -86,24 +98,20 @@
                         <div class="card-body d-flex flex-column">
                             <h5 class="card-title">{{ result.friendly_title }}</h5>
                             <p class="card-text text-truncate text-light">{{ result.description }}</p>
-                            <a href="{% url "podcast_detail" result.id %}" class="btn mt-auto btn-outline-light">View</a>
+                            <a href="{% url "podcast_detail" result.id %}"
+                               class="btn mt-auto btn-outline-light">View</a>
                         </div>
                     </div>
                 {% endfor %}
-                <span class="text-muted">Not what you're looking for? <a href="{% url "search_itunes" request.GET.q %}">Search iTunes</a></span>
             {% endif %}
             <!-- results from iTunes -->
             {% if itunes_results %}
-                <span class="text-muted">
-                    No results in the database but we found the below on iTunes.
-                    If it's correct, feel free to add it to the DB
-                </span>
                 {% for result in itunes_results %}
                     <div class="card force-hover my-2 mx-2" style="width: 18rem;">
                         {% if result.image_url %}
-                            <img src="{{ result.image_url }}" class="card-img-top mt-2"
+                            <img src="{{ result.image_url }}" class="card-img-top"
                                  alt="image for {{ result.title }}"
-                    onerror="this.onerror=null;this.src='{{ MEDIA_URL }}img-placeholder.png';">
+                                 onerror="this.onerror=null;this.src='{{ MEDIA_URL }}img-placeholder.png';">
                         {% else %}
                             <img src="{{ MEDIA_URL }}img-placeholder.png" class="card-img-top mt-2"
                                  alt="image for {{ result.title }}">
@@ -122,6 +130,9 @@
                 {% endfor %}
 
             {% endif %}
+        </div>
+        <div class="row">
+            <span class="text-muted mx-auto">Not what you're looking for? <a href="{% if request.GET.q %}{% url "search_itunes" request.GET.q %}{% else %}{% url "search_itunes" q %}{% endif %}">Search iTunes</a></span>
         </div>
     </div>
 

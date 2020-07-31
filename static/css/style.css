@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Bowlby+One+SC&display=swap');
 
 body {
-    background-color: #f4eeff !important;
+    background-color: white !important;
 }
 
 .card {
@@ -27,6 +27,18 @@ body {
 
 .dropdown-item:hover {
     background-color: #a6b1e1 !important;
+}
+
+.bg-warning {
+    background-color: #FF8600 !important;
+}
+
+.bg-pink {
+    background-color: #EDAFB8 !important;
+}
+
+.text-pink {
+    color: #EDAFB8 !important;
 }
 
 .text-large {
