@@ -2,14 +2,14 @@
 
 body {
     background-color: #f4eeff !important;
-    color: #424874 !important;
 }
 
 .card {
-    background-color: #a6b1e1 !important;
+    background-color: #424874 !important;
+    color: white !important;
 }
 
-.thead-light-blue {
+.bg-light-blue {
     background-color: #dcd6f7 !important;
 }
 
@@ -162,5 +162,5 @@ label[for="id_password"] {
 /* Review cards*/
 
 .review-card-img {
-    border-radius: 50% 0;
+    border-radius: 0 0 50% 0;
 }

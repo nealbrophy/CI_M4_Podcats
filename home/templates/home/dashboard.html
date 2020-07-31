@@ -3,13 +3,12 @@
 
 {% block content %}
     <div class="container-fluid">
-        <div class="col-12 text-center mt-3">
+        <div class="col-12 text-center mt-2">
             <h2>{{ profile.user|capfirst }}'s Dashboard</h2>
-            <hr class="w-50 mb-1" style="margin:auto !important">
         </div>
         <!-- Profile Card -->
-        <div class="row mx-auto no-gutters">
-            <div class="card profile-card force-hover mt-5 col-md-4" style="width: 18rem;">
+        <div class="row mx-auto no-gutters mb-5">
+            <div class="card profile-card force-hover mt-2 col-md-3 col-12" style="width: 18rem;">
                 {% if profile.profile_image_url %}
                     <img class="card-img-top profile-card-img" src="{{ profile.profile_image_url }}"
                          alt="{{ profile.username }} profile image">
@@ -39,19 +38,19 @@
                     <li class="list-group-item">Favourite Genres:
                         <br>
                         {% for fav in profile.fav_genre.all %}
-                            <span class="badge badge-danger">{{ fav.friendly_name }}</span>
+                            <span class="badge badge-light">{{ fav.friendly_name }}</span>
                         {% endfor %}
                     </li>
                 </ul>
                 <div class="card-body">
                     <!-- Button trigger modal -->
-                    <button type="button" class="btn btn-outline-white text-white" data-toggle="modal" data-target="#staticBackdrop">
+                    <button type="button" class="profile-edit-btn btn btn-outline-light" data-toggle="modal" data-target="#staticBackdrop">
                         <i class="fas fa-user-edit"></i> EDIT
                     </button>
                 </div>
             </div>
             <!-- Reviews -->
-            <div class="col-md-8 mt-5 ml-3">
+            <div class="col-md-6 col-12 mt-2 ml-3">
                 {% if reviews %}
                     {% for review in reviews %}
                         <div class="card force-hover mx-auto mb-3">
@@ -68,13 +67,13 @@
                                 <br>
                                 {% with ''|center:review.rating as range %}
                                     {% for i in range %}
-                                        <span class="material-icons">star_rate</span>
+                                        <span class="material-icons text-warning">star_rate</span>
                                     {% endfor %}
                                 {% endwith %}
                             </div>
                             {% for i in reviewed_pods %}
                                 {% if i.0 == review.id %}
-                                    <a class="text-right mr-2 mb-1 text-danger" href="{% url 'add_review' i.1.id %}">
+                                    <a class="text-right mr-2 mb-1 text-light" href="{% url 'add_review' i.1.id %}">
                                         <span class="material-icons">create</span>
                                     </a>
                                 {% endif %}
@@ -82,7 +81,7 @@
                         </div>
                     {% endfor %}
                 {% else %}
-                    <h5 class="text-muted mt-5 text-center">Your reviews will show here!</h5>
+                    <h5 class="text-muted mt-5 text-center">When you review something, it'll show here!</h5>
                 {% endif %}
             </div>
 

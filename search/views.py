@@ -51,9 +51,9 @@ def search_itunes(request, q):
     """ A view to return results via the iTunes API """
     query = q
     itunes_results = []
-    raw_response = requests.get(f"{settings.ITUNES_SEARCH_URL}term={query}&entity=podcast,podcastAuthor")
+    raw_response = requests.get(f"{settings.ITUNES_SEARCH_URL}term={query}&entity=podcast")
     response = raw_response.json()
-
+    print(response)
     for i in range(response["resultCount"]):
         itunes_results.append({
             "itunes_id": response["results"][i]["collectionId"],
