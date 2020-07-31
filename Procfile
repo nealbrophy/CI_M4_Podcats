@@ -1,1 +1,1 @@
-web: gunicorn podcats.wsgi:application
+web: gunicorn Podcats_app.wsgi:application
