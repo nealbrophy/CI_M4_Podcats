@@ -15,19 +15,14 @@ from django.contrib.auth.decorators import login_required
 
 def top_podcasts(request):
     """ A view to return the Pods page """
-    pods = Podcast.objects.annotate(num_reviews=Count("review")).order_by("-num_reviews")[:10]
-    # podcasts = Podcast.objects.all()
-    # for podcast in podcasts:
-    #     try:
-    #         reviews = Review.objects.filter(podcast_id=podcast.id).count()
-    #     except Review.DoesNotExist:
-    #         reviews = 0
-    #     review_count.append((reviews, podcast.id))
-
+    try:
+        pods = Podcast.objects.annotate(num_reviews=Count("review")).order_by("-num_reviews")[:10]
+    except Podcast.DoesNotExist:
+        pods = None
     top_ten = []
-    for pod in pods:
-        top_ten.append((pod.image_url, pod.friendly_title, pod.num_reviews, pod.id))
-
+    if pods:
+        for pod in pods:
+            top_ten.append((pod.image_url, pod.friendly_title, pod.num_reviews, pod.id))
 
     context = {
         "pods": pods,
@@ -90,6 +85,7 @@ def upload_category_data(request):
             friendly_name=column[2],
         )
     context = {}
+    messages.success(request, "Categories uploaded!")
     return render(request, template, context)
 
 

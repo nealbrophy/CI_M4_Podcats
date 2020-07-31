@@ -8,13 +8,16 @@ from .tasks import upload_reviews
 
 def latest_reviews(request):
     """ A view to return the 8 most recently added reviews """
-
-    reviews = Review.objects.order_by("created")[:8]
+    try:
+        reviews = Review.objects.order_by("created")[:8]
+    except Review.DoesNotExist:
+        reviews = None
     review_index = []
-    for review in reviews:
-        review_index.append({
-            "review": review,
-            "podcast": Podcast.objects.get(id=review.podcast_id_id)})
+    if reviews:
+        for review in reviews:
+            review_index.append({
+                "review": review,
+                "podcast": Podcast.objects.get(id=review.podcast_id_id)})
 
     context = {
         "reviews": reviews,

@@ -8,6 +8,7 @@
             </div>
         </div>
         <div class="row">
+        {% if reviews %}
             <div class="card-columns align-items-stretch mb-5">
                 <div class="card">
                     <a class="text-decoration-none" href="{% url 'podcast_detail' review_index.0.podcast.id %}">
@@ -130,6 +131,9 @@
                 </div>
             </div>
         </div>
+    {% else %}
+            <h2 class="mx-auto mt-5 darkest-fg">You haven't added any reviews yet!</h2>
+    {% endif %}
     </div>
 
 {% endblock %}

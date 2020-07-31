@@ -9,6 +9,7 @@
             </div>
         </div>
         <div class="row">
+            {% if pods %}
             <div class="col-md-8 mx-auto">
                 <table class="table table-striped mb-5">
                     <thead class="darkest-bg text-white">
@@ -143,6 +144,9 @@
                 </table>
             </div>
         </div>
+    {% else %}
+        <h2 class="mx-auto mt-5 darkest-fg">You haven't added any pods yet!</h2>
+    {% endif %}
     </div>
 
 {% endblock %}
