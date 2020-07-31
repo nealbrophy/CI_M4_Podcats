@@ -74,6 +74,7 @@ For the look of the site I wanted muted/pastel purples or blues. I decided on [t
 
 ## Deployment
 ### Instructions for running locally
+This app shows it's powere when there is lots of data being used. As such I recommend running it locally rather than demoing on Heroku due to the limitation on rows in Heroku's Postgres.
 To make a local copy of the repo on your machine:
 
 - Create a folder in the desired location on your computer.
@@ -108,12 +109,12 @@ Example using PyCharm Pro or Community Edition:
     - Create a file called env.py and at the top of it type:
         `import os`
     - Add your various API keys to it as follows:
-        `os.environ.["STRIPE_PUBLIC_KEY"] = "your stripe public key"`
-        `os.environ.["STRIPE_SECRET_KEY"] = "your stripe secret key"`
-        `os.environ.["GOOGLE_OAUTH_ID"] = "your google oauth id"`
-        `os.environ.["GOOGLE_OAUTH_SECRET"] = "your google oauth secret"`
-        `os.environ.["TWITTER_KEY"] = "your twitter API key"`
-        `os.environ.["TWITTER_SECRET"] = "your twitter secret"`
+        - `os.environ.["STRIPE_PUBLIC_KEY"] = "your stripe public key"`
+        - `os.environ.["STRIPE_SECRET_KEY"] = "your stripe secret key"`
+        - `os.environ.["GOOGLE_OAUTH_ID"] = "your google oauth id"`
+        - `os.environ.["GOOGLE_OAUTH_SECRET"] = "your google oauth secret"`
+        - `os.environ.["TWITTER_KEY"] = "your twitter API key"`
+        - `os.environ.["TWITTER_SECRET"] = "your twitter secret"`
     - Once you have those added you can try running the app with:
         `python3 manage.py runserver`
     - If it runs ok you'll want to run the pending migrations with:
@@ -123,20 +124,47 @@ Example using PyCharm Pro or Community Edition:
     - You can now start adding data to the app either by uploading via the provided CSV functionality, importing from iTunes, or manually adding.
 
 ### Instructions for deploying to Heroku
+If you would like to deploy your version to heroku you can follow the steps below:
+- Create a [Heroku](https://www.heroku.com/) account
+- Click `New` and `Create New App`
+- Give your app a name and choose a region and click `Create App`
+- Go to `Settings` and click `Reveal Config Vars`
+- You should now add config vars here to match those created [above](#Environment-Variables) in your local env.py file. The finished result should look like this:
+<img src="static/images/heroku-config-vars.png" alt="example of heroku config vars" width="300px">
+- In your text-editor/IDE type:
+ - `echo web: python app.py > Procfile`
+- Go to the `Deploy` section on your heroku project and follow the instructions to push your app to the heroku git
 
 ## Testing
 ### Unit Tests
+N/A
 
 ### Manual Tests
+The app went through rigorous manual testing as follows:
+
+#### Adding Data
+- Uploading podcast data from CSV in files ranging from a few hundred rows to >100,000
+- Uploading review data from CSV as above
+- Deleting above data and re-uploading
+- Uploading with missing/incorrect info
+
+#### Relationships
+Since the app relies on relationships between categories, podcasts, reviews, and users these relationships were tested with the following datasets:
+- [iTunes podcasts](https://www.kaggle.com/roman6335/13000-itunes-podcasts-april-2018) by roman6335
+- [All Podcast Episodes published in Dec 2018](https://www.kaggle.com/listennotes/all-podcast-episodes-published-in-december-2017) by Listen Notes
+- [Podcast Reviews](https://www.kaggle.com/thoughtvector/podcastreviews) by Thought Vector
+- [Podcasts-Data](https://github.com/odenizgiz/Podcasts-Data) by odenizgiz
+- [all-podcasts-dataset](https://github.com/ageitgey/all-podcasts-dataset) by ageitgey
 
 ## Validation
 
 ### Python validation
+All Python code was validated using PyCharm Professional's built-in validation as well as intermittent validation against the [PEP8 online checker](http://pep8online.com/)
 
 ### HTML validation
-
+All pages validated using [W3C Markup Validation Service](https://validator.w3.org/)
 ### CSS validation
-
+Style sheets validated using [W3C CSS Validation Service](https://jigsaw.w3.org/css-validator/validator)
 ### JS validation
 
 ## Bugs
@@ -155,3 +183,4 @@ Example using PyCharm Pro or Community Edition:
     - [this answer](https://stackoverflow.com/a/30864681) from [Blackeagle52](https://stackoverflow.com/users/2798610/blackeagle52) on StackOverflow
 - Login modal with help from [this answer](https://stackoverflow.com/questions/39197723/how-to-move-singup-signin-templates-into-dropdown-menu/39235634#39235634) on StackOverflow
 - Changed Review.podcast_id from (very slow) choices to raw id field with help from [this answer](https://stackoverflow.com/questions/980405/raw-id-fields-for-modelforms) on StackOverflow
+- Stripe implementation from [Code Institute's Boutique Ado](https://github.com/ckz8780/boutique_ado_v1) project

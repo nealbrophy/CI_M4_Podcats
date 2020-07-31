@@ -87,6 +87,7 @@ def upgrade_success(request, order_number):
         user.save()
         return render(request, "pro/upgrade_success.html", context)
 
+
 def benefits(request):
     """ A review to return the benefits page. """
 
