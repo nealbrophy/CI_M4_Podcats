@@ -62,11 +62,35 @@ For the look of the site I wanted muted/pastel purples or blues. I decided on [t
 - If the user adding the review has already reviewed the podcast in question they will instead be shown their existing review which they can update or delete.
 - Pro Upgrade for users who want the ability to add, edit, and delete podcasts from the database.
 - Adding podcasts can be done manually but typing in the necessary info or by search iTunes and importing the podcast info from there.
+- User dashboard where users can edit their profile and see reviews they've posted.
+- Latest Reviews section that displays several of the most recently posted reviews & info about the podcasts they relate to.
+- Top Podcasts section that shows the "Most Review" podcasts.
 
 ### Future Features
+- User playlists where users can curate lists of their favourite podcasts.
+- Advanced search that can be used to search by category, genre etc.
+- Podcast Recommendations.
+- Share podcast/review to social media.
 
 ## Deployment
 ### Instructions for running locally
+To make a local copy of the repo on your machine:
+
+- Create a folder in the desired location on your computer.
+- Open a terminal ([Mac instructions](https://macpaw.com/how-to/use-terminal-on-mac)|[Windows instructions](https://www.quora.com/How-do-I-open-terminal-in-windows)|[Linux instructions](https://www.howtogeek.com/howto/22283/four-ways-to-get-instant-access-to-a-terminal-in-linux/))
+- Navigate to the folder you created using `cd` command in terminal (e.g. `cd ~/Documents/Podcats`)
+- Type `git init`
+- Next type `git clone https://github.com/nealbrophy/CI_M4_Podcats`
+- To break the link between your local copy and the repo at https://github.com/nealbrophy/CI_M4_Podcats type `git remote rm origin`
+
+### To run locally
+#### requirements
+In order to run the app locally you'll need:
+- 1.) A MongoDB a/c
+- 2.) A google account
+- 3.) A sendgrid account
+- 4.) Python 3.6 or later and pip package manager (I recommend [using pipenv to create a virtual environment](https://www.youtube.com/watch?v=6Qmnh5C4Pmo) before completing the `pip install` steps below)
+- 5.) To declare some environment variables
 
 ### Instructions for deploying to Heroku
 
